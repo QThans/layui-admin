@@ -21,7 +21,7 @@
                            placeholder="{$self::$loginPlaceholder|default='用户名/邮箱/手机号'}" autocomplete="off"
                            class="layui-input">
                     <input type="password" lay-verType="tips" name="{$self::$pwdName}" required lay-verify="user_pass"
-                           placeholder="{$self::$pwdPlaceholder}"
+                           placeholder="{$self::$pwdPlaceholder|default='请输入密码'}"
                            autocomplete="off" class="layui-input">
                     {if $self::$captcha}
                     <div class="layui-row">

@@ -76,6 +76,10 @@ class Builder
     
     final public function module($module)
     {
+        if ($module == 'element') {
+            $module = self::$module[0];
+            self::$module[0] = 'element';
+        }
         self::$module[] = $module;
         self::$module = array_unique(self::$module);
         return $this;

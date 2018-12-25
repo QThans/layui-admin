@@ -18,6 +18,8 @@ class Index extends Builder
 
     public static $topMenu = [];
 
+    public static $menu = [];
+
     public static $userNmae = '';
 
     public static $userMenu = [];// title  href  attr
@@ -32,7 +34,9 @@ class Index extends Builder
 
     public static $sLogo = '';
 
-    public function userMenu($title, $href, $attr = [])
+    public static $child = 0;
+
+    public function userMenu($title, $href = '', $attr = [])
     {
         self::$userMenu[] = [
             'title'=>$title,
@@ -41,11 +45,37 @@ class Index extends Builder
         ];
         return $this;
     }
-    
+
+    public function menu($title, $href = '', $icon = '', $attr = [])
+    {
+        $key = count(self::$menu)+1;
+        self::$menu[$key] = [
+            'title'=>$title,
+            'icon'=>$icon,
+            'href'=>$href,
+            'attr'=>$attr,
+            'child'=>[]
+        ];
+        self::$child = $key;
+        return $this;
+    }
+
+    public function child($title, $href = '', $icon = '', $attr = [])
+    {
+        self::$menu[self::$child]['child'] = [
+            'title'=>$title,
+            'icon'=>$icon,
+            'href'=>$href,
+            'attr'=>$attr
+        ];
+        return $this;
+    }
+
     public function render()
     {
         $this->module('element');
         $this->script('admin', [
+            'element.render();',
             'admin.changeAdminTab(element);',
             'admin.prevAdminTab();',
             'admin.nextAdminTab();',

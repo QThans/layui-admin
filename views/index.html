@@ -27,7 +27,7 @@
                     </a>
                     <dl class="layui-nav-child">
                         {volist name="$self::$userMenu" id="vo"}
-                        <dd lay-unselect><a href="{$vo.href}" {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} >{$vo.title}</a></dd>
+                        <dd lay-unselect><a data-href="{$vo.href}" {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} >{$vo.title}</a></dd>
                         {/volist}
                     </dl>
                 </li>
@@ -40,7 +40,19 @@
                     <span class="small-logo">{$sLogo|raw|default=''}</span>
                 </div>
                 <ul class="layui-nav layui-nav-tree">
-
+                    {volist name="$self::$menu" id="vo"}
+                    <li class="layui-nav-item layui-nav-itemed">
+                        {if isset($vo['child']) && $vo.child}
+                        <a href="javascript:;" data-href="{$vo.href}"  {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if}><i class=" layui-icon {$vo.icon}"></i><span>{$vo.title}</span><span
+                            class="layui-nav-more"></span></a>
+                        <dl class="layui-nav-child">
+                            <dd class=""><a data-href='{$vo.child.href}' {if isset($vo.child.attr)}{volist name="$vo.child.attr" id="vv"}{$key}="{$vv}"{/volist}{/if} href="javascript:;"><span>{$vo.child.title}</span></a></dd>
+                        </dl>
+                        {else /}
+                        <a href="javascript:;" data-href="{$vo.href}"  {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if}><i class=" layui-icon {$vo.icon}"></i><span>{$vo.title}</span></a>
+                        {/if}
+                    </li>
+                    {/volist}
                 </ul>
             </div>
         </div>

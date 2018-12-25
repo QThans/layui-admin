@@ -1,0 +1,78 @@
+<div id="app">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item pc-menu"><a admin-event="changeMenu" class="javascript:;"><i
+                        class="layui-icon layui-icon-shrink-right"></i></a></li>
+                <li class="layui-nav-item mobile-menu"><a admin-event="changeMobileMenu" class="javascript:;"><i
+                        class="layui-icon layui-icon-spread-left"></i></a></li>
+                {volist name="$self::$topMenu" id="vo"}
+                <li class="layui-nav-item pc-show"><a admin-event="getSecondMenu" lay-menuid="{$vo.id}" class="javascript:;">{$vo.name|raw}</a></li>
+                {/volist}
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" data-href="http://uinge.com" lay-text="消息中心">
+                        <i class="layui-icon layui-icon-notice"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" admin-event="refresh">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        {$self::$userNmae}
+                    </a>
+                    <dl class="layui-nav-child">
+                        {volist name="$self::$userMenu" id="vo"}
+                        <dd lay-unselect><a href="{$vo.href}" {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} >{$vo.title}</a></dd>
+                        {/volist}
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-side layui-side-menu layui-bg-black">
+            <div class="layui-side-scroll">
+                <div class="layui-logo">
+                    <span class="big-logo">{$logo|raw|default=''}</span>
+                    <span class="small-logo">{$sLogo|raw|default=''}</span>
+                </div>
+                <ul class="layui-nav layui-nav-tree">
+
+                </ul>
+            </div>
+        </div>
+        <div class="admin-tabs">
+            <div class="layui-prev-controller layui-icon layui-icon-prev"></div>
+            <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layui-admin-tabs">
+                <ul class="layui-tab-title">
+                    <li lay-id='{$self::$firstTabUrl}' class="layui-this">{$self::$firstTabName}</li>
+                </ul>
+            </div>
+            <div class="layui-next-controller layui-icon layui-icon-next"></div>
+            <div class="layui-down-controller layui-icon layui-icon-down">
+                <ul class="layui-nav layui-more-controller" lay-filter="admin-tabs-close-nav">
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-unselect">
+                            <dd lay-unselect><a class="closeNowTab" href="javascript:;">关闭当前标签页</a></dd>
+                            <dd lay-unselect><a class="closeOtherTab" href="javascript:;">关闭其他标签页</a></dd>
+                            <dd lay-unselect><a class="closeRightTab" href="javascript:;">关闭右侧标签页</a></dd>
+                            <dd lay-unselect><a class="closeLeftTab" href="javascript:;">关闭左侧标签页</a></dd>
+                            <dd lay-unselect><a class="closeAllTab" href="javascript:;">关闭所有标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div class="admin-tabs-body layui-show">
+                <iframe class="admin-tabs-body-iframe" src="{$self::$firstTabUrl}"></iframe>
+            </div>
+        </div>
+        <div class="admin-body-shade" admin-event="shade"></div>
+    </div>
+</div>

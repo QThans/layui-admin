@@ -1,0 +1,121 @@
+<div class="header">
+    <ul class="layui-nav" lay-filter="">
+        <li class="layui-nav-item">{$self::$logo}</li>
+        <ul class="layui-layout-right">
+            {$self::$rightNav}
+        </ul>
+    </ul>
+</div>
+
+<div class="page-container">
+    <div class="page-content">
+        <div class="content-wrapper">
+            <div class="content layui-form">
+                <div class="content-img">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <h3>{$self::$title}</h3>
+                    <p class="layui-word-aux">{$self::$sTitle}</p>
+                </div>
+                <div class="content-login layui-form" lay-filter="formLogin">
+                    <input type="text" lay-verType="tips" name="{$self::$loginName|default='user_login'}" lay-verify="user_name"
+                           placeholder="{$self::$loginPlaceholder|default='用户名/邮箱/手机号'}" autocomplete="off"
+                           class="layui-input">
+                    <input type="password" lay-verType="tips" name="{$self::$pwdName}" required lay-verify="user_pass"
+                           placeholder="{$self::$pwdPlaceholder}"
+                           autocomplete="off" class="layui-input">
+                    {if $self::$captcha}
+                    <div class="layui-row">
+                        <div class="layui-col-xs6">
+                            <input type="text" lay-verType="tips" name="{$captchaName|default='code'}" required lay-verify="required"
+                                   placeholder="验证码" autocomplete="off" class="layui-input code">
+                        </div>
+                        <div class="layui-col-xs6">
+                            <div class="code-img">
+                                <img class="login-code" id="login-code" src="{$self::$captcha}">
+                            </div>
+                        </div>
+                    </div>
+                    {/if}
+                    <input name="redirect" type="hidden" value="{:input('redirect')}">
+                    <div class="login-forgot">
+                        {if $self::$rember}
+                        <div class="remember">
+                            <input type="checkbox" name="{$self::$rember}" lay-filter="remember" lay-skin="primary"
+                                   title="记住用户">
+                        </div>
+                        {/if}
+                        <div class="reg">{$self::$register}</div>
+                        <div class="forgot">{$self::$forget}</div>
+                    </div>
+                    <button id="login" class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit
+                            lay-filter="formLogin">{$self::$submit}
+                    </button>
+                </div>
+                <div class="content-footer">
+                    {$self::$footer}
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p class="layui-word-aux"> © 2018. 版权所有 by {$self::$copy}</a></p>
+    </footer>
+</div>
+<!--{/block}-->
+<!--{block name="my_js"}-->
+<!--<script>-->
+    <!--layui.use(['layer', 'form', 'admin'], function () {-->
+        <!--var layer = layui.layer-->
+            <!--, $ = layui.$-->
+            <!--, admin = layui.admin-->
+            <!--, form = layui.form;-->
+        <!--form.val("formLogin", {-->
+            <!--"user_login": layui.data('temp').remember_user_login,-->
+            <!--"remember": typeof layui.data('temp').remember_user_login == 'undefined' ? '' : 'on'-->
+        <!--})-->
+        <!--;-->
+        <!--form.verify({-->
+            <!--user_name: function (value, item) { //value：表单的值、item：表单的DOM对象-->
+                <!--if (/^\d+\d+\d$/.test(value)) {-->
+                    <!--return '用户名不能全为数字';-->
+                <!--}-->
+                <!--if (value == '') {-->
+                    <!--return '用户名不能为空';-->
+                <!--}-->
+            <!--}-->
+            <!--, user_pass: [-->
+                <!--/^[\S]{6,12}$/-->
+                <!--, '密码必须6到12位，且不能出现空格'-->
+            <!--]-->
+        <!--});-->
+        <!--form.on('submit(formLogin)', function (data) {-->
+            <!--if (data.field.remember == 'on') {-->
+                <!--layui.data('temp', {-->
+                    <!--key: 'remember_user_login'-->
+                    <!--, value: data.field.user_login-->
+                <!--});-->
+            <!--} else {-->
+                <!--layui.data('temp', {-->
+                    <!--key: 'remember_user_login'-->
+                    <!--, remove: true-->
+                <!--});-->
+            <!--}-->
+            <!--admin.ajax('admin/login', data.field, function (data) {-->
+                <!--if (data.code == 1001) {-->
+                    <!--layer.msg(data.msg, {-->
+                        <!--offset: '15px'-->
+                        <!--, icon: 1-->
+                        <!--, time: 1000-->
+                    <!--}, function () {-->
+                        <!--location.href = data.redirect;-->
+                    <!--});-->
+                <!--} else {-->
+                    <!--layer.msg(data.msg);-->
+                    <!--$('#login-code').click();-->
+                <!--}-->
+            <!--});-->
+            <!--return false;-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+<!--{/block}-->

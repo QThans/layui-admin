@@ -1,0 +1,132 @@
+.header{
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 99;
+}
+.body{
+    background-color: #f5f5f5;
+}
+.header .layui-nav{
+    height: 49px;
+    border-radius:0px;
+}
+.header .layui-nav .layui-nav-item a{
+    padding: 0 10px;
+}
+.header .layui-nav .layui-nav-item i{
+    font-size: 1.5rem;
+}
+
+.header .layui-nav .layui-nav-item{
+    line-height: 49px;
+}
+.header .layui-layout-right{
+    margin-right: 20px;
+}
+.header .layui-layout-right img{
+    width: 20px;
+    height: 20px;
+}
+.page-container{
+    padding-top: 80px;
+    height: 100%;
+}
+.page-container .content{
+    width: 320px;
+    margin: 0 auto;
+    background-color: rgb(255, 255, 255);
+    color: #333;
+    border: 1px solid #ddd;
+}
+.content .content-img{
+    text-align: center;
+    margin: 0 auto;
+    height: 150px;
+    width: 278px;
+    padding-top: 30px;
+}
+.content .content-img h3,.content .content-img p{
+    line-height: 20px;
+    margin: 10px 0;
+}
+.content .content-img i{
+    font-size: 5rem;
+    color: #999;
+}
+.content .content-login{
+    width: 90%;
+    margin: 0 auto;
+}
+.code-img{
+    margin-left: 10px;
+}
+.login-code{
+    max-height: 38px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.content .login-icon{
+    text-align: center;
+    line-height: 50px;
+}
+.content button{
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.content .login-icon img{
+    width: 38px;
+    height: 38px;
+    margin-right: 5px;
+}
+.content fieldset{
+    width: 90%;
+    margin: 0 auto;
+}
+.content fieldset legend{
+    margin: 0 auto;
+    color: #999;
+    font-size: 13px;
+}
+.content .forgot,.content .reg{
+    display: inline-block;
+    color: rgb(30, 151, 236);
+    float: right;
+    margin-top: 3px;
+}
+.content .reg{
+    margin-left: 20px;
+}
+.content .login-forgot{
+    height: 50px;
+    line-height: 50px;
+}
+.login-forgot .remember{
+    display: inline-block;
+    margin-top: 20px;
+}
+.content input{
+    margin-top: 20px;
+}
+.content-footer{
+    font-size: 12px;
+    text-align: center;
+    padding-bottom: 10px;
+    color:#cccccc;
+}
+.content-footer a{
+    color: rgb(30, 151, 236);
+}
+footer{
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    margin-top: 15px;
+}
+footer a{
+    color: rgb(30, 151, 236)
+}

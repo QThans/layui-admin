@@ -1,0 +1,7 @@
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        {volist name="\thans\layuiAdmin\Builder::$html" id="vo"}
+        {:htmlspecialchars_decode($vo)}
+        {/volist}
+    </div>
+</div>

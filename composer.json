@@ -1,0 +1,23 @@
+{
+    "name": "thans\/layui-admin",
+    "description": "layui admin template build",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Thans",
+            "email": "thans@thans.cn"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "topthink/framework": "^5.1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "thans\\layuiAdmin\\": "src"
+        },
+        "files": [
+            "src/common.php"
+        ]
+    }
+}

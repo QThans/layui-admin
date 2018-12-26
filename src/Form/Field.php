@@ -43,17 +43,4 @@ trait Field
         self::$rules = $rules;
         return $this;
     }
-
-    public function __call($name, $value)
-    {
-        if (is_array($value[0])) {
-            return $this;
-        }
-        if (isset(self::$$name)) {
-            self::$$name = $value[0]??'';
-            return $this;
-        }
-        self::$attr[$name] = $value[0]??'';
-        return $this;
-    }
 }

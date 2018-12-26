@@ -24,7 +24,7 @@ class Command extends \think\console\Command
     }
     public function createConfig($output)
     {
-        $configFilePath = APP_PATH . '..' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'layui.php';
+        $configFilePath = env('app_path') . '..' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'layui.php';
         if (is_file($configFilePath)) {
             $output->writeln('Config file is exist');
         } else {
@@ -38,7 +38,7 @@ class Command extends \think\console\Command
     }
     public function createStatic($output)
     {
-        $staticPath = APP_PATH . '..' . DIRECTORY_SEPARATOR . 'public' .
+        $staticPath = env('app_path') . '..' . DIRECTORY_SEPARATOR . 'public' .
             DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'layui-admin' . DIRECTORY_SEPARATOR;
         copy_dir(__DIR__ . DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'static', $staticPath);
         $output->writeln('Copy resources End');

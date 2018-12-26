@@ -45,5 +45,14 @@ trait Compoents
             'self' => $this
         ], true));
     }
-
+    public function __call($name, $value)
+    {
+        if (is_array($value[0])) {
+            return $this;
+        }
+        if (isset(self::$$name)) {
+            self::$$name = $value[0]??'';
+            return $this;
+        }
+    }
 }

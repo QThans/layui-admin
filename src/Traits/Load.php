@@ -17,6 +17,10 @@ trait Load
 
     public function __call($name, $arguments)
     {
+        if (isset(self::$$name)) {
+            self::$$name = $arguments[0]??'';
+            return $this;
+        }
         if (!isset(self::$classMap[$name])) {
             throw new \think\Exception('组件方法不存在:'.$name);
         }
@@ -24,7 +28,7 @@ trait Load
             $class = new self::$classMap[$name](isset($arguments[0])?$arguments[0]:'');
             return $class;
         }
-        throw new \think\Exception('组件类不存在:'.self::$classMap[$name]);
+        throw new \think\Exception('组件类或方法不存在:'.self::$classMap[$name]);
     }
 
     public function render($component = false)

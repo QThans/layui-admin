@@ -32,7 +32,7 @@
         base: '{$cdn_url}vendor/layui-admin/layui/modules/js/' //静态资源所在路径
     });
     layui.use(['{:implode("','",$builder::$module)}'], function(){
-        {volist name="$builder::$module" id="vo"}var {$vo} = layui.{$vo};{/volist}
+        {volist name="$builder::$module" id="vo"}{if $vo != 'jquery'}var {$vo} = layui.{$vo};{else /} var $ = layui.{$vo}; {/if}{/volist}
 
         {volist name="$builder::$script" id="vo"}
 

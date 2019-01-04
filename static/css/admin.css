@@ -428,12 +428,18 @@ html {
     margin: auto 0;
 }
 
+.search .layui-form-item div{
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
 .admin-table .search {
     float: right;
 }
 
 .admin-table .search button {
     margin-top: 4px;
+    width:60px;
 }
 
 @media screen and (max-width: 768px) {

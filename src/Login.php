@@ -70,16 +70,7 @@ class Login extends Builder
     {
         $url = self::$url;
         self::$script[] = <<<EOD
-form.verify({
-  account: [
-    /^[\S]{5,24}$/
-    ,'用户名必须5到50位，且不能出现空格'
-  ]
-  ,password: [
-    /^[\S]{6,24}$/
-    ,'密码必须6到24位，且不能出现空格'
-  ] 
-});
+{$this->formVerify}
 form.on('submit(login)', function(data){
   admin.ajax('{$url}',data.field);
   return false;

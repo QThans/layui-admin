@@ -24,6 +24,19 @@ class Builder
         'admin'
     ];
 
+    public $formVerify = "
+    form.verify({
+      account: [
+        /^[\S]{5,24}$/
+        ,'用户名必须5到50位，且不能出现空格'
+      ]
+      ,password: [
+        /^[\S]{6,24}$/
+        ,'密码必须6到24位，且不能出现空格'
+      ] 
+    });
+    ";
+
     public $view;
 
     public static $css = [

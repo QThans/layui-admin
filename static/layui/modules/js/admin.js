@@ -70,25 +70,6 @@ layui.define(['layer', 'upload'], function (exports) {
         $iframes[0].contentWindow.location.reload();
         return false;
     });
-    //弹窗打开iframe
-    $('body').on('click', "[admin-event='formLayer']", function () {
-        var href = typeof $(this).attr('href') != 'undefined' ? $(this).attr('href') : $(this).attr('data-href');
-        var title = $(this).attr('data-title');
-        layui.event("formLayer", "formLayer('')", {
-            'href': href,
-            'title': title,
-        });
-        return false;
-    });
-    $('body').on('click', "[admin-event='formLayerSm']", function () {
-        var href = typeof $(this).attr('href') != 'undefined' ? $(this).attr('href') : $(this).attr('data-href');
-        var title = $(this).attr('data-title');
-        layui.event("formLayerSm", "formLayerSm('')", {
-            'href': href,
-            'title': title,
-        });
-        return false;
-    });
     //监听表单弹窗。
     layui.onevent("formLayer", "formLayer()", function (param) {
         layer.open({
@@ -98,7 +79,11 @@ layui.define(['layer', 'upload'], function (exports) {
             shade: false,
             maxmin: true, //开启最大化最小化按钮
             area: ['100%', '100%'],
-            content: param.href
+            content: param.href,
+            end:function(){
+                //更新上层表格
+                $('#layui-icon-refresh-'+param.refresh,parent.document).click();
+            }
         });
         return false;
     });
@@ -114,6 +99,48 @@ layui.define(['layer', 'upload'], function (exports) {
         });
         return false;
     });
+
+    //弹窗打开iframe
+    $('body').on('click', "[admin-event='formLayer']", function () {
+        var href = typeof $(this).attr('href') != 'undefined' ? $(this).attr('href') : $(this).attr('data-href');
+        var title = $(this).attr('data-title');
+        var refresh = $(this).attr('refresh');
+        layui.event("formLayer", "formLayer('')", {
+            'href': href,
+            'title': title,
+            'refresh': refresh,
+        });
+        return false;
+    });
+
+    //ajax请求
+    $(document).on('click', "[admin-event='ajax']", function () {
+        var href = typeof $(this).attr('href') != 'undefined' ? $(this).attr('href') : $(this).attr('data-href');
+        var method = $(this).attr('method') || 'get';
+        var refresh = $(this).attr('refresh') || '';
+        obj.ajax(href, '', function (data) {
+            layer.msg(data.msg);
+            if(refresh){
+                $('#layui-icon-refresh-'+param.refresh,parent.document).click();
+            }
+        }, '', method);
+        return false;
+    });
+    $(document).on('click', "[admin-event='confirmAjax']", function () {
+        var href = typeof $(this).attr('href') != 'undefined' ? $(this).attr('href') : $(this).attr('data-href');
+        var title = $(this).attr('data-title');
+        var method = $(this).attr('method') || 'get';
+        var refresh = $(this).attr('refresh') || '';
+        layer.confirm(title, function (index) {
+            obj.ajax(href, '', function (data) {
+                layer.msg(data.msg);
+                if(refresh){
+                    $('#layui-icon-refresh-'+param.refresh,parent.document).click();
+                }
+            }, '', method);
+        });
+        return false;
+    });
     //点击链接增加tab
     $(document).on('click', 'a[data-href]', function () {
         var href = $(this).attr('data-href');
@@ -124,14 +151,6 @@ layui.define(['layer', 'upload'], function (exports) {
             }
             obj.addAdminTab(element, title, href);
         }
-    });
-    //ajax请求
-    $(document).on('click', 'a[data-ajax-href]', function () {
-        var href = $(this).attr('data-ajax-href');
-        obj.ajax(href, '', function (data) {
-            layer.msg(data.msg);
-        }, '', 'get');
-        return false;
     });
     $("[admin-event='changeMenu']").click(function () {
         layui.event("changeMenu", "changeMenu('')");
@@ -416,10 +435,14 @@ layui.define(['layer', 'upload'], function (exports) {
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
             parent.layer.close(index);
         },
-        openFormLayer: function (title, href) {
+        openFormLayer: function (title, href, refresh) {
+            if(typeof refresh == 'undefined'){
+                refresh = '';
+            }
             layui.event("formLayer", "formLayer('')", {
                 'href': href,
-                'title': title
+                'title': title,
+                'refresh':refresh,
             });
         }
     };

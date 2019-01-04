@@ -30,5 +30,6 @@ class Form extends Builder
     {
         parent::__construct();
         $this->module('form');
+        self::$script[] = $this->formVerify;
     }
 }

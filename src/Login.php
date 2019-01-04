@@ -14,6 +14,9 @@ class Login extends Builder
 {
     use Compoents;
 
+    //登录ajax提交url
+    public static $url = '';
+
     public static $tmpl = 'login';
     // 顶部导航 右侧按钮
     public static $rightNav = '';
@@ -41,11 +44,16 @@ class Login extends Builder
     public static $loginPlaceholder = '';
     //登录用户名 name
     public static $loginName = '';
+    //登录用户的验证规则名称，非常规需要自己添加正则
+    public static $loginVerify = 'account';
 
     //登录密码 laceholder
     public static $pwdPlaceholder = '';
     //登录密码 name
     public static $pwdName = '';
+
+    //登录密码的验证规则名称，非常规需要自己添加正则
+    public static $pwdVerify = 'password';
 
     public static $submit = '登录';
 
@@ -53,8 +61,30 @@ class Login extends Builder
     {
         $this->module('form');
         self::$css['login'] = 'vendor/layui-admin/css/login.css';
+        $this->loginScript();
         $this->view->assign('self', $this);
         $this->view->assign('builder', $this);
         return $this->fetch();
+    }
+    private function loginScript()
+    {
+        $url = self::$url;
+        self::$script[] = <<<EOD
+form.verify({
+  account: [
+    /^[\S]{5,24}$/
+    ,'用户名必须5到50位，且不能出现空格'
+  ]
+  ,password: [
+    /^[\S]{6,24}$/
+    ,'密码必须6到24位，且不能出现空格'
+  ] 
+});
+form.on('submit(login)', function(data){
+  admin.ajax('{$url}',data.field);
+  return false;
+});
+EOD;
+
     }
 }

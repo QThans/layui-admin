@@ -1,4 +1,4 @@
-{php}$cdn_url = config('layui.cdn_url');{/php}
+{php}$cdn_url = config('admin.cdn_url');{/php}
 <!DOCTYPE html>
 <html>
 
@@ -33,14 +33,19 @@
     });
     layui.use(['{:implode("','",$builder::$module)}'], function(){
         {volist name="$builder::$module" id="vo"}var {$vo} = layui.{$vo};{/volist}
+
         {volist name="$builder::$script" id="vo"}
+
                 {if is_array($vo)}
-                {volist name="$vo" id="v"}{$v}{/volist}
+
+                {volist name="$vo" id="v"}{$v|raw}{/volist}
+
                 {else /}
-                    {$vo}
+
+                    {$vo|raw}
+
                 {/if}
         {/volist}
-
     });
 </script>
 </body>

@@ -23,7 +23,7 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        {$self::$userNmae}
+                        {$self::$userName}
                     </a>
                     <dl class="layui-nav-child">
                         {volist name="$self::$userMenu" id="vo"}
@@ -36,8 +36,8 @@
         <div class="layui-side layui-side-menu layui-bg-black">
             <div class="layui-side-scroll">
                 <div class="layui-logo">
-                    <span class="big-logo">{$logo|raw|default=''}</span>
-                    <span class="small-logo">{$sLogo|raw|default=''}</span>
+                    <span class="big-logo">{$self::$logo|raw|default=''}</span>
+                    <span class="small-logo">{$self::$sLogo|raw|default=''}</span>
                 </div>
                 <ul class="layui-nav layui-nav-tree">
                     {volist name="$self::$menu" id="vo"}

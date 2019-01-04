@@ -20,7 +20,7 @@ class Index extends Builder
 
     public static $menu = [];
 
-    public static $userNmae = '';
+    public static $userName = '';
 
     public static $userMenu = [];// title  href  attr
 

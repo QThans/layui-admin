@@ -20,7 +20,7 @@ layui.define(['layer', 'upload'], function (exports) {
     /**
      *验证码刷新
      */
-    $('#login-code').click(function () {
+    $('#captcha-code').click(function () {
         var url = $(this).attr('src');
         $(this).attr("src", changeURLPar(url, 'random', Math.random()));
     });
@@ -339,13 +339,8 @@ layui.define(['layer', 'upload'], function (exports) {
             var index = layer.load(1);
             var type = type || "post";
             var dataType = dataType || "json";
-            if (url.substr(0, 4) == 'http' || url.substr(0, 1) == '/') {
-                var url = url;
-            } else {
-                var url = '/api/' + url;
-            }
             var succCallback = succCallback || function (data) {
-                if (data.code == 1001) {
+                if (data.code == 1) {
                     layer.msg(data.msg, {
                         offset: '15px',
                         icon: 1,
@@ -380,17 +375,12 @@ layui.define(['layer', 'upload'], function (exports) {
             });
         }, //表格生成
         table: function (table, id, url, options, default_options) {
-            if (url.substr(0, 4) == 'http' || url.substr(0, 1) == '/') {
-                var url = url;
-            } else {
-                var url = '/api/' + url;
-            }
             var default_options = default_options || {
                 elem: '#' + id,
                 id: id,
                 url: url,
                 response: {
-                    statusCode: 1001,
+                    statusCode: 1,
                     countName: 'total'
                 },
                 limit: 15,
@@ -421,146 +411,6 @@ layui.define(['layer', 'upload'], function (exports) {
                 }
             }
             return theRequest;
-        },
-        fileUploadBtn: function (plupload, elem) {
-            obj.ajax('/open/upload/options', '', function (res) {
-                var upload_options = res.data;
-                var multipart_params = upload_options.posts ? upload_options.posts : '';
-                var index;
-                var options = {
-                    browse_button: elem + '_upload',
-                    max_file_size: upload_options.upload_file_size + "kb",
-                    filters: {
-                        mime_types: [
-                            {title: "files", extensions: upload_options.upload_file_ext},
-                        ]
-                    },
-                    url: upload_options.file_upload_url,
-                    multipart_params: obj.urlToJson(multipart_params.split('&')),
-                    FilesAdded: function (uploader, files) {
-                        index = layer.load(1);
-                        $('#' + elem + '_filename').html(files[0].name);
-                        uploader.start()
-                    },
-                    UploadProgress: function (uploader, file) {
-                        $('#' + elem + '_percent').css('width', file.percent + '%');
-                        $('#' + elem + '_status').html(file.percent + '%');
-                        if (file.percent == 100) {
-                            $('#' + elem + '_status').html('完成');
-                        }
-                    },
-                    FileUploaded: function (uploader, file, info) {
-                        var res = JSON.parse(info.response);
-                        if (info.status == 200) {
-                            $('#' + elem + '_value').val(res.path);
-                        }
-                        layer.close(index);
-                    },
-                    Error: function (uploader, err) {
-                        layer.msg("您选择的文件：" + err.file.name + "，" + err.message);
-                        layer.close(index);
-                    }
-                };
-                plupload.loader(options);
-                $('#' + elem + '_preview').click(function () {
-                    $('#' + elem + '_upload').click();
-                });
-            }, '', 'get');
-        },
-        imgUploadBtn: function (plupload, elem) {
-            obj.ajax('/open/upload/options', '', function (res) {
-                var upload_options = res.data;
-                var multipart_params = upload_options.posts ? upload_options.posts : '';
-                var index;
-                var options = {
-                    browse_button: elem + '_upload',
-                    max_file_size: upload_options.upload_img_size + "kb",
-                    filters: {
-                        mime_types: [
-                            {title: "Image files", extensions: upload_options.upload_img_ext},
-                        ]
-                    },
-                    url: upload_options.image_upload_url,
-                    multipart_params: obj.urlToJson(multipart_params.split('&')),
-                    FilesAdded: function (uploader, files) {
-                        index = layer.load(1);
-                        uploader.start()
-                    },
-                    FileUploaded: function (uploader, file, info) {
-                        console.log(info.status)
-                        var res = JSON.parse(info.response);
-                        if (info.status == 200) {
-                            $('#' + elem + '_value').val(res.path);
-                            $('#' + elem + '_preview').attr('src', '//' + upload_options.domain + '/' + res.path);
-                        }
-                        layer.close(index);
-                    },
-                    Error: function (uploader, err) {
-                        layer.msg("您选择的文件：" + err.file.name + "，" + err.message);
-                        layer.close(index);
-                    }
-                };
-                plupload.loader(options);
-                $('#' + elem + '_preview').click(function () {
-                    $('#' + elem + '_upload').click();
-                });
-            }, '', 'get');
-        }
-        ,
-        imgUpload: function (options) {
-            if (typeof options.funcname == 'undefined') {
-                options.funcname = '';
-            }
-            if (options.funcname) {
-                var url = '/admin/uploadImage?func=' + encodeURIComponent(options.funcname);
-            } else {
-                var url = '/admin/uploadImage?preview=' + encodeURIComponent(options.preview) + '&input=' + encodeURIComponent(options.input);
-            }
-            $(options.elem).click(function () {
-                layer.open({
-                    type: 2,
-                    title: "图片上传",
-                    area: ['80% ', '80%'],
-                    fixed: true,
-                    maxmin: false,
-                    content: url
-                });
-            });
-        },
-        isMobile: function (val) {
-            var reg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
-            if (!reg.test(val)) {
-                return '手机号错误';
-            } else {
-                return false;
-            }
-        },
-        isEmail: function (val) {
-            var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-            if (!reg.test(val)) {
-                return '邮箱错误';
-            } else {
-                return false;
-            }
-        },
-        isUserLogin: function (val) {
-            if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(val)) {
-                return '用户名不能有特殊字符';
-            }
-            if (/(^\_)|(\__)|(\_+$)/.test(val)) {
-                return '用户名首尾不能出现下划线\'_\'';
-            }
-            if (/^\d+\d+\d$/.test(val)) {
-                return '用户名不能全为数字';
-            }
-        },
-        isUserPass: function (val) {
-            var reg = /^[\S]{6,12}$/;
-            if (!reg.test(val)) {
-                return '密码必须6到12位，且不能出现空格';
-            } else {
-                return false;
-            }
         },
         closeSelf: function () {
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引

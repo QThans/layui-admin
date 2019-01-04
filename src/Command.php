@@ -24,11 +24,11 @@ class Command extends \think\console\Command
     }
     public function createConfig($output)
     {
-        $configFilePath = env('app_path') . '..' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'layui.php';
+        $configFilePath = env('app_path') . '..' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'admin.php';
         if (is_file($configFilePath)) {
             $output->writeln('Config file is exist');
         } else {
-            $res = copy(__DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'layui.php', $configFilePath);
+            $res = copy(__DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'admin.php', $configFilePath);
             if ($res) {
                 $output->writeln('Create config file success:' . $configFilePath);
             } else {

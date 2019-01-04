@@ -90,7 +90,7 @@
     color: #999;
     font-size: 13px;
 }
-.content .forgot,.content .reg{
+.content .forgot,.forgot a,.content .reg, .reg a{
     display: inline-block;
     color: rgb(30, 151, 236);
     float: right;

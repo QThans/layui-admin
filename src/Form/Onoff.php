@@ -12,15 +12,15 @@ use thans\layuiAdmin\Builder;
 use thans\layuiAdmin\Render;
 use thans\layuiAdmin\Traits\Compoents;
 
-class Onoff extends Input
+class Onoff extends Builder implements Render
 {
-    public function __construct($arguments = [])
-    {
-        parent::__construct($arguments);
-        self::$type = 'checkbox';
-        $this->attr('lay-skin', 'switch');
-        return $this;
-    }
+
+    use Compoents,Field;
+
+    public $tmpl = 'form/onoff';
+
+    public $type = 'checkbox';
+
     public function text($text)
     {
         $this->attr('lay-text', $text);

@@ -14,13 +14,13 @@ use think\View;
 
 class Builder
 {
-    public static $html;
+    public $html = [];
 
-    public static $script;
+    public $script = [];
 
-    public static $style;
+    public $style = [];
 
-    public static $module = [
+    public $module = [
         'admin'
     ];
 
@@ -33,19 +33,33 @@ class Builder
       ,password: [
         /^[\S]{6,24}$/
         ,'密码必须6到24位，且不能出现空格'
-      ] 
+      ]
+      ,noRequiredPhone:function(value, item){
+        if(value != ''){
+            if(!/^1\d{10}$/.test(value)){
+                return '请输入正确的手机号';
+            }
+        }
+      },
+      noRequiredEmail:function(value, item){
+        if(value != ''){
+            if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)){
+                return '邮箱格式不正确';
+            }
+        }
+      }
     });
     ";
 
     public $view;
 
-    public static $css = [
+    public $css = [
         'layui' => 'vendor/layui-admin/layui/css/layui.css',
         'iconfont' => 'vendor/layui-admin/layui/modules/css/layui-icon-extend/iconfont.css',
         'admin' => 'vendor/layui-admin/css/admin.css',
     ];
 
-    public static $js = [
+    public $js = [
         'layui' => 'vendor/layui-admin/layui/layui.js',
     ];
 
@@ -54,7 +68,7 @@ class Builder
     public function __construct($init = false)
     {
         if ($init) {
-            self::$html = [];
+            $this->html = [];
         }
         $this->view = new View();
         $this->engineConfig['view_path'] = view_path();
@@ -65,48 +79,48 @@ class Builder
 
     final public function css($key, $css)
     {
-        self::$css[$key] = $css;
+        $this->css[$key] = $css;
         return $this;
     }
 
     final public function js($key, $js)
     {
-        self::$js[$key] = $js;
+        $this->js[$key] = $js;
         return $this;
     }
 
     final public function html($key, $html)
     {
-        self::$html[$key] = $html;
+        $this->html[$key] = $html;
         return $this;
     }
 
     final public function script($key, $script)
     {
-        self::$script[$key] = $script;
+        $this->script[$key] = $script;
         return $this;
     }
     
     final public function module($module)
     {
         if ($module == 'element') {
-            $module = self::$module[0];
-            self::$module[0] = 'element';
+            $module = $this->module[0];
+            $this->module[0] = 'element';
         }
-        self::$module[] = $module;
-        self::$module = array_unique(self::$module);
+        $this->module[] = $module;
+        $this->module = array_unique($this->module);
         return $this;
     }
 
     final public function style($key, $style)
     {
-        self::$style[$key] = $style;
+        $this->style[$key] = $style;
         return $this;
     }
 
     final public function push($html)
     {
-        self::$html[] = $html;
+        $this->html[] = $html;
         return $this;
     }
 
@@ -116,7 +130,7 @@ class Builder
             $this->engineConfig['layout_on'] = false;
             unset($this->engineConfig['layout_name']);
         }
-        $class = get_called_class();
-        return $this->view->fetch('/'.$class::$tmpl, $vars, $this->engineConfig);
+        $tmpl = $this->tmpl;
+        return $this->view->fetch('/'.$tmpl, $vars, $this->engineConfig);
     }
 }

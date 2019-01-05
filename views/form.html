@@ -4,7 +4,7 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div class="layui-form" lwid100 iwid300 lay-filter="form">
-                        {volist name="\thans\layuiAdmin\Builder::$html" id="vo"}
+                        {volist name="$builder->html" id="vo"}
                         {:htmlspecialchars_decode($vo)}
                         {/volist}
                         <div class="layui-form-item">

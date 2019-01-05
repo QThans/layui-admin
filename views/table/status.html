@@ -1,6 +1,6 @@
-<script type="text/html" id="{$self::$field}">
-    {volist name="$self::$options" id="vo"}
-        {{#  if(d.{$self::$field} == '{$vo.val}'){ }}
+<script type="text/html" id="{$self->field}">
+    {volist name="$self->options" id="vo"}
+        {{#  if(d.{$self->field} == '{$vo.val}'){ }}
             {if $vo.type}
             <button class="layui-btn layui-btn-xs  layui-btn-{$vo.type}">{$vo.title}</button>
             {else /}

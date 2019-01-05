@@ -8,13 +8,16 @@
 
 namespace thans\layuiAdmin\Form;
 
+use thans\layuiAdmin\Builder;
+use thans\layuiAdmin\Render;
+use thans\layuiAdmin\Traits\Compoents;
 
-class Text extends Input
+class Text extends Builder implements Render
 {
-    public function __construct($arguments = [])
-    {
-        parent::__construct($arguments);
-        self::$type = 'text';
-        return $this;
-    }
+    use Compoents,Field;
+
+    public $tmpl = 'form/input';
+
+    public $type = 'text';
+
 }

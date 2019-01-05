@@ -10,37 +10,36 @@ namespace thans\layuiAdmin\Form;
 
 trait Field
 {
-    public static $label = '';
+    public $label = '';
 
-    public static $name = '';
+    public $name = '';
 
-    public static $value = '';
+    public $value = '';
 
-    public static $tips = '';
+    public $tips = '';
 
-    public static $rules = '';
+    public $rules = '';
 
-    public static $attr = [];
+    public $attr = [];
 
-    public static $regs = [];
-
+    public $regs = [];
 
     public function attr($type = '', $val = '')
     {
-        if (isset(self::$$type)) {
-            self::$$type = $val;
+        if (isset($this->$type)) {
+            $this->$type = $val;
             return $this;
         }
-        self::$attr[$type] = $val;
+        $this->attr[$type] = $val;
         return $this;
     }
 
     public function rules($rules = '', $regs = [])
     {
         if (!empty($regs)) {
-            self::$regs = array_merge($regs, self::$regs);
+            $this->regs = array_merge($regs, $this->regs);
         }
-        self::$rules = $rules;
+        $this->rules = $rules;
         return $this;
     }
 }

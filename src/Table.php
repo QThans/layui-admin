@@ -13,33 +13,33 @@ use thans\layuiAdmin\Traits\Load;
 class Table extends Builder
 {
     use Load;
-    public static $tmpl = 'table';
+    public $tmpl = 'table';
 
-    public static $url = '';
+    public $url = '';
 
-    public static $title = '';
+    public $title = '';
 
-    public static $col = '12';
+    public $col = '12';
 
-    public static $id = '';
+    public $id = '';
 
-    public static $refresh = true;
+    public $refresh = true;
 
-    public static $search = true;
+    public $search = true;
 
-    public static $classMap = [
+    public $classMap = [
         'status' => Table\Status::class,
     ];
 
-    public static $filter = [];
+    public $filter = [];
 
-    public static $action = [];
+    public $action = [];
 
-    public static $fields = [];
+    public $fields = [];
 
-    public static $tools = [];
+    public $tools = [];
 
-    public static $toolWidth = 100;
+    public $toolWidth = 100;
 
 
     /**
@@ -60,7 +60,7 @@ class Table extends Builder
     private function createFilter($title, $name, $type = 'input', $options = [])
     {
         $id = uniqid();
-        self::$filter[] = [
+        $this->filter[] = [
             'title'=>$title,
             'name'=>$name,
             'type'=>$type,
@@ -89,13 +89,13 @@ class Table extends Builder
 
         $this->module('laydate');
 
-        self::$script[] = <<<EOD
+        $this->script[] = <<<EOD
 laydate.render({$options});
 EOD;
     }
     public function action($title, $href)
     {
-        self::$action[] = [
+        $this->action[] = [
             'title'=>$title,
             'href'=>$href
         ];
@@ -105,7 +105,7 @@ EOD;
     public function __construct()
     {
         parent::__construct();
-        self::$id = uniqid();
+        $this->id = uniqid();
         $this->module('table');
         $this->module('jquery');
         $this->module('form');
@@ -114,13 +114,13 @@ EOD;
     public function column($field, $title, $width = 100, $tpl = '', $attr = [])
     {
         $column = ['field'=>$field,'title'=>$title,'width'=>$width,'templet'=>$tpl?'#'.$tpl:''];
-        self::$fields[] = array_merge($column, $attr);
+        $this->fields[] = array_merge($column, $attr);
         return $this;
     }
 
     public function tool($title, $url,$type = 'primary', $method='get', $action = 'ajax')
     {
-        self::$tools[] = [
+        $this->tools[] = [
           'title'=>$title,
           'action'=>$action,
           'method'=>$method,
@@ -133,9 +133,9 @@ EOD;
 
     private function toolParse()
     {
-        if (!empty(self::$tools)) {
+        if (!empty($this->tools)) {
             $html = '';
-            foreach (self::$tools as $val) {
+            foreach ($this->tools as $val) {
                 if ($val['type']) {
                     $class = 'layui-btn-'.$val['type'];
                 } else {
@@ -143,25 +143,25 @@ EOD;
                 }
                 $html .= "<a href='javascript:;' admin-event='{$val['action']}' data-title='确定{$val['title']}吗？' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
             }
-            self::$html[] = <<<EOD
+            $this->html[] = <<<EOD
 <script type="text/html" id="tools">
 {$html}
 </script>
 EOD;
-            $this->column('', '操作', self::$toolWidth, 'tools', ['fixed'=>'right']);
+            $this->column('', '操作', $this->toolWidth, 'tools', ['fixed'=>'right']);
         }
     }
 
     public function render($component = false)
     {
-        $id = self::$id;
-        $url = self::$url;
+        $id = $this->id;
+        $url = $this->url;
         $this->toolParse();
 
 
-        $fields = json_encode(self::$fields);
+        $fields = json_encode($this->fields);
 
-        self::$script[] = <<<EOD
+        $this->script[] = <<<EOD
         var list_table_{$id} = admin.table(table, 'list-table-{$id}', '{$url}', {
             page: true
             , cols: [{$fields}]
@@ -169,8 +169,8 @@ EOD;
 EOD;
 
 
-        if (self::$refresh) {
-            self::$script[] = <<<EOD
+        if ($this->refresh) {
+            $this->script[] = <<<EOD
         $('#layui-icon-refresh-{$id}').click(function () {
             list_table_{$id}.reload();
         });
@@ -178,8 +178,8 @@ EOD;
         }
 
 
-        if (self::$filter || self::$search) {
-            self::$script[] = <<<EOD
+        if ($this->filter || $this->search) {
+            $this->script[] = <<<EOD
         form.on('submit(search-{$id})', function(data){
               list_table_{$id}.reload({
                 where: {

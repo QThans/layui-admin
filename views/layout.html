@@ -8,7 +8,7 @@
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8"/>
-    {volist name="$builder::$css" id="vo"}
+    {volist name="$builder->css" id="vo"}
 <link rel="stylesheet" href="{$cdn_url}{$vo}">
     {/volist}
     <!--[if lt IE 9]>
@@ -16,7 +16,7 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-    {volist name="$builder::$style" id="vo"}
+    {volist name="$builder->style" id="vo"}
     {$vo}
     {/volist}
     </style>
@@ -24,17 +24,17 @@
 
 <body class="layui-layout-admin">
 {__CONTENT__}
-{volist name="$builder::$js" id="vo"}
+{volist name="$builder->js" id="vo"}
 <script src="{$cdn_url}{$vo}"></script>
 {/volist}
 <script type="text/javascript">
     layui.config({
         base: '{$cdn_url}vendor/layui-admin/layui/modules/js/' //静态资源所在路径
     });
-    layui.use(['{:implode("','",$builder::$module)}'], function(){
-        {volist name="$builder::$module" id="vo"}{if $vo != 'jquery'}var {$vo} = layui.{$vo};{else /} var $ = layui.{$vo}; {/if}{/volist}
+    layui.use(['{:implode("','",$builder->module)}'], function(){
+        {volist name="$builder->module" id="vo"}{if $vo != 'jquery'}var {$vo} = layui.{$vo};{else /} var $ = layui.{$vo}; {/if}{/volist}
 
-        {volist name="$builder::$script" id="vo"}
+        {volist name="$builder->script" id="vo"}
 
                 {if is_array($vo)}
 

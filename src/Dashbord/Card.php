@@ -16,24 +16,24 @@ class Card extends Builder implements Render
 {
     use Compoents;
 
-    public static $tmpl = 'dashbord/card';
+    public $tmpl = 'dashbord/card';
 
-    public static $title = '';
+    public $title = '';
 
-    public static $datas = [];
+    public $datas = [];
 
-    public static $col = 6;
+    public $col = 6;
 
 
     public function title($title = '')
     {
-        self::$title = $title;
+        $this->title = $title;
         return $this;
     }
 
     public function datas($datas = [])
     {
-        self::$datas = $datas;
+        $this->datas = $datas;
         return $this;
     }
 
@@ -42,7 +42,7 @@ class Card extends Builder implements Render
         if ($col<0 || $col >12 || !is_int($col)) {
             throw new \think\Exception('col,必须：>=0 && <=12 且为整数');
         }
-        self::$col = $col;
+        $this->col = $col;
         return $this;
     }
 }

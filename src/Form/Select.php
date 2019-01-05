@@ -15,21 +15,20 @@ use thans\layuiAdmin\Traits\Compoents;
 class Select extends Builder implements Render
 {
     use Compoents, Field;
-    public static $tmpl = 'form/select';
+    public $tmpl = 'form/select';
 
-    public static $options = [];
+    public $options = [];
 
-    public static $search = true;
+    public $search = true;
 
     public function option($val, $title)
     {
-        self::$options[$val] = $title;
+        $this->options[$val] = $title;
         return $this;
     }
     //TODO AJAX关联数据
     public function relation($url)
     {
-        $this->script(self::$name, '');
         return $this;
     }
 }

@@ -15,52 +15,52 @@ class Login extends Builder
     use Compoents;
 
     //登录ajax提交url
-    public static $url = '';
+    public $url = '';
 
-    public static $tmpl = 'login';
+    public $tmpl = 'login';
     // 顶部导航 右侧按钮
-    public static $rightNav = '';
+    public $rightNav = '';
     //底部版权信息
-    public static $copy = '';
+    public $copy = '';
     // logo 信息 支持文字、图片
-    public static $logo = '';
+    public $logo = '';
     //页面标题
-    public static $title = '';
+    public $title = '';
     //页面副标题
-    public static $sTitle = '';
+    public $sTitle = '';
     //忘记密码
-    public static $forget = '';
+    public $forget = '';
     //注册账号
-    public static $register = '';
+    public $register = '';
     //记住用户名
-    public static $rember = '';
+    public $rember = '';
     //底部信息
-    public static $footer = '';
+    public $footer = '';
     //验证码链接
-    public static $captcha = '';
+    public $captcha = '';
     //验证码表单name
-    public static $captchaName = '';
+    public $captchaName = '';
     //登录用户名 laceholder
-    public static $loginPlaceholder = '';
+    public $loginPlaceholder = '';
     //登录用户名 name
-    public static $loginName = '';
+    public $loginName = '';
     //登录用户的验证规则名称，非常规需要自己添加正则
-    public static $loginVerify = 'account';
+    public $loginVerify = 'account';
 
     //登录密码 laceholder
-    public static $pwdPlaceholder = '';
+    public $pwdPlaceholder = '';
     //登录密码 name
-    public static $pwdName = '';
+    public $pwdName = '';
 
     //登录密码的验证规则名称，非常规需要自己添加正则
-    public static $pwdVerify = 'password';
+    public $pwdVerify = 'password';
 
-    public static $submit = '登录';
+    public $submit = '登录';
 
     public function render()
     {
         $this->module('form');
-        self::$css['login'] = 'vendor/layui-admin/css/login.css';
+        $this->css['login'] = 'vendor/layui-admin/css/login.css';
         $this->loginScript();
         $this->view->assign('self', $this);
         $this->view->assign('builder', $this);
@@ -68,8 +68,8 @@ class Login extends Builder
     }
     private function loginScript()
     {
-        $url = self::$url;
-        self::$script[] = <<<EOD
+        $url = $this->url;
+        $this->script[] = <<<EOD
 {$this->formVerify}
 form.on('submit(login)', function(data){
   admin.ajax('{$url}',data.field);

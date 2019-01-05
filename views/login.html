@@ -1,8 +1,8 @@
 <div class="header">
     <ul class="layui-nav" lay-filter="">
-        <li class="layui-nav-item">{$self::$logo}</li>
+        <li class="layui-nav-item">{$self->logo}</li>
         <ul class="layui-layout-right">
-            {$self::$rightNav}
+            {$self->rightNav}
         </ul>
     </ul>
 </div>
@@ -12,17 +12,17 @@
             <div class="content layui-form">
                 <div class="content-img">
                     <i class="layui-icon layui-icon-user"></i>
-                    <h3>{$self::$title}</h3>
-                    <p class="layui-word-aux">{$self::$sTitle}</p>
+                    <h3>{$self->title}</h3>
+                    <p class="layui-word-aux">{$self->sTitle}</p>
                 </div>
                 <div class="content-login layui-form" lay-filter="form">
-                    <input type="text" lay-verType="tips" name="{$self::$loginName|default='account'}" lay-verify="{$self::$loginVerify|default='required'}"
-                           placeholder="{$self::$loginPlaceholder|default='用户名/邮箱/手机号'}" autocomplete="off"
+                    <input type="text" lay-verType="tips" name="{$self->loginName|default='account'}" lay-verify="{$self->loginVerify|default='required'}"
+                           placeholder="{$self->loginPlaceholder|default='用户名/邮箱/手机号'}" autocomplete="off"
                            class="layui-input">
-                    <input type="password" lay-verType="tips" name="{$self::$pwdName|default='password'}" required lay-verify="{$self::$pwdVerify|default='required'}"
-                           placeholder="{$self::$pwdPlaceholder|default='请输入密码'}"
+                    <input type="password" lay-verType="tips" name="{$self->pwdName|default='password'}" required lay-verify="{$self->pwdVerify|default='required'}"
+                           placeholder="{$self->pwdPlaceholder|default='请输入密码'}"
                            autocomplete="off" class="layui-input">
-                    {if $self::$captcha}
+                    {if $self->captcha}
                     <div class="layui-row">
                         <div class="layui-col-xs6">
                             <input type="text" lay-verType="tips" name="{$captchaName|default='code'}" required lay-verify="required"
@@ -30,33 +30,33 @@
                         </div>
                         <div class="layui-col-xs6">
                             <div class="code-img">
-                                <img class="login-code  captcha-code" id="login-code" src="{$self::$captcha}">
+                                <img class="login-code  captcha-code" id="login-code" src="{$self->captcha}">
                             </div>
                         </div>
                     </div>
                     {/if}
                     <input name="redirect" type="hidden" value="{:input('redirect','/')}">
                     <div class="login-forgot">
-                        {if $self::$rember}
+                        {if $self->rember}
                         <div class="remember">
-                            <input type="checkbox" name="{$self::$rember}" lay-filter="remember" lay-skin="primary"
+                            <input type="checkbox" name="{$self->rember}" lay-filter="remember" lay-skin="primary"
                                    title="记住用户">
                         </div>
                         {/if}
-                        <div class="reg">{$self::$register|raw}</div>
-                        <div class="forgot">{$self::$forget|raw}</div>
+                        <div class="reg">{$self->register|raw}</div>
+                        <div class="forgot">{$self->forget|raw}</div>
                     </div>
                     <button id="login" class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit
-                            lay-filter="login">{$self::$submit}
+                            lay-filter="login">{$self->submit}
                     </button>
                 </div>
                 <div class="content-footer">
-                    {$self::$footer}
+                    {$self->footer}
                 </div>
             </div>
         </div>
     </div>
     <footer>
-        <p class="layui-word-aux"> © 2018. 版权所有 by {$self::$copy}</a></p>
+        <p class="layui-word-aux"> © 2018. 版权所有 by {$self->copy}</a></p>
     </footer>
 </div>

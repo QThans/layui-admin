@@ -6,7 +6,7 @@
                         class="layui-icon layui-icon-shrink-right"></i></a></li>
                 <li class="layui-nav-item mobile-menu"><a admin-event="changeMobileMenu" class="javascript:;"><i
                         class="layui-icon layui-icon-spread-left"></i></a></li>
-                {volist name="$self::$topMenu" id="vo"}
+                {volist name="$self->topMenu" id="vo"}
                 <li class="layui-nav-item pc-show"><a admin-event="getSecondMenu" lay-menuid="{$vo.id}" class="javascript:;">{$vo.name|raw}</a></li>
                 {/volist}
             </ul>
@@ -23,10 +23,10 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        {$self::$userName}
+                        {$self->userName}
                     </a>
                     <dl class="layui-nav-child">
-                        {volist name="$self::$userMenu" id="vo"}
+                        {volist name="$self->userMenu" id="vo"}
                         <dd lay-unselect><a data-href="{$vo.href}" {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} >{$vo.title}</a></dd>
                         {/volist}
                     </dl>
@@ -36,11 +36,11 @@
         <div class="layui-side layui-side-menu layui-bg-black">
             <div class="layui-side-scroll">
                 <div class="layui-logo">
-                    <span class="big-logo">{$self::$logo|raw|default=''}</span>
-                    <span class="small-logo">{$self::$sLogo|raw|default=''}</span>
+                    <span class="big-logo">{$self->logo|raw|default=''}</span>
+                    <span class="small-logo">{$self->sLogo|raw|default=''}</span>
                 </div>
                 <ul class="layui-nav layui-nav-tree">
-                    {volist name="$self::$menu" id="vo"}
+                    {volist name="$self->menu" id="vo"}
                     <li class="layui-nav-item layui-nav-itemed">
                         {if isset($vo['child']) && $vo.child}
                         <a href="javascript:;" data-href="{$vo.href}"  {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if}><i class=" layui-icon {$vo.icon}"></i><span>{$vo.title}</span><span
@@ -60,7 +60,7 @@
             <div class="layui-prev-controller layui-icon layui-icon-prev"></div>
             <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layui-admin-tabs">
                 <ul class="layui-tab-title">
-                    <li lay-id='{$self::$firstTabUrl}' class="layui-this">{$self::$firstTabName}</li>
+                    <li lay-id='{$self->firstTabUrl}' class="layui-this">{$self->firstTabName}</li>
                 </ul>
             </div>
             <div class="layui-next-controller layui-icon layui-icon-next"></div>
@@ -82,7 +82,7 @@
         <div class="layui-body">
             <!-- 内容主体区域 -->
             <div class="admin-tabs-body layui-show">
-                <iframe class="admin-tabs-body-iframe" src="{$self::$firstTabUrl}"></iframe>
+                <iframe class="admin-tabs-body-iframe" src="{$self->firstTabUrl}"></iframe>
             </div>
         </div>
         <div class="admin-body-shade" admin-event="shade"></div>

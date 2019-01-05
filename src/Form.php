@@ -16,9 +16,9 @@ class Form extends Builder
 {
     use Load;
 
-    public static $tmpl = 'form';
+    public $tmpl = 'form';
 
-    public static $classMap = [
+    public $classMap = [
         'input' => Form\Input::class,
         'text' => Form\Text::class,
         'number' => Form\Number::class,
@@ -30,6 +30,6 @@ class Form extends Builder
     {
         parent::__construct();
         $this->module('form');
-        self::$script[] = $this->formVerify;
+        $this->script[] = $this->formVerify;
     }
 }

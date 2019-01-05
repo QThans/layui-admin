@@ -12,23 +12,23 @@ trait Load
 {
     public function addClassMap($name, $class)
     {
-        self::$classMap[$name] = $class;
+        $this->classMap[$name] = $class;
     }
 
     public function __call($name, $arguments)
     {
-        if (isset(self::$$name)) {
-            self::$$name = $arguments[0]??'';
+        if (isset($this->$name)) {
+            $this->$name = $arguments[0]??'';
             return $this;
         }
-        if (!isset(self::$classMap[$name])) {
+        if (!isset($this->classMap[$name])) {
             throw new \think\Exception('组件方法不存在:'.$name);
         }
-        if (class_exists(self::$classMap[$name])) {
-            $class = new self::$classMap[$name](isset($arguments[0])?$arguments[0]:'');
+        if (class_exists($this->classMap[$name])) {
+            $class = new $this->classMap[$name](isset($arguments[0])?$arguments[0]:'',$this->html);
             return $class;
         }
-        throw new \think\Exception('组件类或方法不存在:'.self::$classMap[$name]);
+        throw new \think\Exception('组件类或变量不存在:'.$this->classMap[$name]);
     }
 
     public function render($component = false)

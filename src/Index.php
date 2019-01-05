@@ -16,29 +16,29 @@ class Index extends Builder
 {
     use Compoents;
 
-    public static $topMenu = [];
+    public $topMenu = [];
 
-    public static $menu = [];
+    public $menu = [];
 
-    public static $userName = '';
+    public $userName = '';
 
-    public static $userMenu = [];// title  href  attr
+    public $userMenu = [];// title  href  attr
 
-    public static $tmpl = 'index';
+    public $tmpl = 'index';
 
-    public static $firstTabName = '';
+    public $firstTabName = '';
 
-    public static $firstTabUrl = '';
+    public $firstTabUrl = '';
 
-    public static $logo = '';
+    public $logo = '';
 
-    public static $sLogo = '';
+    public $sLogo = '';
 
-    public static $child = 0;
+    public $child = 0;
 
     public function userMenu($title, $href = '', $attr = [])
     {
-        self::$userMenu[] = [
+        $this->userMenu[] = [
             'title'=>$title,
             'href'=>$href,
             'attr'=>$attr
@@ -48,21 +48,21 @@ class Index extends Builder
 
     public function menu($title, $href = '', $icon = '', $attr = [])
     {
-        $key = count(self::$menu)+1;
-        self::$menu[$key] = [
+        $key = count($this->menu)+1;
+        $this->menu[$key] = [
             'title'=>$title,
             'icon'=>$icon,
             'href'=>$href,
             'attr'=>$attr,
             'child'=>[]
         ];
-        self::$child = $key;
+        $this->child = $key;
         return $this;
     }
 
     public function child($title, $href = '', $icon = '', $attr = [])
     {
-        self::$menu[self::$child]['child'] = [
+        $this->menu[$this->child]['child'] = [
             'title'=>$title,
             'icon'=>$icon,
             'href'=>$href,

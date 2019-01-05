@@ -16,9 +16,9 @@ class Dashbord extends Builder
 {
     use Load;
 
-    public static $tmpl = 'dashbord';
+    public $tmpl = 'dashbord';
 
-    public static $classMap = [
+    public $classMap = [
         'card' => Dashbord\Card::class,
     ];
 }

@@ -10,7 +10,9 @@ namespace thans\layuiAdmin\Traits;
 
 trait Compoents
 {
-    public static $disabled = '';
+    public $disabled = '';
+
+    public $renderHtml = [];
 
     public function load($arguments = [])
     {
@@ -23,20 +25,22 @@ trait Compoents
         }
     }
 
-    public function __construct($arguments = [])
+    public function __construct($arguments = [],&$html)
     {
         parent::__construct();
         $this->load($arguments);
+        $this->renderHtml = &$html;
         return $this;
     }
 
     public function __destruct()
     {
-        $this->render();
+        $render = $this->render();
+        $this->renderHtml = array_merge($this->renderHtml,$render->html);
     }
     public function disabled($disabled)
     {
-        self::$disabled = $disabled ? 'disabled' : '';
+        $this->disabled = $disabled ? 'disabled' : '';
         return $this;
     }
     public function render()
@@ -44,14 +48,15 @@ trait Compoents
         $this->push($this->fetch([
             'self' => $this
         ], true));
+        return $this;
     }
     public function __call($name, $value)
     {
         if (is_array($value[0])) {
             return $this;
         }
-        if (isset(self::$$name)) {
-            self::$$name = $value[0]??'';
+        if (isset($this->$name)) {
+            $this->$name = $value[0]??'';
             return $this;
         }
     }

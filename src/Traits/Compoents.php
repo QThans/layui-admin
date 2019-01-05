@@ -18,14 +18,14 @@ trait Compoents
     {
         if ($arguments && is_array($arguments)) {
             foreach ($arguments as $key => $val) {
-                if (isset(self::$$key)) {
-                    self::$$key = $val;
+                if (isset($this->$key)) {
+                    $this->$key = $val;
                 }
             }
         }
     }
 
-    public function __construct($arguments = [],&$html)
+    public function __construct($arguments = [],&$html = '')
     {
         parent::__construct();
         $this->load($arguments);
@@ -35,8 +35,7 @@ trait Compoents
 
     public function __destruct()
     {
-        $render = $this->render();
-        $this->renderHtml = array_merge($this->renderHtml,$render->html);
+        $this->render();
     }
     public function disabled($disabled)
     {
@@ -45,9 +44,10 @@ trait Compoents
     }
     public function render()
     {
-        $this->push($this->fetch([
+        $render = $this->fetch([
             'self' => $this
-        ], true));
+        ], true);
+        $this->renderHtml[] = $render;
         return $this;
     }
     public function __call($name, $value)
@@ -57,7 +57,12 @@ trait Compoents
         }
         if (isset($this->$name)) {
             $this->$name = $value[0]??'';
-            return $this;
         }
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this;
     }
 }

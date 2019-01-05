@@ -102,7 +102,7 @@ layui.define(['layer', 'upload'], function (exports) {
 
     //弹窗打开iframe
     $('body').on('click', "[admin-event='formLayer']", function () {
-        var href = typeof $(this).attr('href') != 'undefined' ? $(this).attr('href') : $(this).attr('data-href');
+        var href = $(this).attr('data-href');
         var title = $(this).attr('data-title');
         var refresh = $(this).attr('refresh');
         layui.event("formLayer", "formLayer('')", {
@@ -114,8 +114,8 @@ layui.define(['layer', 'upload'], function (exports) {
     });
 
     //ajax请求
-    $(document).on('click', "[admin-event='ajax']", function () {
-        var href = typeof $(this).attr('href') != 'undefined' ? $(this).attr('href') : $(this).attr('data-href');
+    $('body').on('click', "[admin-event='ajax']", function () {
+        var href = $(this).attr('data-href');
         var method = $(this).attr('method') || 'get';
         var refresh = $(this).attr('refresh') || '';
         obj.ajax(href, '', function (data) {
@@ -126,8 +126,8 @@ layui.define(['layer', 'upload'], function (exports) {
         }, '', method);
         return false;
     });
-    $(document).on('click', "[admin-event='confirmAjax']", function () {
-        var href = typeof $(this).attr('href') != 'undefined' ? $(this).attr('href') : $(this).attr('data-href');
+    $('body').on('click', "[admin-event='confirmAjax']", function () {
+        var href = $(this).attr('data-href');
         var title = $(this).attr('data-title');
         var method = $(this).attr('method') || 'get';
         var refresh = $(this).attr('refresh') || '';
@@ -151,6 +151,7 @@ layui.define(['layer', 'upload'], function (exports) {
             }
             obj.addAdminTab(element, title, href);
         }
+        return false;
     });
     $("[admin-event='changeMenu']").click(function () {
         layui.event("changeMenu", "changeMenu('')");

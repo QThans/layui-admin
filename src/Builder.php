@@ -41,6 +41,13 @@ class Builder
             }
         }
       },
+      noRequiredPwd:function(value, item){
+        if(value != ''){
+            if(!/^[\S]{6,24}$/.test(value)){
+                return '密码必须6到24位，且不能出现空格';
+            }
+        }
+      },
       noRequiredEmail:function(value, item){
         if(value != ''){
             if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)){
@@ -115,12 +122,6 @@ class Builder
     final public function style($key, $style)
     {
         $this->style[$key] = $style;
-        return $this;
-    }
-
-    final public function push($html)
-    {
-        $this->html[] = $html;
         return $this;
     }
 

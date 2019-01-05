@@ -147,7 +147,7 @@ EOD;
                 if ($val['action'] == 'confirmAjax') {
                     $val['title-tips']='确定'.$val['title-tips'].'吗？';
                 }
-                $html .= "<a href='javascript:;' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
+                $html .= "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
             }
             $this->html[] = <<<EOD
 <script type="text/html" id="tools">

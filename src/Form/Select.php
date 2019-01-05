@@ -28,7 +28,7 @@ class Select extends Builder implements Render
             $this->options = array_merge($this->options, $val);
             return $this;
         }
-        $this->options[$val] = $title;
+        $this->options[] = ['val'=>$val,'title'=>$title];
         return $this;
     }
     //TODO AJAX关联数据

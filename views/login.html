@@ -25,7 +25,7 @@
                     {if $self->captcha}
                     <div class="layui-row">
                         <div class="layui-col-xs6">
-                            <input type="text" lay-verType="tips" name="{$captchaName|default='code'}" required lay-verify="required"
+                            <input type="text" lay-verType="tips" name="{$captchaName|default='code'}" required lay-verify="required|code"
                                    placeholder="验证码" autocomplete="off" class="layui-input code">
                         </div>
                         <div class="layui-col-xs6">

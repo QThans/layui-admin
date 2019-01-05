@@ -3,9 +3,9 @@
     <div class="layui-input-inline">
         {php}$value = $self->value;$search = $self->search;{/php}
         <select {if $search}lay-search{/if} lay-verify="{$self->rules}" {volist name="$self->attr" id="vo"}{$key}="{$vo}"{/volist} name="{$self->name}" {$self->disabled}>
-            {volist name="$self->options" id="vo"}
-            <option value="{$key}" {if $key == $value }selected="selected"{/if}>{$vo}</option>
-            {/volist}
+            {foreach $self->options as $key=>$vo}
+            <option value="{$vo.val}" {if $key == $value }selected="selected"{/if}>{$vo.title}</option>
+            {/foreach}
         </select>
     </div>
     <div class="layui-form-mid layui-word-aux">{$self->tips}</div>

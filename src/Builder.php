@@ -24,40 +24,6 @@ class Builder
         'admin'
     ];
 
-    public $formVerify = "
-    form.verify({
-      account: [
-        /^[\S]{5,24}$/
-        ,'用户名必须5到50位，且不能出现空格'
-      ]
-      ,password: [
-        /^[\S]{6,24}$/
-        ,'密码必须6到24位，且不能出现空格'
-      ]
-      ,noRequiredPhone:function(value, item){
-        if(value != ''){
-            if(!/^1\d{10}$/.test(value)){
-                return '请输入正确的手机号';
-            }
-        }
-      },
-      noRequiredPwd:function(value, item){
-        if(value != ''){
-            if(!/^[\S]{6,24}$/.test(value)){
-                return '密码必须6到24位，且不能出现空格';
-            }
-        }
-      },
-      noRequiredEmail:function(value, item){
-        if(value != ''){
-            if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)){
-                return '邮箱格式不正确';
-            }
-        }
-      }
-    });
-    ";
-
     public $view;
 
     public $css = [

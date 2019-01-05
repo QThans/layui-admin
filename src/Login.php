@@ -70,7 +70,24 @@ class Login extends Builder
     {
         $url = $this->url;
         $this->script[] = <<<EOD
-{$this->formVerify}
+
+    form.verify({
+      account: [
+        /^[\S]{5,24}$/
+        ,'用户名必须5到50位，且不能出现空格'
+      ]
+      ,password: [
+        /^[\S]{6,24}$/
+        ,'密码必须6到24位，且不能出现空格'
+      ]
+      ,code:function(value, item){
+        if(value != ''){
+            if(!/^\d{4,6}$/.test(value)){
+                return '请输入正确的验证码';
+            }
+        }
+      }
+    });
 form.on('submit(login)', function(data){
   admin.ajax('{$url}',data.field);
   return false;

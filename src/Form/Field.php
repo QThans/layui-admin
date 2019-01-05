@@ -22,8 +22,6 @@ trait Field
 
     public $attr = [];
 
-    public $regs = [];
-
     public function attr($type = '', $val = '')
     {
         if (isset($this->$type)) {
@@ -34,12 +32,11 @@ trait Field
         return $this;
     }
 
-    public function rules($rules = '', $regs = [])
+    public function rules($rules = '', $required = true, $min = 0, $max = 0)
     {
-        if (!empty($regs)) {
-            $this->regs = array_merge($regs, $this->regs);
-        }
-        $this->rules = $rules;
+        $id = uniqid();
+        $this->rules = $rules.'_'.$id;
+        $this->obj->rules[] = [$id,$rules,$required,$min,$max];//向Form类里面添加规则，用户编译
         return $this;
     }
 }

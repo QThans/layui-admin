@@ -35,6 +35,8 @@ class Table extends Builder
 
     public $action = [];
 
+    public $page = true;
+
     public $fields = [];
 
     public $tools = [];
@@ -162,16 +164,15 @@ EOD;
         $url = $this->url;
         $this->toolParse();
 
-
+        $page = $this->page?'true':'false';
         $fields = json_encode($this->fields);
 
         $this->script[] = <<<EOD
         var list_table_{$id} = admin.table(table, 'list-table-{$id}', '{$url}', {
-            page: true
+            page: {$page}
             , cols: [{$fields}]
         });
 EOD;
-
 
         if ($this->refresh) {
             $this->script[] = <<<EOD

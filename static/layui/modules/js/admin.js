@@ -112,6 +112,18 @@ layui.define(['layer', 'upload'], function (exports) {
         });
         return false;
     });
+    //弹窗打开小iframe
+    $('body').on('click', "[admin-event='formLayerSm']", function () {
+        var href = $(this).attr('data-href');
+        var title = $(this).attr('data-title');
+        var refresh = $(this).attr('refresh');
+        layui.event("formLayerSm", "formLayerSm('')", {
+            'href': href,
+            'title': title,
+            'refresh': refresh,
+        });
+        return false;
+    });
 
     //ajax请求
     $('body').on('click', "[admin-event='ajax']", function () {
@@ -351,13 +363,14 @@ layui.define(['layer', 'upload'], function (exports) {
                 });
             });
         },
-        ajax: function (url, postData, succCallback, errorCallback, type, dataType) {
+        ajax: function (url, postData, succCallback, errorCallback, type, dataType,async) {
             if (typeof url == 'undefined') {
                 layer.msg("错误");
                 return false;
             }
             var index = layer.load(1);
             var type = type || "post";
+            var async = async || true;
             var dataType = dataType || "json";
             var succCallback = succCallback || function (data) {
                 if (data.code == 1) {
@@ -382,6 +395,7 @@ layui.define(['layer', 'upload'], function (exports) {
             $.ajax({
                 type: type,
                 url: url,
+                async:async,
                 data: postData,
                 dataType: dataType,
                 success: function (res) {

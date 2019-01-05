@@ -25,7 +25,7 @@ trait Load
             throw new \think\Exception('组件方法不存在:'.$name);
         }
         if (class_exists($this->classMap[$name])) {
-            $class = new $this->classMap[$name](isset($arguments[0])?$arguments[0]:'',$this->html);
+            $class = new $this->classMap[$name](isset($arguments[0])?$arguments[0]:'',$this);
             return $class;
         }
         throw new \think\Exception('组件类或变量不存在:'.$this->classMap[$name]);

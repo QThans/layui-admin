@@ -14,6 +14,8 @@ trait Compoents
 
     public $renderHtml = [];
 
+    public $obj = [];
+
     public function load($arguments = [])
     {
         if ($arguments && is_array($arguments)) {
@@ -25,11 +27,12 @@ trait Compoents
         }
     }
 
-    public function __construct($arguments = [],&$html = '')
+    public function __construct($arguments = [],&$obj = '')
     {
         parent::__construct();
         $this->load($arguments);
-        $this->renderHtml = &$html;
+        $this->obj = &$obj;
+        $this->renderHtml = &$obj->html;
         return $this;
     }
 

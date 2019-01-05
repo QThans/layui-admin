@@ -133,7 +133,7 @@ layui.define(['layer', 'upload'], function (exports) {
         obj.ajax(href, '', function (data) {
             layer.msg(data.msg);
             if(refresh){
-                $('#layui-icon-refresh-'+param.refresh,parent.document).click();
+                $('#layui-icon-refresh-'+refresh,parent.document).click();
             }
         }, '', method);
         return false;
@@ -147,7 +147,7 @@ layui.define(['layer', 'upload'], function (exports) {
             obj.ajax(href, '', function (data) {
                 layer.msg(data.msg);
                 if(refresh){
-                    $('#layui-icon-refresh-'+param.refresh,parent.document).click();
+                    $('#layui-icon-refresh-'+refresh,parent.document).click();
                 }
             }, '', method);
         });
@@ -447,6 +447,9 @@ layui.define(['layer', 'upload'], function (exports) {
             return theRequest;
         },
         closeSelf: function () {
+            if ($('.layui-icon-refresh',parent.document)){
+                $('.layui-icon-refresh',parent.document).click();
+            }
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
             parent.layer.close(index);
         },

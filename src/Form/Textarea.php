@@ -15,4 +15,5 @@ use thans\layuiAdmin\Traits\Compoents;
 class Textarea extends Builder implements Render
 {
     use Compoents,Field;
+    public $tmpl = 'form/textarea';
 }

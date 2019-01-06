@@ -36,6 +36,7 @@ class Form extends Builder
         'number' => Form\Number::class,
         'select' => Form\Select::class,
         'onoff' => Form\Onoff::class,
+        'authtree' => Form\Authtree::class,
     ];
 
     public $formVerify = [

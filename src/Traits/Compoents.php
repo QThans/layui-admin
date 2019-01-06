@@ -27,7 +27,7 @@ trait Compoents
         }
     }
 
-    public function __construct($arguments = [],&$obj = '')
+    public function __construct($arguments = [], &$obj = '')
     {
         parent::__construct();
         $this->load($arguments);
@@ -47,6 +47,9 @@ trait Compoents
     }
     public function render()
     {
+        if (method_exists($this, '_make')) {
+            $this->_make();
+        }
         $render = $this->fetch([
             'self' => $this
         ], true);

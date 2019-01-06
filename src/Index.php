@@ -46,17 +46,9 @@ class Index extends Builder
         return $this;
     }
 
-    public function menu($title, $href = '', $icon = '', $attr = [])
+    public function menu($menu)
     {
-        $key = count($this->menu)+1;
-        $this->menu[$key] = [
-            'title'=>$title,
-            'icon'=>$icon,
-            'href'=>$href,
-            'attr'=>$attr,
-            'child'=>[]
-        ];
-        $this->child = $key;
+        $this->menu = $menu;
         return $this;
     }
 

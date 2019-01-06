@@ -44,17 +44,17 @@
                         {if $vo['status'] == 1}
                             <li class="layui-nav-item ">
                                 {if isset($vo['children']) && $vo.children}
-                                    <a href="javascript:;" {if $vo.href}data-href="{$vo.href}"{/if}><i class=" layui-icon {$vo.icon}"></i><span>{$vo.name}</span><span
+                                    <a href="javascript:;" {if $vo.href}data-href="{$vo.href}"{/if}><i class=" layui-icon {$vo.icon}"></i>{php}echo str_repeat('&nbsp;&nbsp;', $vo['deep']);{/php}<span>{$vo.name|raw}</span><span
                                         class="layui-nav-more"></span></a>
                                     {volist name="$vo['children']" id="vv"}
                                         <dl class="layui-nav-child">
                                             <dd class="">
-                                                <a {if $vv.href}data-href='{$vv.href}'{/if} href="javascript:;"><span>{$vv.name}</span></a>
+                                                <a {if $vv.href}data-href='{$vv.href}'{/if} href="javascript:;">{php}echo str_repeat('&nbsp;&nbsp;', $vv['deep']);{/php}<span>{$vv.name|raw}</span></a>
                                                 {volist name="$vv['children']" id="v"}
                                                     {if $v['status'] == 1}
                                                         <dl class="layui-nav-child">
                                                             <dd class="">
-                                                                <a {if $v.href}data-href='{$v.href}'{/if} href="javascript:;"><span>{$v.name}</span></a>
+                                                                <a {if $v.href}data-href='{$v.href}'{/if} href="javascript:;">{php}echo str_repeat('&nbsp;&nbsp;', $v['deep']);{/php}<span>{$v.name|raw}</span></a>
                                                             </dd>
                                                         </dl>
                                                     {/if}

@@ -1,8 +1,8 @@
-<div class="layui-col-md{$self::$col}">
+<div class="layui-col-md{$self->col}">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">{$self::$title}</div>
+                <div class="layui-card-header">{$self->title}</div>
                 <div class="layui-card-body">
                     <table class="layui-table">
                         <colgroup>
@@ -10,7 +10,7 @@
                             <col>
                         </colgroup>
                         <tbody>
-                        {volist name="$self::$datas" id="vo"}
+                        {volist name="$self->datas" id="vo"}
                         <tr>
                             <td>{$key}</td>
                             <td>{:htmlspecialchars_decode($vo)}</td>

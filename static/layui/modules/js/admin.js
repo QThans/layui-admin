@@ -174,7 +174,7 @@ layui.define(['layer', 'upload'], function (exports) {
         $('.small-logo').css('display', 'none');
         $('.layui-layout-admin .layui-side-menu .layui-side-scroll').css('width', '240px');
         $('.layui-layout-admin .layui-side-menu,.layui-layout-admin .layui-logo').css('width', '220px');
-        $('.layui-layout-admin .layui-side-menu .layui-nav .layui-nav-item a span').css('display', 'block');
+        $('.layui-layout-admin .layui-side-menu .layui-nav .layui-nav-item a span').css('display', 'inline');
         $('.layui-layout-admin .layui-body, .layui-layout-left,.admin-tabs').css('left', '220px');
         $('.pc-menu a .layui-icon-spread-left').addClass('layui-icon-shrink-right');
         $('.pc-menu a .layui-icon-spread-left').removeClass('layui-icon-spread-left');

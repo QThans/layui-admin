@@ -40,7 +40,7 @@ trait Compoents
     {
         $this->render();
     }
-    public function disabled($disabled)
+    public function disabled($disabled = true)
     {
         $this->disabled = $disabled ? 'disabled' : '';
         return $this;
@@ -62,7 +62,7 @@ trait Compoents
             return $this;
         }
         if (isset($this->$name)) {
-            $this->$name = $value[0]??'';
+            $this->$name = $value[0]?:'';
         }
         return $this;
     }

@@ -30,12 +30,15 @@ class Form extends Builder
 
     public $rules = [];
 
+    public $submitBtn = "保存";
+
     public $classMap = [
         'input' => Form\Input::class,
         'text' => Form\Text::class,
         'number' => Form\Number::class,
         'select' => Form\Select::class,
         'onoff' => Form\Onoff::class,
+        'checkbox' => Form\Checkbox::class,
         'authtree' => Form\Authtree::class,
     ];
 

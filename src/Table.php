@@ -63,11 +63,11 @@ class Table extends Builder
     {
         $id = uniqid();
         $this->filter[] = [
-            'title'=>$title,
-            'name'=>$name,
-            'type'=>$type,
-            'id'=>$id,
-            'options'=>$options
+            'title' => $title,
+            'name' => $name,
+            'type' => $type,
+            'id' => $id,
+            'options' => $options
         ];
         return $id;
     }
@@ -95,11 +95,12 @@ class Table extends Builder
 laydate.render({$options});
 EOD;
     }
+
     public function action($title, $href)
     {
         $this->action[] = [
-            'title'=>$title,
-            'href'=>$href
+            'title' => $title,
+            'href' => $href
         ];
         return $this;
     }
@@ -115,46 +116,61 @@ EOD;
 
     public function column($field, $title, $width = 100, $tpl = '', $attr = [])
     {
-        $column = ['field'=>$field,'title'=>$title,'width'=>$width,'templet'=>$tpl?'#'.$tpl:''];
+        $column = ['field' => $field, 'title' => $title, 'width' => $width, 'templet' => $tpl ? '#' . $tpl : ''];
         $this->fields[] = array_merge($column, $attr);
         return $this;
     }
 
-    public function tool($title, $url, $type = 'primary', $method='get', $action = 'ajax')
+    public function tool($title, $url, $type = 'primary', $method = 'get', $action = 'ajax', $condition = '')
     {
         $this->tools[] = [
-          'title'=>$title,
-          'action'=>$action,
-          'method'=>$method,
-          'url'=>$url,
-          'type'=>$type,
+            'title' => $title,
+            'action' => $action,
+            'method' => $method,
+            'url' => $url,
+            'type' => $type,
+            'condition' => $condition,
         ];
         return $this;
     }
 
+    public function htmlTool($html = '')
+    {
+        $this->tools[] = [
+            'html' => $html
+        ];
+    }
 
     private function toolParse()
     {
         if (!empty($this->tools)) {
             $html = '';
             foreach ($this->tools as $val) {
+                if (isset($val['html'])){
+                    $html .= $val['html'];
+                    continue;
+                }
                 if ($val['type']) {
-                    $class = 'layui-btn-'.$val['type'];
+                    $class = 'layui-btn-' . $val['type'];
                 } else {
                     $class = '';
                 }
                 $val['title-tips'] = $val['title'];
                 if ($val['action'] == 'confirmAjax') {
-                    $val['title-tips']='确定'.$val['title-tips'].'吗？';
+                    $val['title-tips'] = '确定' . $val['title-tips'] . '吗？';
                 }
-                $html .= "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
+                $tmp = "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
+                if($val['condition']){
+                    $tmp = '{{#  if('.$val['condition'].'){ }}'.$tmp.'{{#  } }} ';//条件
+                }
+                $html .= $tmp;
             }
             $this->html[] = <<<EOD
 <script type="text/html" id="tools">
 {$html}
 </script>
 EOD;
-            $this->column('', '操作', $this->toolWidth, 'tools', ['fixed'=>'right']);
+            $this->column('', '操作', $this->toolWidth, 'tools', ['fixed' => 'right']);
         }
     }
 
@@ -164,7 +180,7 @@ EOD;
         $url = $this->url;
         $this->toolParse();
 
-        $page = $this->page?'true':'false';
+        $page = $this->page ? 'true' : 'false';
         $fields = json_encode($this->fields);
 
         $this->script[] = <<<EOD
@@ -197,7 +213,7 @@ EOD;
         }
 
         return $this->fetch($vars = [
-            'builder'=> $this
+            'builder' => $this
         ], $component);
     }
 }

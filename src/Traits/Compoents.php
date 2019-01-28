@@ -16,6 +16,8 @@ trait Compoents
 
     public $obj = [];
 
+    public $id = '';
+
     public function load($arguments = [])
     {
         if ($arguments && is_array($arguments)) {
@@ -30,6 +32,7 @@ trait Compoents
     public function __construct($arguments = [], &$obj = '')
     {
         parent::__construct();
+        $this->id = uniqid();
         $this->load($arguments);
         $this->obj = &$obj;
         $this->renderHtml = &$obj->html;

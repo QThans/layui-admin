@@ -32,11 +32,17 @@ class Form extends Builder
 
     public $submitBtn = "保存";
 
+    public $hiddenSubmit = false;
+
+    public $setValueSctipt = [];
+
     public $classMap = [
         'input' => Form\Input::class,
         'text' => Form\Text::class,
+        'textarea' => Form\Textarea::class,
         'number' => Form\Number::class,
         'select' => Form\Select::class,
+        'multiSelect' => Form\MultiSelect::class,
         'onoff' => Form\Onoff::class,
         'checkbox' => Form\Checkbox::class,
         'authtree' => Form\Authtree::class,
@@ -86,21 +92,40 @@ class Form extends Builder
         parent::__construct();
         $this->id = uniqid();
         $this->module('form');
+        $this->module('jquery');
     }
+    final public function setValueScript($key,$value){
+        $this->setValueSctipt[$key] = $value;
+    }
+
     public function render($component = false)
     {
         if ($this->dataUrl) {
+            $setValueSctipt = '';
+
+            foreach ($this->setValueSctipt as $value){
+                $setValueSctipt .= $value;
+            }
             $this->script[] = <<<EOD
         admin.ajax('{$this->dataUrl}','',function (data) {
             if (data.code == 1) {
+                $.each(data.data,function(i,e){
+                    if(typeof e == 'object'){
+                        if(e){
+                            $.each(e,function(index,value){
+                                data.data[i+"["+index+"]"] = value;
+                            });
+                        }
+                    }
+                });
                 form.val("form-{$this->id}", data.data)
+                {$setValueSctipt}
             } else {
                 layer.msg(data.msg);
             }
         },'','{$this->dataMethod}');
 EOD;
         }
-
 
         if ($this->rules) {
             //构建表单验证JS代码

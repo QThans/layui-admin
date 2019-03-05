@@ -10,6 +10,7 @@ namespace thans\layuiAdmin\Traits;
 
 trait Field
 {
+    use Compoents;
     public $label = '';
 
     public $name = '';
@@ -29,6 +30,18 @@ trait Field
             return $this;
         }
         $this->attr[$type] = $val;
+        return $this;
+    }
+
+    public function render()
+    {
+        if (method_exists($this, 'end')) {
+            $this->end();
+        }
+        $render = $this->obj->builder->display($this->tmpl, [
+            'self' => $this
+        ], true);
+        $this->obj->field[] = $render;
         return $this;
     }
 

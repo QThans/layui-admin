@@ -8,12 +8,11 @@
 
 namespace thans\layuiAdmin\Form;
 
-use thans\layuiAdmin\Traits\Compoents;
 use thans\layuiAdmin\Traits\Field;
 
 class Authtree
 {
-    use Compoents,Field;
+    use Field;
 
     public $tmpl = 'form/authtree';
 
@@ -33,7 +32,7 @@ class Authtree
     //节点是否选中的字段（支持 String 和 Array）
     public $checked = [];
 
-    public function _make()
+    public function end()
     {
         $this->id = uniqid();
         $this->obj->module('authtree');

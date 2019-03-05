@@ -10,7 +10,7 @@ namespace thans\layuiAdmin\Form;
 
 class MultiSelect extends Select
 {
-    public function _make()
+    public function end()
     {
         if (method_exists(parent::class, '_make')) {
             parent::_make();

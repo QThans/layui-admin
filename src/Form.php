@@ -32,6 +32,8 @@ class Form
 
     public $submitBtn = "保存";
 
+    public $field = [];
+
     public $hiddenSubmit = false;
 
     public $setValueSctipt = [];
@@ -111,5 +113,10 @@ class Form
     {
         $code = $this->display(__DIR__ . DIRECTORY_SEPARATOR.'form'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'form.js.stub');
         $this->builder->script('form', $code);
+    }
+
+    public function getFields()
+    {
+        return implode('', $this->filed);
     }
 }

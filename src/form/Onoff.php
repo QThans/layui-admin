@@ -8,12 +8,11 @@
 
 namespace thans\layuiAdmin\Form;
 
-use thans\layuiAdmin\Traits\Compoents;
 use thans\layuiAdmin\Traits\Field;
 class Onoff
 {
 
-    use Compoents,Field;
+    use Field;
 
     public $tmpl = 'form/onoff';
 

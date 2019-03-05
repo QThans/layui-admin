@@ -8,11 +8,9 @@
 
 namespace thans\layuiAdmin\Dashbord;
 
-use thans\layuiAdmin\Builder;
-use thans\layuiAdmin\Render;
 use thans\layuiAdmin\Traits\Compoents;
 
-class Card extends Builder implements Render
+class Card
 {
     use Compoents;
 

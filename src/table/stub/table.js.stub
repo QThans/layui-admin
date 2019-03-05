@@ -1,0 +1,15 @@
+var list_table_{$self->id} = admin.table(table, 'list-table-{$self->id}', '{$self->url}', {
+    page: {$self->page ? 'true' : 'false'}
+    , cols: [{:json_encode($self->fields)}]
+});
+$('#layui-icon-refresh-{$self->id}').click(function () {
+    list_table_{$self->id}.reload();
+});
+form.on('submit(search-{$self->id})', function(data){
+    list_table_{$self->id}.reload({
+    where: {
+        filter:data.field
+    }
+    });
+    return false;
+});

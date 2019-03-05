@@ -10,11 +10,11 @@
 
 namespace thans\layuiAdmin;
 
-use thans\layuiAdmin\Traits\Compoents;
+use thans\layuiAdmin\Traits\Load;
 
-class Index extends Builder
+class Index
 {
-    use Compoents;
+    use Load;
 
     public $topMenu = [];
 
@@ -63,18 +63,15 @@ class Index extends Builder
         return $this;
     }
 
-    public function render()
+    public function init()
     {
-        $this->module('element');
-        $this->script('admin', [
+        $this->builder->module('element');
+        $this->builder->script('admin', [
             'element.render();',
             'admin.changeAdminTab(element);',
             'admin.prevAdminTab();',
             'admin.nextAdminTab();',
             'admin.bindCloseTab();',
         ]);
-        $this->view->assign('self', $this);
-        $this->view->assign('builder', $this);
-        return $this->fetch();
     }
 }

@@ -1,0 +1,21 @@
+form.verify({
+    account: [
+    /^[\S]{5,24}$/
+    ,'用户名必须5到50位，且不能出现空格'
+    ]
+    ,password: [
+    /^[\S]{6,24}$/
+    ,'密码必须6到24位，且不能出现空格'
+    ]
+    {if $self->captcha}
+    ,code:function(value, item){
+        if(!/^\d{4,6}$/.test(value)){
+            return '请输入正确的验证码';
+        }
+    }
+    {/if}
+});
+form.on('submit(login)', function(data){
+    admin.ajax('{$self->url}',data.field);
+    return false;
+});

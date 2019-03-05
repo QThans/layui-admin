@@ -20,6 +20,8 @@ class Builder
 
     public $style = [];
 
+    public $tmpl = '';
+
     public $module = [
         'admin'
     ];
@@ -38,15 +40,14 @@ class Builder
 
     private $engineConfig = [];
 
-    public function __construct($init = false)
+    public function __construct($tmpl = '', $init = false)
     {
         if ($init) {
             $this->html = [];
         }
         $this->view = new View();
         $this->engineConfig['view_path'] = view_path();
-        $this->engineConfig['layout_on'] = true;
-        $this->engineConfig['layout_name'] = 'layout';
+        $this->tmpl = $tmpl;
         $this->view->init($this->engineConfig);
     }
 
@@ -93,11 +94,30 @@ class Builder
 
     public function fetch($vars = [], $component = false)
     {
+        $this->engineConfig['layout_on'] = true;
         if ($component) {
             $this->engineConfig['layout_on'] = false;
             unset($this->engineConfig['layout_name']);
         }
+        $this->engineConfig['view_path'] = view_path();
         $tmpl = $this->tmpl;
         return $this->view->fetch('/'.$tmpl, $vars, $this->engineConfig);
+    }
+    
+    public function display($tmpl, $vars = [])
+    {
+        $this->view->engine->layout(false);
+        return $this->view->fetch('/'.$tmpl, $vars);
+    }
+    //加载其他组件
+    public function load($obj)
+    {
+        $this->html[] = $obj->render(true);
+        $vars = get_object_vars($this);
+        foreach ($vars as $key=>$val) {
+            if (is_array($this->$key)) {
+                $this->$key = array_merge($this->$key, $obj->builder->$key);
+            }
+        }
     }
 }

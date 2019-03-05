@@ -12,7 +12,7 @@ use thans\layuiAdmin\Builder;
 use thans\layuiAdmin\Render;
 use thans\layuiAdmin\Traits\Compoents;
 
-class Status extends Builder implements Render
+class Status
 {
     use Compoents;
 

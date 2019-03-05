@@ -8,11 +8,10 @@
 
 namespace thans\layuiAdmin\Form;
 
-use thans\layuiAdmin\Builder;
-use thans\layuiAdmin\Render;
 use thans\layuiAdmin\Traits\Compoents;
+use thans\layuiAdmin\Traits\Field;
 
-class Authtree extends Builder implements Render
+class Authtree
 {
     use Compoents,Field;
 

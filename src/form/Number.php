@@ -8,16 +8,13 @@
 
 namespace thans\layuiAdmin\Form;
 
-use thans\layuiAdmin\Builder;
-use thans\layuiAdmin\Render;
 use thans\layuiAdmin\Traits\Compoents;
-
-class Text extends Builder implements Render
+use thans\layuiAdmin\Traits\Field;
+class Number
 {
     use Compoents,Field;
 
     public $tmpl = 'form/input';
 
-    public $type = 'text';
-
+    public $type = 'number';
 }

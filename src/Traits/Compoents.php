@@ -31,11 +31,12 @@ trait Compoents
 
     public function __construct($arguments = [], &$obj = '')
     {
-        parent::__construct();
         $this->id = uniqid();
         $this->load($arguments);
         $this->obj = &$obj;
-        $this->renderHtml = &$obj->html;
+        if (method_exists($this,'init')) {
+            $this->init();
+        }
         return $this;
     }
 
@@ -43,35 +44,26 @@ trait Compoents
     {
         $this->render();
     }
-    public function disabled($disabled = true)
-    {
-        $this->disabled = $disabled ? 'disabled' : '';
-        return $this;
-    }
+
     public function render()
     {
-        if (method_exists($this, '_make')) {
-            $this->_make();
+        if (method_exists($this,'end')) {
+            $this->end();
         }
-        $render = $this->fetch([
+        $render = $this->obj->builder->display($this->tmpl,[
             'self' => $this
         ], true);
-        $this->renderHtml[] = $render;
+        $this->obj->builder->html[] = $render;
         return $this;
     }
     public function __call($name, $value)
     {
-        if (is_array($value[0])) {
+        if (isset($value[0]) && is_array($value[0])) {
             return $this;
         }
         if (isset($this->$name)) {
             $this->$name = $value[0]?:'';
         }
-        return $this;
-    }
-
-    public function __toString()
-    {
         return $this;
     }
 }

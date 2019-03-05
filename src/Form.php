@@ -12,7 +12,7 @@ namespace thans\layuiAdmin;
 
 use thans\layuiAdmin\Traits\Load;
 
-class Form extends Builder
+class Form
 {
     use Load;
 
@@ -36,16 +36,25 @@ class Form extends Builder
 
     public $setValueSctipt = [];
 
+    //请求成功状态码
+    public $successStatusCode = 1;
+
+    //请求成功后脚本  null 或  continue 或 msg
+    public $successEndScript = 'continue';
+
+    //提交结束后脚本
+    public $submitEndSctipt = [];
+
     public $classMap = [
-        'input' => Form\Input::class,
-        'text' => Form\Text::class,
-        'textarea' => Form\Textarea::class,
-        'number' => Form\Number::class,
-        'select' => Form\Select::class,
-        'multiSelect' => Form\MultiSelect::class,
-        'onoff' => Form\Onoff::class,
-        'checkbox' => Form\Checkbox::class,
-        'authtree' => Form\Authtree::class,
+        'input' => form\Input::class,
+        'text' => form\Text::class,
+        'textarea' => form\Textarea::class,
+        'number' => form\Number::class,
+        'select' => form\Select::class,
+        'multiSelect' => form\MultiSelect::class,
+        'onoff' => form\Onoff::class,
+        'checkbox' => form\Checkbox::class,
+        'authtree' => form\Authtree::class,
     ];
 
     public $formVerify = [
@@ -87,105 +96,20 @@ class Form extends Builder
         ]
     ];
 
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
         $this->id = uniqid();
-        $this->module('form');
-        $this->module('jquery');
+        $this->builder->module('form');
+        $this->builder->module('jquery');
     }
-    final public function setValueScript($key,$value){
+    final public function setValueScript($key, $value)
+    {
         $this->setValueSctipt[$key] = $value;
     }
 
-    public function render($component = false)
+    public function end()
     {
-        if ($this->dataUrl) {
-            $setValueSctipt = '';
-
-            foreach ($this->setValueSctipt as $value){
-                $setValueSctipt .= $value;
-            }
-            $this->script[] = <<<EOD
-        admin.ajax('{$this->dataUrl}','',function (data) {
-            if (data.code == 1) {
-                $.each(data.data,function(i,e){
-                    if(typeof e == 'object'){
-                        if(e){
-                            $.each(e,function(index,value){
-                                data.data[i+"["+index+"]"] = value;
-                            });
-                        }
-                    }
-                });
-                form.val("form-{$this->id}", data.data)
-                {$setValueSctipt}
-            } else {
-                layer.msg(data.msg);
-            }
-        },'','{$this->dataMethod}');
-EOD;
-        }
-
-        if ($this->rules) {
-            //构建表单验证JS代码
-            $verify = '';
-            foreach ($this->rules as $key=>$val) {
-                if (count($val)<3) {
-                    continue;
-                }
-                if (!isset($this->formVerify[$val[1]])) {
-                    continue;
-                }
-
-                $rule = $this->formVerify[$val[1]];
-                if ($verify != '') {
-                    $verify.=',';
-                }
-                $verify .= "{$val[1]}_{$val[0]}:function(value, item){\n";
-
-                $verify.=!$val[2]?"if(value != ''){\n":'';
-                $verify.= $val[3]!=0?"if(value.length<{$val[3]}){ return '该项长度不能小于{$val[3]}' }":'';
-                $verify.= $val[4]!=0?"if(value.length>{$val[4]}){ return '该项长度不能大于{$val[4]}' }":'';
-                $verify.="if(!{$rule['reg']}.test(value)){\n";
-                $verify.="return '{$rule['tips']}';\n";
-                $verify.="}\n";
-
-                $verify.=!$val[2]?"}\n":'';
-
-                $verify.="}\n";
-            }
-
-            $this->script[] = <<<EOD
-            form.verify({
-              {$verify}
-            });
-EOD;
-        }
-
-        if ($this->url) {
-            $this->script[] = <<<EOD
-        form.on('submit(form-{$this->id})', function (data) {
-            admin.ajax('{$this->url}', data.field, function (data) {
-                if (data.code == 1) {
-                    layer.confirm(data.msg + ',是否继续?', {
-                        icon: 3,
-                        title: '提示',
-                        btn: ['继续', '返回']
-                    }, function (index) {
-                        location.reload();
-                    }, function () {
-                        admin.closeSelf()
-                    });
-                } else {
-                    layer.msg(data.msg);
-                }
-            },'','{$this->method}');
-        });
-EOD;
-        }
-        return $this->fetch($vars = [
-            'builder'=> $this
-        ], $component);
+        $code = $this->display(__DIR__ . DIRECTORY_SEPARATOR.'form'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'form.js.stub');
+        $this->builder->script('form', $code);
     }
 }

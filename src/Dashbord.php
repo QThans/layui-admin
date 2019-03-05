@@ -12,13 +12,13 @@ namespace thans\layuiAdmin;
 
 use thans\layuiAdmin\Traits\Load;
 
-class Dashbord extends Builder
+class Dashbord
 {
     use Load;
 
     public $tmpl = 'dashbord';
 
     public $classMap = [
-        'card' => Dashbord\Card::class,
+        'card' => dashbord\Card::class,
     ];
 }

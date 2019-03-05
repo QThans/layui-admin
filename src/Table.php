@@ -10,9 +10,10 @@ namespace thans\layuiAdmin;
 
 use thans\layuiAdmin\Traits\Load;
 
-class Table extends Builder
+class Table
 {
     use Load;
+
     public $tmpl = 'table';
 
     public $url = '';
@@ -28,7 +29,7 @@ class Table extends Builder
     public $search = true;
 
     public $classMap = [
-        'status' => Table\Status::class,
+        'status' => table\Status::class,
     ];
 
     public $filter = [];
@@ -89,7 +90,7 @@ class Table extends Builder
 
         $options = json_encode($options);
 
-        $this->module('laydate');
+        $this->builder->module('laydate');
 
         $this->script[] = <<<EOD
 laydate.render({$options});
@@ -105,13 +106,19 @@ EOD;
         return $this;
     }
 
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
         $this->id = uniqid();
-        $this->module('table');
-        $this->module('jquery');
-        $this->module('form');
+        $this->builder->module('table');
+        $this->builder->module('jquery');
+        $this->builder->module('form');
+    }
+
+    public function end()
+    {
+        $this->toolParse();
+        $code = $this->display(__DIR__ . DIRECTORY_SEPARATOR.'table'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'table.js.stub');
+        $this->builder->script('table', $code);
     }
 
     public function column($field, $title, $width = 100, $tpl = '', $attr = [])
@@ -146,7 +153,7 @@ EOD;
         if (!empty($this->tools)) {
             $html = '';
             foreach ($this->tools as $val) {
-                if (isset($val['html'])){
+                if (isset($val['html'])) {
                     $html .= $val['html'];
                     continue;
                 }
@@ -160,60 +167,17 @@ EOD;
                     $val['title-tips'] = '确定' . $val['title-tips'] . '吗？';
                 }
                 $tmp = "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
-                if($val['condition']){
+                if ($val['condition']) {
                     $tmp = '{{#  if('.$val['condition'].'){ }}'.$tmp.'{{#  } }} ';//条件
                 }
                 $html .= $tmp;
             }
-            $this->html[] = <<<EOD
+            $this->builder->html[] = <<<EOD
 <script type="text/html" id="tools">
 {$html}
 </script>
 EOD;
             $this->column('', '操作', $this->toolWidth, 'tools', ['fixed' => 'right']);
         }
-    }
-
-    public function render($component = false)
-    {
-        $id = $this->id;
-        $url = $this->url;
-        $this->toolParse();
-
-        $page = $this->page ? 'true' : 'false';
-        $fields = json_encode($this->fields);
-
-        $this->script[] = <<<EOD
-        var list_table_{$id} = admin.table(table, 'list-table-{$id}', '{$url}', {
-            page: {$page}
-            , cols: [{$fields}]
-        });
-EOD;
-
-        if ($this->refresh) {
-            $this->script[] = <<<EOD
-        $('#layui-icon-refresh-{$id}').click(function () {
-            list_table_{$id}.reload();
-        });
-EOD;
-        }
-
-
-        if ($this->filter || $this->search) {
-            $this->script[] = <<<EOD
-        form.on('submit(search-{$id})', function(data){
-              list_table_{$id}.reload({
-                where: {
-                   filter:data.field
-                }
-               });
-              return false;
-         });
-EOD;
-        }
-
-        return $this->fetch($vars = [
-            'builder' => $this
-        ], $component);
     }
 }

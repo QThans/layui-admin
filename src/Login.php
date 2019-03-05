@@ -8,16 +8,17 @@
 
 namespace thans\layuiAdmin;
 
-use thans\layuiAdmin\Traits\Compoents;
+use thans\layuiAdmin\Traits\Load;
 
-class Login extends Builder
+class Login
 {
-    use Compoents;
+    use Load;
 
     //登录ajax提交url
     public $url = '';
 
     public $tmpl = 'login';
+
     // 顶部导航 右侧按钮
     public $rightNav = '';
     //底部版权信息
@@ -57,42 +58,11 @@ class Login extends Builder
 
     public $submit = '登录';
 
-    public function render()
+    public function init()
     {
-        $this->module('form');
-        $this->css['login'] = 'vendor/layui-admin/css/login.css';
-        $this->loginScript();
-        $this->view->assign('self', $this);
-        $this->view->assign('builder', $this);
-        return $this->fetch();
-    }
-    private function loginScript()
-    {
-        $url = $this->url;
-        $this->script[] = <<<EOD
-
-    form.verify({
-      account: [
-        /^[\S]{5,24}$/
-        ,'用户名必须5到50位，且不能出现空格'
-      ]
-      ,password: [
-        /^[\S]{6,24}$/
-        ,'密码必须6到24位，且不能出现空格'
-      ]
-      ,code:function(value, item){
-        if(value != ''){
-            if(!/^\d{4,6}$/.test(value)){
-                return '请输入正确的验证码';
-            }
-        }
-      }
-    });
-form.on('submit(login)', function(data){
-  admin.ajax('{$url}',data.field);
-  return false;
-});
-EOD;
-
+        $this->builder->module('form');
+        $this->builder->css['login'] = 'vendor/layui-admin/css/login.css';
+        $code = $this->display(__DIR__ . DIRECTORY_SEPARATOR.'login'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'login.js.stub');
+        $this->builder->script('login', $code);
     }
 }

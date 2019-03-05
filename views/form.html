@@ -3,14 +3,14 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body">
-                    <div class="layui-form" lwid100 iwid300 lay-filter="form-{$builder->id}">
-                        {volist name="$builder->html" id="vo"}
+                    <div class="layui-form" lwid100 iwid300 lay-filter="form-{$self->id}">
+                        {volist name="$self->builder->html" id="vo"}
                         {:htmlspecialchars_decode($vo)}
                         {/volist}
-                        {if !$builder->hiddenSubmit}
+                        {if !$self->hiddenSubmit}
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="form-{$builder->id}">{$builder->submitBtn}</button>
+                                <button class="layui-btn" lay-submit lay-filter="form-{$self->id}">{$self->submitBtn}</button>
                             </div>
                         </div>
                         {/if}

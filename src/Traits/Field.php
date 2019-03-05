@@ -6,7 +6,7 @@
  * Time: 00:35
  */
 
-namespace thans\layuiAdmin\Form;
+namespace thans\layuiAdmin\Traits;
 
 trait Field
 {

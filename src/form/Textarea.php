@@ -8,11 +8,10 @@
 
 namespace thans\layuiAdmin\Form;
 
-use thans\layuiAdmin\Builder;
-use thans\layuiAdmin\Render;
 use thans\layuiAdmin\Traits\Compoents;
+use thans\layuiAdmin\Traits\Field;
 
-class Textarea extends Builder implements Render
+class Textarea
 {
     use Compoents,Field;
     public $tmpl = 'form/textarea';

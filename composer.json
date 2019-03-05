@@ -15,9 +15,6 @@
     "autoload": {
         "psr-4": {
             "thans\\layuiAdmin\\": "src"
-        },
-        "files": [
-            "src/common.php"
-        ]
+        }
     }
 }

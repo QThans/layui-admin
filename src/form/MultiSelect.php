@@ -12,8 +12,8 @@ class MultiSelect extends Select
 {
     public function end()
     {
-        if (method_exists(parent::class, '_make')) {
-            parent::_make();
+        if (method_exists(parent::class, 'end')) {
+            parent::end();
         }
         $this->obj->module('formSelects');
         $this->obj->css($this->id, 'vendor/layui-admin/layui/modules/css/formSelects.css');

@@ -57,6 +57,7 @@ class Form
         'onoff' => form\Onoff::class,
         'checkbox' => form\Checkbox::class,
         'authtree' => form\Authtree::class,
+        'richtext' => form\Richtext::class,
     ];
 
     public $formVerify = [

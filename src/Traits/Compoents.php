@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Thans
- * Date: 2018/12/7
- * Time: 15:52
+
+/*
+ * This file is part of the thans/layui-admin.
+ *
+ * (c) Thans <thans@thans.cn>
+ *
+ * This source file is subject to the Apache2.0 license that is bundled.
  */
 
 namespace thans\layuiAdmin\Traits;
@@ -31,10 +33,10 @@ trait Compoents
 
     public function __construct($arguments = [], &$obj = '')
     {
-        $this->id = uniqid();
+        $this->id = 'id_'.uniqid();
         $this->load($arguments);
         $this->obj = &$obj;
-        if (method_exists($this,'init')) {
+        if (method_exists($this, 'init')) {
             $this->init();
         }
         return $this;
@@ -47,10 +49,10 @@ trait Compoents
 
     public function render()
     {
-        if (method_exists($this,'end')) {
+        if (method_exists($this, 'end')) {
             $this->end();
         }
-        $render = $this->obj->builder->display($this->tmpl,[
+        $render = $this->obj->builder->display($this->tmpl, [
             'self' => $this
         ], true);
         $this->obj->builder->html[] = $render;

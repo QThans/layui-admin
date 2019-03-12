@@ -44,6 +44,7 @@ class Upload
         $code = $this->obj->builder->display(__DIR__ . DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'upload.js.stub', $vars = [
             'self'=> $this
         ]);
-        $this->obj->script('upload_js', $code);
+        $this->obj->script('upload_js_'.$this->id, $code);
+        $this->obj->submitStartSctipt('upload_start_script_'.$this->id, 'delete data.field.'.$this->field.';');
     }
 }

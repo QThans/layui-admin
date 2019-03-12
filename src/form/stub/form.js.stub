@@ -49,9 +49,12 @@ foreach ($self->rules as $key=>$val) {
 {/if}
 {if $self->url}
 form.on('submit(form-{$self->id})', function (data) {
+    {volist name="$self->submitStartSctipt" id="vo"}
+        {$vo|raw}
+    {/volist}
     admin.ajax('{$self->url}', data.field, function (data) {
         {volist name="$self->submitEndSctipt" id="vo"}
-            {$vo}
+            {$vo|raw}
         {/volist}
         if (data.code == {$self->successStatusCode}) {
             {switch $self->successEndScript}

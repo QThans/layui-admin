@@ -44,6 +44,9 @@ class Form
     //请求成功后脚本  null 或  continue 或 msg
     public $successEndScript = 'continue';
 
+    //提交前脚本
+    public $submitStartSctipt = [];
+
     //提交结束后脚本
     public $submitEndSctipt = [];
 
@@ -109,6 +112,16 @@ class Form
     final public function setValueScript($key, $value)
     {
         $this->setValueScript[$key] = $value;
+    }
+
+    final public function submitStartSctipt($key, $value)
+    {
+        $this->submitStartSctipt[$key] = $value;
+    }
+
+    final public function submitEndSctipt($key, $value)
+    {
+        $this->submitEndSctipt[$key] = $value;
     }
 
     public function end()

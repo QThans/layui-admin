@@ -36,7 +36,7 @@ class Form
 
     public $hiddenSubmit = false;
 
-    public $setValueSctipt = [];
+    public $setValueScript = [];
 
     //请求成功状态码
     public $successStatusCode = 1;
@@ -108,7 +108,7 @@ class Form
     }
     final public function setValueScript($key, $value)
     {
-        $this->setValueSctipt[$key] = $value;
+        $this->setValueScript[$key] = $value;
     }
 
     public function end()

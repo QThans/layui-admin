@@ -11,8 +11,8 @@ admin.ajax('{$self->dataUrl}','',function (data) {
             }
         });
         form.val("form-{$self->id}", data.data)
-        {volist name="$self->setValueSctipt" id="vo"}
-            {$vo}
+        {volist name="$self->setValueScript" id="vo"}
+            {$vo|raw}
         {/volist}
     } else {
         layer.msg(data.msg);

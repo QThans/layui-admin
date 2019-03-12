@@ -30,15 +30,20 @@ class Richtext
         $config = '';
         $this->config('filebrowserImageUploadUrl', $this->imageUploadUrl);
         foreach ($this->config as $key => $value) {
-            $config .= "CKEDITOR.config.{$key} = '{$value}';";
+            $config .= "var richtext_config_{$this->id} = CKEDITOR.config; richtext_config_{$this->id}.{$key} = '{$value}';";
         }
         $this->obj->builder->script(
-            'richtext',
+            'richtext_'.$this->id,
             <<<EOD
         $config
-        CKEDITOR.replace('{$this->id}',CKEDITOR.config);
+        var richtext_{$this->id} =  CKEDITOR.replace('{$this->id}',richtext_config_{$this->id});
+        richtext_{$this->id}.on( 'change', function( evt ) {
+            $('#{$this->id}').html(evt.editor.getData());
+        });
 EOD
 );
+        $setValueScript = $this->name?"$('textarea[name=\"{$this->name}\"]').html(data.data.{$this->name});richtext_{$this->id}.setData(data.data.{$this->name});":'';
+        $this->obj->setValueScript('richtext_'.$this->id,$setValueScript);
     }
     public function config($key, $value)
     {

@@ -82,7 +82,11 @@ layui.define(['layer', 'upload'], function (exports) {
             content: param.href,
             end:function(){
                 //更新上层表格
-                $('#layui-icon-refresh-'+param.refresh,parent.document).click();
+                if(param.refresh){
+                    $('#layui-icon-refresh-'+param.refresh,parent.document).click();
+                }else{
+                    $('.layui-icon-refresh',parent.document).click();
+                }
             }
         });
         return false;
@@ -95,7 +99,15 @@ layui.define(['layer', 'upload'], function (exports) {
             shade: false,
             maxmin: true, //开启最大化最小化按钮
             area: ['80%', '80%'],
-            content: param.href
+            content: param.href,
+            end:function(){
+                //更新上层表格
+                if(param.refresh){
+                    $('#layui-icon-refresh-'+param.refresh,parent.document).click();
+                }else{
+                    $('.layui-icon-refresh',parent.document).click();
+                }
+            }
         });
         return false;
     });
@@ -134,6 +146,8 @@ layui.define(['layer', 'upload'], function (exports) {
             layer.msg(data.msg);
             if(refresh){
                 $('#layui-icon-refresh-'+refresh,parent.document).click();
+            }else{
+                $('.layui-icon-refresh',parent.document).click();
             }
         }, '', method);
         return false;
@@ -148,6 +162,8 @@ layui.define(['layer', 'upload'], function (exports) {
                 layer.msg(data.msg);
                 if(refresh){
                     $('#layui-icon-refresh-'+refresh,parent.document).click();
+                }else{
+                    $('.layui-icon-refresh',parent.document).click();
                 }
             }, '', method);
         });

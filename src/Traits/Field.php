@@ -28,6 +28,7 @@ trait Field
     public function value($val = '')
     {
         $this->value = $val;
+        return $this;
     }
 
     public function attr($type = '', $val = '')

@@ -12,7 +12,7 @@
 <div class="review">
         <div class="layui-upload-list" id="{$self->id}_upload_list">
             {php}
-            if(!is_array($self->value)){
+            if(!is_array($self->value) && $self->value){
                 $id = uniqid();
             {/php}
                 <div id="dim_id_{$id}" class="dimback">
@@ -22,7 +22,7 @@
                 </div>
                 <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$self->value}">
             {php}
-            }else{
+            }else if(is_array($self->value)){
             {/php}
                 {volist name="$self->value" id="vo"}
                 {php}$id = uniqid();{/php}

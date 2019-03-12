@@ -1,4 +1,4 @@
-var number_{$self->id} = 0;
+var number_{$self->id} = $('input[name="{$self->name}"]').length;
 var files;
 var uploadInst_{$self->id} = upload.render({
     elem: '#{$self->id}' //绑定元素

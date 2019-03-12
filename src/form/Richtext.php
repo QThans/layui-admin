@@ -19,17 +19,29 @@ class Richtext
     public $options = [];
 
     public $tmpl = 'form/richtext';
-
+    //图片上传接口开发参考：https://ckeditor.com/docs/ckeditor4/latest/guide/dev_file_upload.html
+    public $imageUploadUrl = '';
     public function init()
     {
         $this->obj->builder->js('richtext', 'vendor/layui-admin/ckeditor/ckeditor.js');
     }
     public function end()
     {
-        $this->obj->builder->script('richtext', "CKEDITOR.replace('{$this->id}');");
+        $config = '';
+        $this->config('filebrowserImageUploadUrl', $this->imageUploadUrl);
+        foreach ($this->config as $key => $value) {
+            $config .= "CKEDITOR.config.{$key} = '{$value}';";
+        }
+        $this->obj->builder->script(
+            'richtext',
+            <<<EOD
+        $config
+        CKEDITOR.replace('{$this->id}',CKEDITOR.config);
+EOD
+);
     }
-    public function option($key, $value)
+    public function config($key, $value)
     {
-        $this->options[$key] = $value;
+        $this->config[$key] = $value;
     }
 }

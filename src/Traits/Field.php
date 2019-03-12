@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Thans
- * Date: 2018/12/8
- * Time: 00:35
+
+/*
+ * This file is part of the thans/layui-admin.
+ *
+ * (c) Thans <thans@thans.cn>
+ *
+ * This source file is subject to the Apache2.0 license that is bundled.
  */
 
 namespace thans\layuiAdmin\Traits;
@@ -22,6 +24,11 @@ trait Field
     public $rules = '';
 
     public $attr = [];
+
+    public function value($val)
+    {
+        $this->value = $val;
+    }
 
     public function attr($type = '', $val = '')
     {

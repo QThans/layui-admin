@@ -10,5 +10,32 @@
     <div class="layui-form-mid layui-word-aux">{$self->tips|raw}</div>
 </div>
 <div class="review">
-        <div class="layui-upload-list" id="{$self->id}_upload_list"></div>
+        <div class="layui-upload-list" id="{$self->id}_upload_list">
+            {php}
+            if(!is_array($self->value)){
+                $id = uniqid();
+            {/php}
+                <div id="dim_id_{$id}" class="dimback">
+                    <img id="img_id_{$id}" src="{$self->value}" class="layui-upload-img">
+                    <span class="status_{$id}">已上传</span>
+                    <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
+                </div>
+                <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$self->value}">
+            {php}
+            }else{
+            {/php}
+                {volist name="$self->value" id="vo"}
+                {php}$id = uniqid();{/php}
+                <div id="dim_id_{$id}" class="dimback">
+                    <img id="img_id_{$id}" src="{$vo}" class="layui-upload-img">
+                    <span class="status_{$id}">已上传</span>
+                    <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
+                </div>
+                <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$vo}">
+                {/volist}
+            {php}
+            }
+            {/php}
+        
+        </div>
 </div>

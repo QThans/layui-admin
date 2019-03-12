@@ -58,6 +58,7 @@ class Form
         'checkbox' => form\Checkbox::class,
         'authtree' => form\Authtree::class,
         'richtext' => form\Richtext::class,
+        'upload' => form\Upload::class,
     ];
 
     public $formVerify = [

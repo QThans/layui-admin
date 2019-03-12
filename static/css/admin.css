@@ -490,7 +490,6 @@ html {
 .layui-upload-img {
     width: auto;
     height: 100px;
-    margin: 0 10px 10px 0;
 }
 
 .layui-drag-upload-img {
@@ -540,4 +539,34 @@ html {
     right: 0;
     top: 40%;
     cursor:default;
+}
+
+.richtext-tips{
+    margin-left: 130px;
+}
+.review img{
+    width:100px;
+}
+.review{
+    margin-top:10px;
+    margin-left: 130px;
+}
+
+.dim{
+    opacity:0.6; filter: alpha(opacity=60);
+}   
+.dimback{
+    background: #000;
+    color:#fff;
+    text-align: center;
+    width:100px;
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 12px;
+} 
+.layui-upload-files{
+    background: #fff;
+    color: #000;
+    height:100px;
+    border: 1px solid #ccc;
 }

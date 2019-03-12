@@ -1,0 +1,59 @@
+var number_{$self->id} = 0;
+var files;
+var uploadInst_{$self->id} = upload.render({
+    elem: '#{$self->id}' //绑定元素
+    ,url: '{$self->url}' //上传接口
+    ,data: {:json_encode($self->data)}
+    ,headers:{:json_encode($self->headers)}
+    ,accept:'{$self->uploadType}'
+    ,exts:'{$self->exts}'
+    ,size:'{$self->size}'
+    ,field:'{$self->field}'
+    ,acceptMime:'{$self->acceptMime}'
+    ,auto:false
+    ,multiple:{$self->multiple?'true':'false'}
+    ,before: function(obj){
+        layer.load(); //上传loading
+    }
+    ,done: function(res,index){
+        if(res.code == {$self->successCode}){
+            $('#{$self->id}_upload_list').append('<input name="{$self->name}" type="hidden" class="value_'+index+'" value="'+res.data+'">')
+            $('.status_'+index).html('上传成功');
+        }else{
+            $('.status_'+index).html(res.msg);
+        }
+        layer.closeAll('loading');
+        return delete files[index];
+    }
+    ,error: function(index, upload){
+        layer.closeAll('loading');
+        $('.status_'+index).html('上传失败');
+        number_{$self->id}--;
+        return delete files[index];
+    }
+    ,choose: function(obj){
+        files = obj.pushFile();
+        obj.preview(function(index, file, result){
+            if(number_{$self->id}+1 > {$self->number}){
+                delete files[index];
+                layer.msg("最多只能长传{$self->number}个文件",{icon:2});
+                return;
+            }
+            number_{$self->id}++;
+            {switch $self->uploadType}
+            {case image}
+                $('#{$self->id}_upload_list').append('<div id="dim_id_'+index+'" class="dimback"><img id="img_id_'+index+'" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" ><span class="status_'+index+'">上传中...</span><i data-id="'+index+'" class="layui-icon-close layui-icon removeimg"></i></div>')
+            {/case}
+            {default /}
+                $('#{$self->id}_upload_list').append('<div id="dim_id_'+index+'" class="dimback"><p id="img_id_'+index+'"  class="layui-upload-files" >'+ file.name +'</p><span class="status_'+index+'">上传中...</span><i data-id="'+index+'" class="layui-icon-close layui-icon removeimg"></i></div>')
+            {/switch}
+            obj.upload(index, file)
+        });
+    }
+});
+$(document).on('click','.removeimg',function(){
+    var index = $(this).attr('data-id');
+    $('#dim_id_'+index).remove();
+    number_{$self->id}--;
+    return delete files[index];
+});

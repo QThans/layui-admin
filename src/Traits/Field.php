@@ -25,7 +25,7 @@ trait Field
 
     public $attr = [];
 
-    public function value($val)
+    public function value($val = '')
     {
         $this->value = $val;
     }

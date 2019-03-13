@@ -1,8 +1,9 @@
 # layui-admin
 
-## 针对tp5.1开发的，layui的后台模板。便捷的使用方式，快捷的开发方式，希望能够对你有帮助.
+## 极速构建后台模板
 
-### 通过代码极速创建数据表格、表单
+# [开发文档]([https://gitee.com/thans/layuiAdmin](https://www.kancloud.cn/sanshinet/layui-admin))
+
 
 ## 版本:1.0 beta
 

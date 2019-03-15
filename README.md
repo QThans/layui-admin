@@ -2,7 +2,9 @@
 
 ## 极速构建后台模板
 
-# [开发文档]([https://gitee.com/thans/layuiAdmin](https://www.kancloud.cn/sanshinet/layui-admin))
+### 开发文档 
+
+[文档地址：https://www.kancloud.cn/sanshinet/layui-admin](https://www.kancloud.cn/sanshinet/layui-admin)
 
 
 ## 版本:1.0 beta

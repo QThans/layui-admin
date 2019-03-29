@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": ">=7.0",
-        "topthink/framework": "^5.1.10"
+        "topthink/framework": "^5.1.10",
+        "topthink/think-migration": "*"
     },
     "autoload": {
         "psr-4": {

@@ -16,6 +16,22 @@ form.verify({
     {/if}
 });
 form.on('submit(login)', function(data){
+    if(data.field.rember == 'on'){
+        var name = $('.account').attr('name');
+        admin.setCookie('account',data.field[name]);
+    }else{
+        admin.setCookie('account','');
+    }
+    return false;
     admin.ajax('{$self->url}',data.field);
     return false;
 });
+{if $self->rember}
+    var account = admin.getCookie('account');
+    $('.account').val(account);
+    if(account){
+        form.val("form",{
+            'rember':'on'
+        });
+    }
+{/if}

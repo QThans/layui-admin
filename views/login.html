@@ -1,8 +1,8 @@
 <div class="header">
     <ul class="layui-nav" lay-filter="">
-        <li class="layui-nav-item">{$self->logo}</li>
+        <li class="layui-nav-item">{$self->logo|raw}</li>
         <ul class="layui-layout-right">
-            {$self->rightNav}
+            {$self->rightNav|raw}
         </ul>
     </ul>
 </div>
@@ -12,16 +12,16 @@
             <div class="content layui-form">
                 <div class="content-img">
                     <i class="layui-icon layui-icon-user"></i>
-                    <h3>{$self->title}</h3>
-                    <p class="layui-word-aux">{$self->sTitle}</p>
+                    <h3>{$self->title|raw}</h3>
+                    <p class="layui-word-aux">{$self->sTitle|raw}</p>
                 </div>
                 <div class="content-login layui-form" lay-filter="form">
                     <input type="text" lay-verType="tips" name="{$self->loginName|default='account'}" lay-verify="{$self->loginVerify|default='required'}"
                            placeholder="{$self->loginPlaceholder|default='用户名/邮箱/手机号'}" autocomplete="off"
-                           class="layui-input">
+                           class="layui-input account">
                     <input type="password" lay-verType="tips" name="{$self->pwdName|default='password'}" required lay-verify="{$self->pwdVerify|default='required'}"
                            placeholder="{$self->pwdPlaceholder|default='请输入密码'}"
-                           autocomplete="off" class="layui-input">
+                           autocomplete="off" class="layui-input password">
                     {if $self->captcha}
                     <div class="layui-row">
                         <div class="layui-col-xs6">
@@ -39,7 +39,7 @@
                     <div class="login-forgot">
                         {if $self->rember}
                         <div class="remember">
-                            <input type="checkbox" name="{$self->rember}" lay-filter="remember" lay-skin="primary"
+                            <input type="checkbox" name="rember" lay-filter="remember" lay-skin="primary"
                                    title="记住用户">
                         </div>
                         {/if}
@@ -51,12 +51,12 @@
                     </button>
                 </div>
                 <div class="content-footer">
-                    {$self->footer}
+                    {$self->footer|raw}
                 </div>
             </div>
         </div>
     </div>
     <footer>
-        <p class="layui-word-aux"> © 2018. 版权所有 by {$self->copy}</a></p>
+        <p class="layui-word-aux"> © 2018. 版权所有 by {$self->copy|raw}</a></p>
     </footer>
 </div>

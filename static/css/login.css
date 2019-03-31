@@ -94,7 +94,6 @@
     display: inline-block;
     color: rgb(30, 151, 236);
     float: right;
-    margin-top: 3px;
 }
 .content .reg{
     margin-left: 20px;
@@ -105,7 +104,6 @@
 }
 .login-forgot .remember{
     display: inline-block;
-    margin-top: 20px;
 }
 .content input{
     margin-top: 20px;

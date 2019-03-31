@@ -1,13 +1,30 @@
 <?php
+
 /*
- * @Description:
- * @Author: Thans
- * @Date: 2018-12-05 20:59:14
+ * This file is part of the thans/layui-admin.
+ *
+ * (c) Thans <thans@thans.cn>
+ *
+ * This source file is subject to the Apache2.0 license that is bundled.
  */
+
 \think\Console::addDefaultCommands([
     \thans\layuiAdmin\Command::class,
 ]);
-if (!function_exists('sub_dir')) {
+
+bind([
+    'auth' => \thans\layuiAdmin\Auth::class,
+]);
+
+if (!function_exists('scan_dir')) {
+    /**
+     * 扫描目录
+     *
+     * @param string 目录
+     * @param integer 层级
+     * @param integer 当前层级
+     * @return array
+     */
     function scan_dir($dir, $depth = 0, $now = 0)
     {
         $dirs = [];
@@ -28,7 +45,15 @@ if (!function_exists('sub_dir')) {
         return $dirs;
     }
 }
+
 if (!function_exists('copy_dir')) {
+    /**
+     * 复制目录
+     *
+     * @param string $dir 目录
+     * @param string $dest 目标目录
+     * @return boolean
+     */
     function copy_dir($dir, $dest = '')
     {
         if (!is_dir($dir)) {
@@ -47,8 +72,59 @@ if (!function_exists('copy_dir')) {
     }
 }
 if (!function_exists('view_path')) {
+    /**
+     * 获取模板具体目录
+     *
+     * @return string
+     */
     function view_path()
     {
         return __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR;
+    }
+}
+if (!function_exists('encrypt_password')) {
+    /**
+     * 密码加密
+     *
+     * @param string $password 原密码
+     * @param string $salt 盐值
+     * @return string
+     */
+    function encrypt_password($password, $salt)
+    {
+        $block_count = ceil(strlen($salt) / strlen($password));
+        $output = "";
+        for ($i = 1; $i <= $block_count; $i++) {
+            // $i encoded as 4 bytes, big endian.
+            $last = $salt . pack("N", $i);
+            // first iteration
+            $last = $xorsum = hash_hmac('sha256', $last, $password, true);
+            // perform the other $count - 1 iterations
+            for ($j = 1; $j < strlen($last); $j++) {
+                $xorsum ^= ($last = hash_hmac('sha1', $last, $password, true));
+            }
+            $output .= $xorsum;
+        }
+        return bin2hex(hash_hmac('sha512', $salt, $output, true));
+    }
+}
+if (!function_exists('random_str')) {
+    /**
+     * 随机字符串
+     *
+     * @param integer $length 随机长度
+     * @param boolean $numeric 是否只取数字
+     * @param boolean $lower 是否小写
+     * @return string
+     */
+    function random_str($length = 6, $numeric = false, $lower = false)
+    {
+        $map = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLOMNOPQRSTUVWXYZ';
+        $maxLength = $numeric ? 9 : 62;
+        $str = '';
+        for ($i = 0; $i < $length; $i++) {
+            $str .= $map[rand(0, $maxLength)];
+        }
+        return $lower ? strtolower($str) : $str;
     }
 }

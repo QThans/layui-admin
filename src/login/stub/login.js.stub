@@ -22,7 +22,6 @@ form.on('submit(login)', function(data){
     }else{
         admin.setCookie('account','');
     }
-    return false;
     admin.ajax('{$self->url}',data.field);
     return false;
 });

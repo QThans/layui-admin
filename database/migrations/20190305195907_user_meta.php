@@ -30,9 +30,12 @@ class UserMeta extends Migrator
     public function change()
     {
         $table = $this->table('user_meta');
-        $table->addColumn('uid', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
+        $table->addColumn('user_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
             ->addColumn('key', 'string', array('limit' => 255))
             ->addColumn('value', 'text', array('limit' => MysqlAdapter::TEXT_LONG,'null'=>true))
+            ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
+            ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
+            ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>null,'null' => true])
             ->addIndex(['uid'], array('unique' => false))
             ->addIndex(['key'], array('unique' => false))
             ->create();

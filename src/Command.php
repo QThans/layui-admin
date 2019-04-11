@@ -1,8 +1,11 @@
 <?php
+
 /*
- * @Description:
- * @Author: Thans
- * @Date: 2018-12-05 21:02:44
+ * This file is part of the thans/layui-admin.
+ *
+ * (c) Thans <thans@thans.cn>
+ *
+ * This source file is subject to the Apache2.0 license that is bundled.
  */
 
 namespace thans\layuiAdmin;
@@ -21,6 +24,7 @@ class Command extends \think\console\Command
     {
         $this->createConfig($output);
         $this->createStatic($output);
+        $this->createMigrations($output);
     }
     public function createConfig($output)
     {
@@ -36,11 +40,17 @@ class Command extends \think\console\Command
             }
         }
     }
+    public function createMigrations($output)
+    {
+        $migrationsPath = env('app_path') . '..' . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations';
+        copy_dir(__DIR__ . DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database' . DIRECTORY_SEPARATOR . 'migrations', $migrationsPath);
+        $output->writeln('Copy database margrations end');
+    }
     public function createStatic($output)
     {
         $staticPath = env('app_path') . '..' . DIRECTORY_SEPARATOR . 'public' .
             DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'layui-admin' . DIRECTORY_SEPARATOR;
         copy_dir(__DIR__ . DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'static', $staticPath);
-        $output->writeln('Copy resources End');
+        $output->writeln('Copy resources end');
     }
 }

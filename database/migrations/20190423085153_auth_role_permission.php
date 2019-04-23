@@ -1,10 +1,10 @@
 <?php
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use think\migration\Migrator;
 use think\migration\db\Column;
-use Phinx\Db\Adapter\MysqlAdapter;
 
-class UserMeta extends Migrator
+class AuthRolePermission extends Migrator
 {
     /**
      * Change Method.
@@ -29,15 +29,23 @@ class UserMeta extends Migrator
      */
     public function change()
     {
-        $table = $this->table('user_meta');
-        $table->addColumn('user_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
-            ->addColumn('key', 'string', array('limit' => 255))
-            ->addColumn('value', 'text', array('limit' => MysqlAdapter::TEXT_LONG,'null'=>true))
+        $table = $this->table('auth_role_permission',array('id'=>false));
+
+        $table->addColumn('role_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
+            ->addColumn('permission_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
             ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
             ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
             ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>null,'null' => true])
-            ->addIndex(['user_id'], array('unique' => false))
-            ->addIndex(['key'], array('unique' => false))
+            ->addIndex(['role_id'], array('unique' => false))
+            ->addIndex(['permission_id'], array('unique' => false))
             ->create();
+        $defaultUser = [
+            'role_id' => 1,
+            'permission_id' => 1,
+            'create_time' => time(),
+            'update_time' => time(),
+        ];
+        $table->insert($defaultUser);
+        $table->saveData();
     }
 }

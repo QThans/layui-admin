@@ -1,10 +1,10 @@
 <?php
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use think\migration\Migrator;
 use think\migration\db\Column;
-use Phinx\Db\Adapter\MysqlAdapter;
 
-class AuthGroupAccess extends Migrator
+class AuthRoleMenu extends Migrator
 {
     /**
      * Change Method.
@@ -29,13 +29,15 @@ class AuthGroupAccess extends Migrator
      */
     public function change()
     {
-        $table = $this->table('auth_group_access');
-        $table->addColumn('user_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR,'default' => 0,'null' => false))
-            ->addColumn('group_id', 'char', array('limit' => 100))
-            ->addIndex(['user_id'], array('unique' => false))
-            ->addIndex(['group_id'], array('unique' => false))
-            ->addIndex(['user_id','group_id'], array('unique' => true,'name'=>'uid_group_id'))
+        $table = $this->table('auth_role_menu',array('id'=>false));
+
+        $table->addColumn('role_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
+            ->addColumn('menu_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
+            ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
+            ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
+            ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>null,'null' => true])
+            ->addIndex(['role_id'], array('unique' => false))
+            ->addIndex(['menu_id'], array('unique' => false))
             ->create();
     }
-
 }

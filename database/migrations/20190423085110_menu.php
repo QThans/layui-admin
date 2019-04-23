@@ -1,10 +1,10 @@
 <?php
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use think\migration\Migrator;
 use think\migration\db\Column;
-use Phinx\Db\Adapter\MysqlAdapter;
 
-class UserMeta extends Migrator
+class Menu extends Migrator
 {
     /**
      * Change Method.
@@ -29,15 +29,19 @@ class UserMeta extends Migrator
      */
     public function change()
     {
-        $table = $this->table('user_meta');
-        $table->addColumn('user_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
-            ->addColumn('key', 'string', array('limit' => 255))
-            ->addColumn('value', 'text', array('limit' => MysqlAdapter::TEXT_LONG,'null'=>true))
+        $table = $this->table('menu');
+
+        $table->addColumn('name', 'string', array('limit' => 100))
+            ->addColumn('parent_id', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
+            ->addColumn('order', 'integer', ['limit' => MysqlAdapter::BLOB_REGULAR,'default'=>1000])
+            ->addColumn('icon', 'string', array('limit' => 20))
+            ->addColumn('url', 'string', array('limit' => 100))
+            ->addColumn('permission', 'string', array('limit' => 100))
+            ->addColumn('status', 'integer', array('limit' => MysqlAdapter::INT_TINY,'default' => 0,'null' => false))
             ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
             ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
             ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>null,'null' => true])
-            ->addIndex(['user_id'], array('unique' => false))
-            ->addIndex(['key'], array('unique' => false))
+            ->addIndex(['parent_id'], array('unique' => false))
             ->create();
     }
 }

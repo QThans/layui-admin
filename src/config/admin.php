@@ -16,5 +16,12 @@ return [
     /**
      * web title
      */
-    'title' => 'Admin',
+    'title' => 'Inge Admin',
+    'login' => [
+        'logo' => '<span>Inge Admin</span>',
+        'title' => '后台管理',
+        's_title' => '登录',
+        'copy' => '版权所有',
+        'remeber' => true,
+    ]
 ];

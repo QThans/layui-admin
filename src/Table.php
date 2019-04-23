@@ -30,6 +30,7 @@ class Table
 
     public $classMap = [
         'status' => table\Status::class,
+        'icon' => table\Icon::class,
     ];
 
     public $filter = [];
@@ -117,7 +118,7 @@ EOD;
     public function end()
     {
         $this->toolParse();
-        $code = $this->display(__DIR__ . DIRECTORY_SEPARATOR.'table'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'table.js.stub');
+        $code = $this->display(__DIR__ . DIRECTORY_SEPARATOR . 'table' . DIRECTORY_SEPARATOR . 'stub' . DIRECTORY_SEPARATOR . 'table.js.stub');
         $this->builder->script('table', $code);
     }
 
@@ -128,13 +129,13 @@ EOD;
         return $this;
     }
 
-    public function tool($title, $url, $type = 'primary', $method = 'get', $action = 'ajax', $condition = '')
+    public function tool($title, $url, $action = 'ajax', $type = 'primary', $method = 'get', $condition = '')
     {
         $this->tools[] = [
             'title' => $title,
             'action' => $action,
             'method' => $method,
-            'url' => $url,
+            'url' => urldecode($url),
             'type' => $type,
             'condition' => $condition,
         ];
@@ -168,7 +169,7 @@ EOD;
                 }
                 $tmp = "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
                 if ($val['condition']) {
-                    $tmp = '{{#  if('.$val['condition'].'){ }}'.$tmp.'{{#  } }} ';//条件
+                    $tmp = '{{#  if(' . $val['condition'] . '){ }}' . $tmp . '{{#  } }} ';//条件
                 }
                 $html .= $tmp;
             }

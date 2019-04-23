@@ -1,8 +1,8 @@
-layui.define(["layer", "upload"], function(exports) {
+layui.define(["layer", "upload"], function (exports) {
   var $ = layui.$,
     upload = layui.upload,
     element = layui.element;
-  var changeURLPar = function(url, arg, arg_val) {
+  var changeURLPar = function (url, arg, arg_val) {
     var pattern = arg + "=([^&]*)";
     var replaceText = arg + "=" + arg_val;
     if (url.match(pattern)) {
@@ -20,7 +20,7 @@ layui.define(["layer", "upload"], function(exports) {
   /**
    *验证码刷新
    */
-  $("#captcha-code").click(function() {
+  $("#captcha-code").click(function () {
     var url = $(this).attr("src");
     $(this).attr("src", changeURLPar(url, "random", Math.random()));
   });
@@ -28,7 +28,7 @@ layui.define(["layer", "upload"], function(exports) {
   function changeAdminTabLeft() {
     var ul_width = $(".admin-tabs .layui-tab .layui-tab-title").width();
     var all_width = 0;
-    $(".admin-tabs .layui-tab .layui-tab-title li").each(function() {
+    $(".admin-tabs .layui-tab .layui-tab-title li").each(function () {
       all_width += parseInt($(this).outerWidth(true));
       if ($(this).hasClass("layui-this")) {
         return false;
@@ -62,16 +62,16 @@ layui.define(["layer", "upload"], function(exports) {
    * 事件定义以及绑定
    */
   //刷新当前iframe
-  $("[admin-event='refresh']").click(function() {
+  $("[admin-event='refresh']").click(function () {
     layui.event("refresh", "refresh('')");
   });
-  layui.onevent("refresh", "refresh()", function() {
+  layui.onevent("refresh", "refresh()", function () {
     $iframes = $(".layui-show .admin-tabs-body-iframe");
     $iframes[0].contentWindow.location.reload();
     return false;
   });
   //监听表单弹窗。
-  layui.onevent("formLayer", "formLayer()", function(param) {
+  layui.onevent("formLayer", "formLayer()", function (param) {
     layer.open({
       type: 2,
       title: param.title,
@@ -80,7 +80,7 @@ layui.define(["layer", "upload"], function(exports) {
       maxmin: true, //开启最大化最小化按钮
       area: ["100%", "100%"],
       content: param.href,
-      end: function() {
+      end: function () {
         //更新上层表格
         if (param.refresh) {
           $("#layui-icon-refresh-" + param.refresh, parent.document).click();
@@ -91,7 +91,7 @@ layui.define(["layer", "upload"], function(exports) {
     });
     return false;
   });
-  layui.onevent("formLayerSm", "formLayerSm()", function(param) {
+  layui.onevent("formLayerSm", "formLayerSm()", function (param) {
     layer.open({
       type: 2,
       title: param.title,
@@ -100,7 +100,7 @@ layui.define(["layer", "upload"], function(exports) {
       maxmin: true, //开启最大化最小化按钮
       area: ["80%", "80%"],
       content: param.href,
-      end: function() {
+      end: function () {
         //更新上层表格
         if (param.refresh) {
           $("#layui-icon-refresh-" + param.refresh, parent.document).click();
@@ -113,7 +113,7 @@ layui.define(["layer", "upload"], function(exports) {
   });
 
   //弹窗打开iframe
-  $("body").on("click", "[admin-event='formLayer']", function() {
+  $("body").on("click", "[admin-event='formLayer']", function () {
     var href = $(this).attr("data-href");
     var title = $(this).attr("data-title");
     var refresh = $(this).attr("refresh");
@@ -125,7 +125,7 @@ layui.define(["layer", "upload"], function(exports) {
     return false;
   });
   //弹窗打开小iframe
-  $("body").on("click", "[admin-event='formLayerSm']", function() {
+  $("body").on("click", "[admin-event='formLayerSm']", function () {
     var href = $(this).attr("data-href");
     var title = $(this).attr("data-title");
     var refresh = $(this).attr("refresh");
@@ -138,14 +138,14 @@ layui.define(["layer", "upload"], function(exports) {
   });
 
   //ajax请求
-  $("body").on("click", "[admin-event='ajax']", function() {
+  $("body").on("click", "[admin-event='ajax']", function () {
     var href = $(this).attr("data-href");
     var method = $(this).attr("method") || "get";
     var refresh = $(this).attr("refresh") || "";
     obj.ajax(
       href,
       "",
-      function(data) {
+      function (data) {
         layer.msg(data.msg);
         if (refresh) {
           $("#layui-icon-refresh-" + refresh, parent.document).click();
@@ -158,16 +158,16 @@ layui.define(["layer", "upload"], function(exports) {
     );
     return false;
   });
-  $("body").on("click", "[admin-event='confirmAjax']", function() {
+  $("body").on("click", "[admin-event='confirmAjax']", function () {
     var href = $(this).attr("data-href");
     var title = $(this).attr("data-title");
     var method = $(this).attr("method") || "get";
     var refresh = $(this).attr("refresh") || "";
-    layer.confirm(title, function(index) {
+    layer.confirm(title, function (index) {
       obj.ajax(
         href,
         "",
-        function(data) {
+        function (data) {
           layer.msg(data.msg);
           if (refresh) {
             $("#layui-icon-refresh-" + refresh, parent.document).click();
@@ -182,7 +182,7 @@ layui.define(["layer", "upload"], function(exports) {
     return false;
   });
   //点击链接增加tab
-  $(document).on("click", "a[data-href]", function() {
+  $(document).on("click", "a[data-href]", function () {
     var href = $(this).attr("data-href");
     if (typeof href != "undefined") {
       var title = $(this)
@@ -195,11 +195,11 @@ layui.define(["layer", "upload"], function(exports) {
     }
     return false;
   });
-  $("[admin-event='changeMenu']").click(function() {
+  $("[admin-event='changeMenu']").click(function () {
     layui.event("changeMenu", "changeMenu('')");
   });
   //菜单展开
-  var big = function() {
+  var big = function () {
     $(".big-logo").css("display", "block");
     $(".small-logo").css("display", "none");
     $(".layui-layout-admin .layui-side-menu .layui-side-scroll").css("width", "240px");
@@ -210,7 +210,7 @@ layui.define(["layer", "upload"], function(exports) {
     $(".pc-menu a .layui-icon-spread-left").removeClass("layui-icon-spread-left");
   };
   //菜单收缩
-  var small = function() {
+  var small = function () {
     $(".big-logo").css("display", "none");
     $(".small-logo").css("display", "block");
     $(".layui-layout-admin .layui-side-menu .layui-side-scroll").css("width", "80px");
@@ -221,7 +221,7 @@ layui.define(["layer", "upload"], function(exports) {
     $(".pc-menu a .layui-icon-shrink-right").removeClass("layui-icon-shrink-right");
   };
   var is_need_small = false;
-  layui.onevent("changeMenu", "changeMenu()", function(param) {
+  layui.onevent("changeMenu", "changeMenu()", function (param) {
     if ($(".big-logo").css("display") != "none") {
       is_need_small = true;
       small();
@@ -229,13 +229,13 @@ layui.define(["layer", "upload"], function(exports) {
       is_need_small = false;
       big();
     }
-    $(".layui-layout-admin .layui-side-menu").mouseover(function() {
+    $(".layui-layout-admin .layui-side-menu").mouseover(function () {
       if (is_need_small) {
         big();
       }
       return false;
     });
-    $(".layui-layout-admin .layui-side-menu").mouseout(function() {
+    $(".layui-layout-admin .layui-side-menu").mouseout(function () {
       if (is_need_small) {
         small();
       }
@@ -244,11 +244,11 @@ layui.define(["layer", "upload"], function(exports) {
     return false;
   });
   //手机下打开侧边菜单点击
-  $("[admin-event='changeMobileMenu']").click(function() {
+  $("[admin-event='changeMobileMenu']").click(function () {
     layui.event("changeMobileMenu", "changeMobileMenu('')");
   });
   //手机菜单隐藏
-  var mobileMenuHide = function() {
+  var mobileMenuHide = function () {
     $(".mobile-menu a .layui-icon-shrink-right").addClass("layui-icon-spread-left");
     $(".mobile-menu a .layui-icon-shrink-right").removeClass("layui-icon-shrink-right");
     $(".layui-body").css("transform", "translate3d(0, 0, 0)");
@@ -261,7 +261,7 @@ layui.define(["layer", "upload"], function(exports) {
     $(".layui-layout-admin .layui-side").css("-webkit-transform", "translate3d(-220px, 0, 0)");
   };
   //手机版菜单展开
-  var mobileMenuShow = function() {
+  var mobileMenuShow = function () {
     $(".mobile-menu a .layui-icon-spread-left").addClass("layui-icon-shrink-right");
     $(".mobile-menu a .layui-icon-spread-left").removeClass("layui-icon-spread-left");
 
@@ -277,12 +277,12 @@ layui.define(["layer", "upload"], function(exports) {
     $(".layui-layout-admin .layui-side").css("-webkit-transform", "translate3d(0, 0, 0)");
   };
   //手机版菜单缩小
-  layui.onevent("changeMobileMenu", "changeMobileMenu()", function(param) {
+  layui.onevent("changeMobileMenu", "changeMobileMenu()", function (param) {
     big();
     if ($(".mobile-menu a i").hasClass("layui-icon-spread-left")) {
       mobileMenuShow();
       $(".admin-body-shade").css("display", "block");
-      $("[admin-event='shade']").click(function() {
+      $("[admin-event='shade']").click(function () {
         layui.event("shade", "shade('')", mobileMenuHide);
       });
     } else {
@@ -291,12 +291,12 @@ layui.define(["layer", "upload"], function(exports) {
     return false;
   });
 
-  layui.onevent("shade", "shade()", function(func) {
+  layui.onevent("shade", "shade()", function (func) {
     $(".admin-body-shade").css("display", "none");
     func();
     return false;
   });
-  layui.onevent("addAdminTab", "addAdminTab()", function(param) {
+  layui.onevent("addAdminTab", "addAdminTab()", function (param) {
     obj.addAdminTab(param.element, param.title, param.href);
     return false;
   });
@@ -306,8 +306,8 @@ layui.define(["layer", "upload"], function(exports) {
     /**
      * 切换页面 layui-admin-tabs
      */
-    changeAdminTab: function(element) {
-      element.on("tab(layui-admin-tabs)", function(data) {
+    changeAdminTab: function (element) {
+      element.on("tab(layui-admin-tabs)", function (data) {
         var href = $(this).attr("lay-id");
         $(".layui-layout-admin .layui-body .admin-tabs-body").removeClass("layui-show");
         $('iframe[src="' + href + '"]')
@@ -316,7 +316,7 @@ layui.define(["layer", "upload"], function(exports) {
         changeAdminTabLeft();
       });
     },
-    addAdminTab: function(element, title, href) {
+    addAdminTab: function (element, title, href) {
       var li = $('li[lay-id="' + href + '"]').length;
       if (li > 0) {
         element.tabChange("layui-admin-tabs", href);
@@ -330,8 +330,8 @@ layui.define(["layer", "upload"], function(exports) {
         $(".layui-layout-admin .layui-body").append('<div class="admin-tabs-body layui-show"><iframe class="admin-tabs-body-iframe" src="' + href + '"></iframe></div>');
       }
     },
-    prevAdminTab: function() {
-      $(".admin-tabs .layui-prev-controller").click(function() {
+    prevAdminTab: function () {
+      $(".admin-tabs .layui-prev-controller").click(function () {
         var href = $(".admin-tabs .layui-tab-title .layui-this")
           .prev()
           .attr("lay-id");
@@ -340,8 +340,8 @@ layui.define(["layer", "upload"], function(exports) {
         }
       });
     },
-    nextAdminTab: function() {
-      $(".admin-tabs .layui-next-controller").click(function() {
+    nextAdminTab: function () {
+      $(".admin-tabs .layui-next-controller").click(function () {
         var href = $(".admin-tabs .layui-tab-title .layui-this")
           .next()
           .attr("lay-id");
@@ -350,21 +350,21 @@ layui.define(["layer", "upload"], function(exports) {
         }
       });
     },
-    bindCloseTab: function() {
-      $(".admin-tabs .layui-tab").on("click", function(e) {
+    bindCloseTab: function () {
+      $(".admin-tabs .layui-tab").on("click", function (e) {
         if ($(e.target).is(".layui-tab-close")) {
           $(
             'iframe[src="' +
-              $(e.target)
-                .parent()
-                .attr("lay-id") +
-              '"]'
+            $(e.target)
+              .parent()
+              .attr("lay-id") +
+            '"]'
           )
             .parent()
             .remove();
         }
       });
-      $(".closeNowTab").click(function() {
+      $(".closeNowTab").click(function () {
         if ($(".admin-tabs .layui-tab-title .layui-this").prev().length != 0) {
           var next_href = $(".admin-tabs .layui-tab-title .layui-this")
             .next()
@@ -377,8 +377,8 @@ layui.define(["layer", "upload"], function(exports) {
           element.tabChange("layui-admin-tabs", next_href);
         }
       });
-      $(".closeOtherTab").click(function() {
-        $(".admin-tabs .layui-tab-title li").each(function(index, value) {
+      $(".closeOtherTab").click(function () {
+        $(".admin-tabs .layui-tab-title li").each(function (index, value) {
           if (index != 0 && !$(this).hasClass("layui-this")) {
             var href = $(this).attr("lay-id");
             element.tabDelete("layui-admin-tabs", href);
@@ -388,7 +388,7 @@ layui.define(["layer", "upload"], function(exports) {
           }
         });
       });
-      $(".closeRightTab").click(function() {
+      $(".closeRightTab").click(function () {
         while ($(".admin-tabs .layui-tab-title .layui-this").next().length) {
           var href = $(".admin-tabs .layui-tab-title .layui-this")
             .next()
@@ -399,12 +399,12 @@ layui.define(["layer", "upload"], function(exports) {
             .remove();
         }
       });
-      $(".closeLeftTab").click(function() {
+      $(".closeLeftTab").click(function () {
         while (
           $(".admin-tabs .layui-tab-title .layui-this")
             .prev()
             .prev().length
-        ) {
+          ) {
           var href = $(".admin-tabs .layui-tab-title .layui-this")
             .prev()
             .attr("lay-id");
@@ -414,8 +414,8 @@ layui.define(["layer", "upload"], function(exports) {
             .remove();
         }
       });
-      $(".closeAllTab").click(function() {
-        $(".admin-tabs .layui-tab-title li").each(function(index, value) {
+      $(".closeAllTab").click(function () {
+        $(".admin-tabs .layui-tab-title li").each(function (index, value) {
           if (index != 0) {
             var href = $(this).attr("lay-id");
             element.tabDelete("layui-admin-tabs", href);
@@ -426,7 +426,7 @@ layui.define(["layer", "upload"], function(exports) {
         });
       });
     },
-    ajax: function(url, postData, succCallback, errorCallback, type, dataType, async) {
+    ajax: function (url, postData, succCallback, errorCallback, type, dataType, async) {
       if (typeof url == "undefined") {
         layer.msg("错误");
         return false;
@@ -437,20 +437,19 @@ layui.define(["layer", "upload"], function(exports) {
       var dataType = dataType || "json";
       var succCallback =
         succCallback ||
-        function(data) {
+        function (data) {
+          var wait = data.wait*1000 || 1000;
           if (!data.code) {
             layer.msg(
               data.msg,
               {
                 offset: "15px",
                 icon: 1,
-                time: 1000
+                time: wait
               },
-              function() {
+              function () {
                 if (data.redirect) {
                   location.href = data.redirect;
-                } else {
-                  location.reload();
                 }
               }
             );
@@ -460,7 +459,7 @@ layui.define(["layer", "upload"], function(exports) {
         };
       var errorCallback =
         errorCallback ||
-        function(e, t) {
+        function (e, t) {
           layer.msg(e.responseJSON.error_msg);
         };
       $.ajax({
@@ -469,17 +468,17 @@ layui.define(["layer", "upload"], function(exports) {
         async: async,
         data: postData,
         dataType: dataType,
-        success: function(res) {
+        success: function (res) {
           layer.close(index);
           succCallback(res);
         },
-        error: function(e, t) {
+        error: function (e, t) {
           layer.close(index);
           errorCallback(e, t);
         }
       });
     }, //表格生成
-    table: function(table, id, url, options, default_options) {
+    table: function (table, id, url, options, default_options) {
       var default_options = default_options || {
         elem: "#" + id,
         id: id,
@@ -497,8 +496,8 @@ layui.define(["layer", "upload"], function(exports) {
       options = $.extend(default_options, options);
       return table.render(options);
     }, //回车绑定
-    enter: function(func) {
-      document.onkeydown = function(e) {
+    enter: function (func) {
+      document.onkeydown = function (e) {
         var theEvent = window.event || e;
         var code = theEvent.keyCode || theEvent.which;
         if (code == 13) {
@@ -506,7 +505,7 @@ layui.define(["layer", "upload"], function(exports) {
         }
       };
     },
-    urlToJson: function(arr) {
+    urlToJson: function (arr) {
       var theRequest = new Object();
       for (var i = 0; i < arr.length; i++) {
         var kye = arr[i].split("=")[0];
@@ -517,14 +516,14 @@ layui.define(["layer", "upload"], function(exports) {
       }
       return theRequest;
     },
-    closeSelf: function() {
+    closeSelf: function () {
       if ($(".layui-icon-refresh", parent.document)) {
         $(".layui-icon-refresh", parent.document).click();
       }
       var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
       parent.layer.close(index);
     },
-    openFormLayer: function(title, href, refresh) {
+    openFormLayer: function (title, href, refresh) {
       if (typeof refresh == "undefined") {
         refresh = "";
       }
@@ -534,10 +533,10 @@ layui.define(["layer", "upload"], function(exports) {
         refresh: refresh
       });
     },
-    setCookie: function(cname, cvalue) {
+    setCookie: function (cname, cvalue) {
       document.cookie = cname + "=" + cvalue + "; ";
     },
-    getCookie: function(cname) {
+    getCookie: function (cname) {
       var name = cname + "=";
       var ca = document.cookie.split(";");
       for (var i = 0; i < ca.length; i++) {

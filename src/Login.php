@@ -34,7 +34,7 @@ class Login
     //注册账号
     public $register = '';
     //记住用户名
-    public $rember = '';
+    public $remeber = '';
     //底部信息
     public $footer = '';
     //验证码链接

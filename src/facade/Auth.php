@@ -16,6 +16,6 @@ class Auth extends Facade
 {
     protected static function getFacadeClass()
     {
-        return 'thans\layuiAdmin\Auth';
+        return 'thans\layuiAdmin\tool\Auth';
     }
 }

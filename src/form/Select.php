@@ -28,6 +28,11 @@ class Select
         $this->options[] = ['val'=>$val,'title'=>$title];
         return $this;
     }
+    public function options($vals)
+    {
+        $this->options = $vals;
+        return $this;
+    }
     //TODO AJAX关联数据
     public function relation($url, $label, $value)
     {

@@ -16,6 +16,8 @@ bind([
     'auth' => \thans\layuiAdmin\Auth::class,
 ]);
 
+require_once 'route' . DIRECTORY_SEPARATOR . 'Route.php';
+
 if (!function_exists('scan_dir')) {
     /**
      * 扫描目录
@@ -28,7 +30,7 @@ if (!function_exists('scan_dir')) {
     function scan_dir($dir, $depth = 0, $now = 0)
     {
         $dirs = [];
-        if (!is_dir($dir) || ($now >= $depth && $depth!=0)) {
+        if (!is_dir($dir) || ($now >= $depth && $depth != 0)) {
             return false;
         }
         $dirArr = glob("$dir/*");
@@ -62,10 +64,10 @@ if (!function_exists('copy_dir')) {
         @mkdir($dest, 0777, true);
         $resources = scandir($dir);
         foreach ($resources as $item) {
-            if (is_dir($dir.DIRECTORY_SEPARATOR.$item) && $item != '.' && $item != '..') {
-                copy_dir($dir.DIRECTORY_SEPARATOR.$item, $dest.DIRECTORY_SEPARATOR.$item);
-            } elseif (is_file($dir.DIRECTORY_SEPARATOR.$item)) {
-                copy($dir.DIRECTORY_SEPARATOR.$item, $dest.DIRECTORY_SEPARATOR.$item);
+            if (is_dir($dir . DIRECTORY_SEPARATOR . $item) && $item != '.' && $item != '..') {
+                copy_dir($dir . DIRECTORY_SEPARATOR . $item, $dest . DIRECTORY_SEPARATOR . $item);
+            } elseif (is_file($dir . DIRECTORY_SEPARATOR . $item)) {
+                copy($dir . DIRECTORY_SEPARATOR . $item, $dest . DIRECTORY_SEPARATOR . $item);
             }
         }
         return true;
@@ -79,7 +81,7 @@ if (!function_exists('view_path')) {
      */
     function view_path()
     {
-        return __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR;
+        return __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
     }
 }
 if (!function_exists('encrypt_password')) {

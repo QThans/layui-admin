@@ -25,11 +25,14 @@
                     <a href="javascript:;">
                         {$self->userName}
                     </a>
+                    {if $self->userMenu}
                     <dl class="layui-nav-child">
-                        {volist name="$self->userMenu" id="vo"}
-                        <dd lay-unselect><a {if $vo.href}data-href="{$vo.href}"{/if} {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} ><span>{$vo.title}</span></a></dd>
-                        {/volist}
+                            {volist name="$self->userMenu" id="vo"}
+                            <dd lay-unselect><a {if $vo.href}data-href="{$vo.href}"{/if} {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} ><span>{$vo.title}</span></a></dd>
+                            {/volist}
                     </dl>
+                    {/if}
+
                 </li>
             </ul>
         </div>

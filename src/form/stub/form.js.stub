@@ -1,4 +1,5 @@
 {if $self->dataUrl}
+layer.load(1);
 admin.ajax('{$self->dataUrl}','',function (data) {
     if (data.code == 1) {
         $.each(data.data,function(i,e){
@@ -14,10 +15,17 @@ admin.ajax('{$self->dataUrl}','',function (data) {
         {volist name="$self->setValueScript" id="vo"}
             {$vo|raw}
         {/volist}
+        layer.closeAll('loading');
     } else {
         layer.msg(data.msg);
     }
 },'','{$self->dataMethod}');
+{/if}
+{if $self->data}
+form.val("form-{$self->id}", {:json_encode($self->data)});
+{volist name="$self->setValueScript" id="vo"}
+    {$vo|raw}
+{/volist}
 {/if}
 {php}
 $verify = [];
@@ -25,19 +33,19 @@ foreach ($self->rules as $key=>$val) {
     if (count($val)<3) {
         continue;
     }
-    if (!isset($self->formVerify[$val[1]])) {
+    if (!isset($self->formVerify[$val['rules']])) {
         continue;
     }
     $tmpl = '';
-    $rule = $self->formVerify[$val[1]];
-    $tmpl .= $val[1]."_".$val[0].":function(value, item){\n";
-    $tmpl.=!$val[2]?"if(value != ''){\n":'';
+    $rule = $self->formVerify[$val['rules']];
+    $tmpl .= $val['rules']."_".$val['id'].":function(value, item){\n";
+    $tmpl.=!$val['required']?"if(value != ''){\n":'';
     $tmpl.="if(!".$rule['reg'].".test(value)){\n";
-    $tmpl.="return '".$rule['tips']."';\n";
+    $tmpl.= $val['tips']?"return '".$val['tips']."';\n":"return '".$rule['tips']."';\n";
     $tmpl.="}\n";
-    $tmpl.= $val[3]!=0?"if(value.length<".$val[3]."){ return '该项长度不能小于".$val[3]."' }":'';
-    $tmpl.= $val[4]!=0?"if(value.length>".$val[4]."){ return '该项长度不能大于".$val[4]."' }":'';
-    $tmpl.=!$val[2]?"}\n":'';
+    $tmpl.= $val['min']!=0?"if(value.length<".$val['min']."){ return '该项长度不能小于".$val['min']."' }":'';
+    $tmpl.= $val['max']!=0?"if(value.length>".$val['max']."){ return '该项长度不能大于".$val['max']."' }":'';
+    $tmpl.=!$val['required']?"}\n":'';
     $tmpl.="}\n";
     $verify[] = $tmpl;
 }

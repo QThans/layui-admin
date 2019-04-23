@@ -1,7 +1,7 @@
 <div class="layui-form-item">
     <label class="layui-form-label">{$self->label}</label>
     <div class="layui-input-inline">
-        <textarea lay-verify="{$self->rules}" {volist name="$self->attr" id="vo"}{$key}="{$vo}" {/volist} name="{$self->name}" value="{$self->value}" {$self->disabled} class="layui-textarea">{$self->value}</textarea>
+        <textarea lay-verify="{$self->rules}" placeholder="{$self->placeholder|default=''}" {volist name="$self->attr" id="vo"}{$key}="{$vo}" {/volist} name="{$self->name}" value="{$self->value}" {$self->disabled} class="layui-textarea">{$self->value}</textarea>
     </div>
     <div class="layui-form-mid layui-word-aux">{$self->tips|raw}</div>
 </div>

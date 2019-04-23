@@ -23,6 +23,8 @@ trait Field
 
     public $rules = '';
 
+    public $placeholder = '';
+
     public $attr = [];
 
     public function value($val = '')
@@ -41,6 +43,22 @@ trait Field
         return $this;
     }
 
+    public function placeholder($val = '')
+    {
+        $this->placeholder = $val;
+        return $this;
+    }
+
+    public function hide()
+    {
+        if (isset($this->attr['style'])) {
+            $this->attr['style'] = 'display:none;' . $this->attr['style'];
+        } else {
+            $this->attr['style'] = 'display:none;';
+        }
+        return $this;
+    }
+
     public function render()
     {
         if (method_exists($this, 'end')) {
@@ -53,11 +71,18 @@ trait Field
         return $this;
     }
 
-    public function rules($rules = '', $required = true, $min = 0, $max = 0)
+    public function rules($rules = '', $tips = '', $required = true, $min = 0, $max = 0)
     {
         $id = uniqid();
-        $this->rules = $rules.'_'.$id;
-        $this->obj->rules[] = [$id,$rules,$required,$min,$max];//向Form类里面添加规则，用户编译
+        $this->rules = $rules . '_' . $id;
+        $this->obj->rules[] = [
+            'id' => $id,
+            'rules' => $rules,
+            'required' => $required,
+            'min' => $min,
+            'max' => $max,
+            'tips' => $tips
+        ];
         return $this;
     }
 }

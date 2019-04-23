@@ -35,11 +35,11 @@
                         </div>
                     </div>
                     {/if}
-                    <input name="redirect" type="hidden" value="{:input('redirect','/')}">
+                    <input name="redirect" type="hidden" value="{:input('redirect','')}">
                     <div class="login-forgot">
-                        {if $self->rember}
+                        {if $self->remeber}
                         <div class="remember">
-                            <input type="checkbox" name="rember" lay-filter="remember" lay-skin="primary"
+                            <input type="checkbox" name="remeber" lay-filter="remember" lay-skin="primary"
                                    title="记住用户">
                         </div>
                         {/if}

@@ -4,6 +4,7 @@
 namespace thans\layuiAdmin\controller;
 
 
+use thans\layuiAdmin\facade\Auth;
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
@@ -31,13 +32,27 @@ class Menu
         $tb->column('icon', 'ICON', 200, 'icon', ['align' => 'center']);
         $tb->column('uri', 'URI', 200);
         $tb->column('permission', '权限绑定', 200);
-
-        $tb->action('新增菜单', url('thans\layuiAdmin\controller\Menu/create'));
-
-        $tb->tool('编辑', url('thans\layuiAdmin\controller\Menu/edit', 'id={{ d.id }}'), 'formLayer');
+        $url = url('thans\layuiAdmin\controller\Menu/create');
+        if (Auth::check($url)) {
+            $tb->action('新增菜单', $url);
+        }
+        $url = url('thans\layuiAdmin\controller\Menu/edit', 'id={{ d.id }}');
+        if (Auth::check($url)) {
+            $tb->tool('编辑', $url, 'formLayer');
+        }
+        $url = url('thans\layuiAdmin\controller\Menu/delete', 'id={{ d.id }}');
+        if (Auth::check($url, 'DELETE')) {
+            $tb->tool('删除', $url, 'confirmAjax', 'danger', 'DELETE');
+        }
         $tb->title('菜单管理');
 
         return $tb->render();
+    }
+
+    public function delete($id)
+    {
+        MenuModel::destroy($id);
+        Json::success("删除完成");
     }
 
     public function create()
@@ -111,6 +126,9 @@ class Menu
         $status[] = ['val' => 0, 'title' => '启用'];
         $status[] = ['val' => 1, 'title' => '禁用'];
         $form->select()->name('status')->label('状态')->options($status);
+
+        $form->hiddenSubmit(!Auth::check($url, $method));
+
         return $form->render();
     }
 }

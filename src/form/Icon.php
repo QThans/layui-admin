@@ -46,7 +46,7 @@ class Icon
 EOD
         );
         $this->attr('lay-filter',$this->id);
-        $val = $this->obj->data[$this->name];
+        $val = isset($this->obj->data[$this->name])?$this->obj->data[$this->name]:'';
         $setValueScript = $this->name ? ";iconPicker.checkIcon('{$this->id}', '{$val}');" : "";
         $this->obj->setValueScript('icon_' . $this->id, $setValueScript);
     }

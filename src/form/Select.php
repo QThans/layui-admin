@@ -6,7 +6,7 @@
  * Time: 00:32
  */
 
-namespace thans\layuiAdmin\Form;
+namespace thans\layuiAdmin\form;
 
 use thans\layuiAdmin\Traits\Field;
 class Select

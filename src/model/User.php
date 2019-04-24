@@ -15,8 +15,15 @@ use think\Model;
 class User extends Model
 {
     protected $name = 'user';
+
     public function meta()
     {
         return $this->hasMany('user_meta')->whereNull('delete_time');
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany('AuthRole', 'thans\layuiAdmin\model\AuthRoleUser', 'role_id', 'user_id');
+    }
+
 }

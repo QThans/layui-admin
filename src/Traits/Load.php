@@ -23,45 +23,61 @@ trait Load
     {
         if (isset($this->$name)) {
             if (is_array($this->$name)) {
-                $this->$name[$arguments[0]] = $arguments[1]??'';
+                $this->$name[$arguments[0]] = $arguments[1] ?? '';
             } else {
-                $this->$name = $arguments[0]??'';
+                $this->$name = $arguments[0] ?? '';
             }
             return $this;
         }
         //判断是否builder类存在对应变量
         if (isset($this->builder->$name)) {
             if (is_array($this->builder->$name)) {
-                if(count($arguments) == 1){
-                    $this->builder->$name[] = $arguments[0]??'';                    
-                }else{
-                    $this->builder->$name[$arguments[0]] = $arguments[1]??'';
+                if (count($arguments) == 1) {
+                    $this->builder->$name[] = $arguments[0] ?? '';
+                } else {
+                    $this->builder->$name[$arguments[0]] = $arguments[1] ?? '';
                 }
             } else {
-                $this->builder->$name = $arguments[0]??'';
+                $this->builder->$name = $arguments[0] ?? '';
             }
             return $this;
         }
         if (isset($this->classMap) && isset($this->classMap[$name]) && class_exists($this->classMap[$name])) {
-            $class = new $this->classMap[$name](isset($arguments[0])?$arguments[0]:'', $this);
+            $class = new $this->classMap[$name](isset($arguments[0]) ? $arguments[0] : '', $this);
             return $class;
         }
     }
 
+    public function tmpl($tmpl)
+    {
+        $this->builder->tmpl = $tmpl;
+        return $this;
+    }
+
     public function render($component = false)
     {
+        //session中设置错误提示，自动加载提示
+        if (session('error_msg')) {
+            $error_msg = session('error_msg');
+            session('error_msg', null);
+            $this->builder->module('notice');
+            $this->builder->script('error_msg', <<<EOT
+                notice.error('{$error_msg}');
+EOT
+            );
+        }
         if (method_exists($this, 'end')) {
             $this->end();
         }
         return $this->builder->fetch($vars = [
-            'self'=> $this
+            'self' => $this
         ], $component);
     }
-    
+
     public function display($tmpl)
     {
         return $this->builder->display($tmpl, $vars = [
-            'self'=> $this
+            'self' => $this
         ]);
     }
 

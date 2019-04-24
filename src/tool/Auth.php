@@ -45,11 +45,63 @@ class Auth
         $user = Cache::get('user_' . session('user_id'));
         if (!$user) {
             $user = User::get(session('user_id'), 'meta');
-            foreach ($user->meta as $key => $value) {
-                $user->meta[$value['key']] = $value['value'];
-            }
             Cache::set('user_' . session('user_id'), $user, 3600);
         }
         return $user;
+    }
+
+    public function isLogin()
+    {
+        if (session('user_id')) {
+            return true;
+        }
+        return false;
+    }
+
+    public function check($path, $method = 'GET')
+    {
+        $path = parse_url($path)['path'];
+        $path = trim($path, '/');
+        $path = trim($path, '.html');
+        $user = $this->user();
+        if (!$user || !$user->admin) {
+            return false;
+        }
+        $roles = $user->roles;
+        foreach ($roles as $role) {
+            //查找所有权限
+            $permissions = $role->permissions()->select();
+            if (!$permissions) {
+                //本次权限组无权限，跳出本次循环
+                continue;
+            }
+            foreach ($permissions as $val) {
+                if ($val['alias'] == $path) {
+                    return $this->chekMethod($val['http_method'], $method);
+                }
+                foreach (explode("\r\n", $val['path']) as $v) {
+                    if ($v == $path) {
+                        return $this->chekMethod($val['http_method'], $method);
+                    }
+                    $pattern = trim($v, '/');
+                    $pattern = trim($pattern, '.html');
+                    $pattern = preg_quote($pattern, '#');
+                    $pattern = str_replace('\*', '.*', $pattern);
+                    if (preg_match('#^' . $pattern . '\z#u', $path) === 1) {
+                        return $this->chekMethod($val['http_method'], $method);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private function chekMethod($http_method, $method)
+    {
+        if (strpos($http_method, $method) !== false || $http_method == "") {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

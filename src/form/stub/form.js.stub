@@ -34,11 +34,13 @@ foreach ($self->rules as $key=>$val) {
         continue;
     }
     if (!isset($self->formVerify[$val['rules']])) {
-        continue;
+        $rule = [];
+        $rule['reg'] = $val['rules'];
+    }else{
+        $rule = $self->formVerify[$val['rules']];
     }
     $tmpl = '';
-    $rule = $self->formVerify[$val['rules']];
-    $tmpl .= $val['rules']."_".$val['id'].":function(value, item){\n";
+    $tmpl .= "rule_".$val['id'].":function(value, item){\n";
     $tmpl.=!$val['required']?"if(value != ''){\n":'';
     $tmpl.="if(!".$rule['reg'].".test(value)){\n";
     $tmpl.= $val['tips']?"return '".$val['tips']."';\n":"return '".$rule['tips']."';\n";

@@ -6,7 +6,7 @@
  * Time: 00:32
  */
 
-namespace thans\layuiAdmin\Form;
+namespace thans\layuiAdmin\form;
 
 class MultiSelect extends Select
 {
@@ -17,25 +17,34 @@ class MultiSelect extends Select
         }
         $this->obj->module('formSelects');
         $this->obj->css($this->id, 'vendor/layui-admin/layui/modules/css/formSelects.css');
-        $this->attr('xm-select', 'xm-'.$this->id);
+        $this->attr('xm-select', 'xm-' . $this->id);
         $this->obj->module('jquery');
         $this->obj->script($this->id, "formSelects.render('xm-{$this->id}');");
-        $this->obj->setValueScript($this->id,"formSelects.value('xm-{$this->id}',data.data.{$this->name}.split(','));");
+        $val = isset($this->obj->data[$this->name]) ? $this->obj->data[$this->name] : '';
+        $val = explode(',', $val);
+        $val = json_encode($val);
+        $this->obj->setValueScript($this->id, "formSelects.value('xm-{$this->id}',{$val});");
     }
+
     public function search($url = '')
     {
         $this->attr('xm-select-search', $url);
     }
-    public function value($val){
-        $val = explode(',',$this->value);
+
+    public function value($val = '')
+    {
+        $val = explode(',', $this->value);
         $val = json_encode($val);
-        $this->obj->script($this->id,"formSelects.value('xm-{$this->id}',{$val};");
+        $this->obj->script($this->id, "formSelects.value('xm-{$this->id}',{$val};");
     }
+
     public function searchType($type = 'title')
     {
         $this->attr('xm-select-search-type', $type);
     }
-    public function radio(){
+
+    public function radio()
+    {
         $this->attr('xm-select-radio');
     }
 }

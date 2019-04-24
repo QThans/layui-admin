@@ -6,7 +6,7 @@
  * Time: 14:34
  */
 
-namespace thans\layuiAdmin\Form;
+namespace thans\layuiAdmin\form;
 
 use thans\layuiAdmin\Traits\Field;
 class Checkbox

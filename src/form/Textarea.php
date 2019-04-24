@@ -6,7 +6,7 @@
  * Time: 16:50
  */
 
-namespace thans\layuiAdmin\Form;
+namespace thans\layuiAdmin\form;
 
 use thans\layuiAdmin\Traits\Field;
 

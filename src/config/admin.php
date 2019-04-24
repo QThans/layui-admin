@@ -23,5 +23,6 @@ return [
         's_title' => '登录',
         'copy' => '版权所有',
         'remeber' => true,
-    ]
+    ],
+    'jump_tmpl' => Env::get('root_path') . 'vendor/thans/layui-admin/views/jump.html',
 ];

@@ -3,10 +3,12 @@
 
 namespace thans\layuiAdmin\model;
 
+use think\model\concern\SoftDelete;
+use think\model\Pivot;
 
-use think\Model;
-
-class AuthRoleUser extends Model
+class AuthRoleUser extends Pivot
 {
+    use SoftDelete;
     protected $name = 'auth_role_user';
+    protected $autoWriteTimestamp = true;
 }

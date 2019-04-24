@@ -8,7 +8,7 @@
  * This source file is subject to the Apache2.0 license that is bundled.
  */
 
-namespace thans\layuiAdmin\Form;
+namespace thans\layuiAdmin\form;
 
 use thans\layuiAdmin\Traits\Field;
 

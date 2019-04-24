@@ -1,0 +1,121 @@
+<div class="message">
+    <div class="system-message">
+        <?php switch ($code) {?>
+        <?php case 1:?>
+        <h1><i class="layui-icon layui-icon-face-smile"></i></h1>
+        <p class="tips"><?php echo(strip_tags($msg));?></p>
+        <?php break;?>
+        <?php case 0:?>
+        <h1><i class="layui-icon layui-icon-face-cry"></i></h1>
+        <p class="tips">错误：<?php echo(strip_tags($msg));?></p>
+        <?php break;?>
+        <?php case -1:?>
+        <h1><i class="layui-icon layui-icon-tips"></i></h1>
+        <p class="tips">提示：<?php echo(strip_tags($msg));?></p>
+        <?php break;?>
+        <?php } ?>
+        <hr/>
+        <p class="detail">{$tips}</p>
+
+        <p class="jump">
+            <?php if (isset($url) && $url && $url != 'close') {?>
+            页面自动 <b id="wait"><?php echo($wait);?></b>后跳转
+            <?php } ?>
+        </p>
+
+    </div>
+    <div class="action">
+        <?php if (isset($url) && $url && $url != 'close') {?>
+        <a id="href" class="layui-btn layui-btn-primary" href="<?php echo($url);?>">点击跳转</a>
+        <?php } ?>
+        <?php if ($url == 'close') {?>
+        <a id="close" class="layui-btn layui-btn-primary">关闭页面</a>
+        <?php } ?>
+        <a id="home" href="/"
+           class="layui-btn layui-btn-primary">返回首页</a>
+    </div>
+    <div class="bug">
+        <a href="https://gitee.com/thans/layuiAdmin/issues">BUG反馈</a>
+    </div>
+</div>
+<?php if (isset($url) && $url && $url != 'close') {?>
+<script type="text/javascript">
+    (function () {
+        var wait = document.getElementById('wait'),
+            href = document.getElementById('href').href;
+        var interval = setInterval(function () {
+            var time = --wait.innerHTML;
+            if (time <= 0) {
+                location.href = href;
+                clearInterval(interval);
+            }
+            ;
+        }, 1000);
+    })();
+</script>
+<?php } ?>
+<style>
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+
+    .layui-layout-admin {
+        text-align: center;
+    }
+
+    .message {
+        width: 30%;
+        background: #fff;
+        max-height: 560px;
+        min-width: 500px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        padding: 30px;
+        margin-top: -220px;
+        margin-left: -280px;
+        box-shadow: 1px 1px 1px rgba(99,99,99,0.2);
+    }
+
+    .message .layui-icon {
+        font-size: 120px;
+    }
+
+    .layui-icon-tips {
+        color: #FF5722;
+    }
+
+    .detail, .jump {
+        color: #cccccc;
+    }
+
+    .jump {
+        padding: 10px;
+    }
+
+    .layui-icon-face-cry {
+        color: red;
+    }
+
+    .layui-icon-face-smile {
+        color: #0684ff;
+    }
+
+    .tips {
+        font-size: 22px;
+        padding: 10px;
+    }
+    .bug a{
+        color:#ccc;
+    }
+
+    .action a {
+        margin: 10px 60px;
+        width: 150px;
+        border-radius: 30px;
+    }
+    .bug{
+        padding-top: 20px;
+    }
+</style>

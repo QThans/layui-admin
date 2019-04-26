@@ -45,8 +45,10 @@ foreach ($self->rules as $key=>$val) {
     $tmpl.="if(!".$rule['reg'].".test(value)){\n";
     $tmpl.= $val['tips']?"return '".$val['tips']."';\n":"return '".$rule['tips']."';\n";
     $tmpl.="}\n";
-    $tmpl.= $val['min']!=0?"if(value.length<".$val['min']."){ return '该项长度不能小于".$val['min']."' }":'';
-    $tmpl.= $val['max']!=0?"if(value.length>".$val['max']."){ return '该项长度不能大于".$val['max']."' }":'';
+    $minTips = $val['tips']?$val['tips']:"该项长度不能小于".$val['min']."个字符";
+    $maxTips = $val['tips']?$val['tips']:"该项长度不能大于".$val['max']."个字符";
+    $tmpl.= $val['min']!=0?"if(value.length<".$val['min']."){ return '".$minTips."' }":'';
+    $tmpl.= $val['max']!=0?"if(value.length>".$val['max']."){ return '".$maxTips."' }":'';
     $tmpl.=!$val['required']?"}\n":'';
     $tmpl.="}\n";
     $verify[] = $tmpl;
@@ -82,6 +84,10 @@ form.on('submit(form-{$self->id})', function (data) {
                 {case end}
                     parent.layer.msg(data.msg);
                     admin.closeSelf()
+                {/case}
+                {case refresh}
+                    parent.layer.msg(data.msg);
+                    location.reload();
                 {/case}
                 {default /}
                 {$self->successEndScript}

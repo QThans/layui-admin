@@ -25,4 +25,11 @@ return [
         'remeber' => true,
     ],
     'jump_tmpl' => Env::get('root_path') . 'vendor/thans/layui-admin/views/jump.html',
+
+    'upload' => [
+        'image' => [
+            'size' => 1024000,//KB
+            'ext' => 'jpg,png,jpeg'
+        ]
+    ]
 ];

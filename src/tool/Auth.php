@@ -10,6 +10,7 @@
 
 namespace thans\layuiAdmin\tool;
 
+use thans\layuiAdmin\model\Menu;
 use thans\layuiAdmin\model\User;
 use think\facade\Cache;
 use think\facade\Request;
@@ -36,8 +37,13 @@ class Auth
         session('user_id', $user->id);
         session('user_info', $user);
         session('user_meta', $user->meta);
-        Cache::rm('user_' . $user->id);
+        $this->clearCache();
         return $user;
+    }
+
+    public function clearCache()
+    {
+        Cache::rm('user_' . session('user_id'));
     }
 
     public function user()
@@ -50,12 +56,29 @@ class Auth
         return $user;
     }
 
-    public function isLogin()
+    public function userId()
     {
-        if (session('user_id')) {
-            return true;
+        return session('user_id');
+    }
+
+    public function menu()
+    {
+        $roles = $this->isAdmin();
+        foreach ($roles as $role) {
+            if ($role['id'] == 1) {
+                return \thans\layuiAdmin\facade\Utils::buildTree(Menu::select()->toArray(), true);
+            }
+
         }
-        return false;
+    }
+
+    public function isAdmin()
+    {
+        $user = $this->user();
+        if (!$user || !$user->admin) {
+            return false;
+        }
+        return $user->roles;
     }
 
     public function check($path, $method = 'GET')
@@ -63,11 +86,7 @@ class Auth
         $path = parse_url($path)['path'];
         $path = trim($path, '/');
         $path = trim($path, '.html');
-        $user = $this->user();
-        if (!$user || !$user->admin) {
-            return false;
-        }
-        $roles = $user->roles;
+        $roles = $this->isAdmin();
         foreach ($roles as $role) {
             //查找所有权限
             $permissions = $role->permissions()->select();

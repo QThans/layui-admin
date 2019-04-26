@@ -3,11 +3,12 @@
         <div class="layui-header">
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item pc-menu"><a admin-event="changeMenu" class="javascript:;"><i
-                        class="layui-icon layui-icon-shrink-right"></i></a></li>
+                    class="layui-icon layui-icon-shrink-right"></i></a></li>
                 <li class="layui-nav-item mobile-menu"><a admin-event="changeMobileMenu" class="javascript:;"><i
-                        class="layui-icon layui-icon-spread-left"></i></a></li>
+                    class="layui-icon layui-icon-spread-left"></i></a></li>
                 {volist name="$self->topMenu" id="vo"}
-                <li class="layui-nav-item pc-show"><a admin-event="getSecondMenu" lay-menuid="{$vo.id}" class="javascript:;">{$vo.name|raw}</a></li>
+                <li class="layui-nav-item pc-show"><a admin-event="getSecondMenu" lay-menuid="{$vo.id}"
+                                                      class="javascript:;">{$vo.name|raw}</a></li>
                 {/volist}
             </ul>
             <ul class="layui-nav layui-layout-right">
@@ -27,9 +28,10 @@
                     </a>
                     {if $self->userMenu}
                     <dl class="layui-nav-child">
-                            {volist name="$self->userMenu" id="vo"}
-                            <dd lay-unselect><a {if $vo.href}data-href="{$vo.href}"{/if} {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} ><span>{$vo.title}</span></a></dd>
-                            {/volist}
+                        {volist name="$self->userMenu" id="vo"}
+                        <dd lay-unselect><a {if $vo.href}data-href="{$vo.href}" {/if} {if isset($vo.attr)}{volist
+                            name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} ><span>{$vo.title}</span></a></dd>
+                        {/volist}
                     </dl>
                     {/if}
 
@@ -44,30 +46,40 @@
                 </div>
                 <ul class="layui-nav layui-nav-tree">
                     {volist name="$self->menu" id="vo"}
-                            <li class="layui-nav-item ">
-                                {if isset($vo['children']) && $vo.children}
-                                    <a href="javascript:;" {if $vo.href}data-href="{$vo.href}"{/if}><i class=" layui-icon {$vo.icon}"></i>{php}echo str_repeat('&nbsp;&nbsp;', $vo['deep']);{/php}<span>{$vo.name|raw}</span><span
-                                        class="layui-nav-more"></span></a>
-                                    {volist name="$vo['children']" id="vv"}
-                                        <dl class="layui-nav-child">
-                                            <dd class="">
-                                                <a {if $vv.href}data-href='{$vv.href}'{/if} href="javascript:;">{php}echo str_repeat('&nbsp;&nbsp;', $vv['deep']);{/php}<span>{$vv.name|raw}</span></a>
-                                                {volist name="$vv['children']" id="v"}
-                                                    {if $v['status'] == 1}
-                                                        <dl class="layui-nav-child">
-                                                            <dd class="">
-                                                                <a {if $v.href}data-href='{$v.href}'{/if} href="javascript:;">{php}echo str_repeat('&nbsp;&nbsp;', $v['deep']);{/php}<span>{$v.name|raw}</span></a>
-                                                            </dd>
-                                                        </dl>
-                                                    {/if}
-                                                {/volist}
-                                            </dd>
-                                        </dl>
-                                    {/volist}
-                                {else /}
-                                <a href="javascript:;" {if isset($vo.href)}data-href="{$vo.href}"{/if}  {if isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if}><i class=" layui-icon {$vo.icon}"></i><span>{$vo.name}</span></a>
+                    <li class="layui-nav-item ">
+                        {if isset($vo['children']) && $vo.children}
+                        <a href="javascript:;" {if $vo.uri}data-href="{:url($vo.uri)}" {/if}><i
+                        class=" layui-icon {$vo.icon}"></i>{php}echo str_repeat('&nbsp;&nbsp;',
+                        $vo['deep']);{/php}<span>{$vo.name|raw}</span><span
+                        class="layui-nav-more"></span></a>
+                        {if isset($vo['children']) && $vo.children}
+                        {volist name="$vo['children']" id="vv"}
+                        <dl class="layui-nav-child">
+                            <dd class="">
+                                <a {if $vv.uri}data-href='{:url($vv.uri)}' {/if} href="javascript:;">{php}echo str_repeat('&nbsp;&nbsp;',
+                                $vv['deep']);{/php}<span>{$vv.name|raw}</span></a>
+                                {if isset($vv['children']) && $vo.children}
+                                {volist name="$vv['children']" id="v"}
+                                {if $v['status'] == 1}
+                                <dl class="layui-nav-child">
+                                    <dd class="">
+                                        <a {if $v.uri}data-href='{:url($v.uri)}' {/if} href="javascript:;">{php}echo
+                                        str_repeat('&nbsp;&nbsp;', $v['deep']);{/php}<span>{$v.name|raw}</span></a>
+                                    </dd>
+                                </dl>
                                 {/if}
-                            </li>
+                                {/volist}
+                                {/if}
+                            </dd>
+                        </dl>
+                        {/volist}
+                        {/if}
+                        {else /}
+                        <a href="javascript:;" {if isset($vo.uri)}data-href="{:url($vo.uri)}" {/if} {if
+                        isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if}><i
+                        class=" layui-icon {$vo.icon}"></i><span>{$vo.name}</span></a>
+                        {/if}
+                    </li>
                     {/volist}
                 </ul>
             </div>

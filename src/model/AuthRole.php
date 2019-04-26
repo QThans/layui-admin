@@ -17,4 +17,9 @@ class AuthRole extends Model
     {
         return $this->belongsToMany('AuthPermission', 'thans\layuiAdmin\model\AuthRolePermission', 'permission_id', 'role_id');
     }
+
+    public function menus()
+    {
+        return $this->belongsToMany('Menu', 'thans\layuiAdmin\model\AuthRoleMenu', 'menu_id', 'role_id');
+    }
 }

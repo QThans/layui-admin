@@ -122,14 +122,14 @@ EOD;
         $this->builder->script('table', $code);
     }
 
-    public function column($field, $title, $width = 100, $tpl = '', $attr = [])
+    public function column($field, $title, $width = 200, $tpl = '', $attr = [])
     {
         $column = ['field' => $field, 'title' => $title, 'width' => $width, 'templet' => $tpl ? '#' . $tpl : ''];
         $this->fields[] = array_merge($column, $attr);
         return $this;
     }
 
-    public function tool($title, $url, $action = 'ajax', $type = 'primary', $method = 'get', $condition = '')
+    public function tool($title, $url, $action = 'formLayer', $type = 'primary', $method = 'get', $condition = '')
     {
         $this->tools[] = [
             'title' => $title,

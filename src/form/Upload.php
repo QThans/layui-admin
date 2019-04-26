@@ -24,7 +24,7 @@ class Upload
     //文件上传headers
     public $headers = [];
     //上传成功代码
-    public $successCode = 1;
+    public $successCode = 0;
     //上传文件后缀，默认图片
     public $exts = '';
     //设定文件域的字段名

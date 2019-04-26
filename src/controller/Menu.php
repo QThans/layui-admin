@@ -20,7 +20,8 @@ class Menu
         if ($request->isAjax()) {
             list($where, $order, $page, $limit) = Utils::buildParams('name|url|permission');
             $menu = new MenuModel();
-            $list = $menu->tree();
+            $list = $menu->select();
+            $list = Utils::buildTree($list, false, '└―');
             $count = $menu->where($where)->count();
             Json::success('success', $list, 200, ['total' => $count]);
         }
@@ -111,12 +112,12 @@ class Menu
         $form->url($url);
         $parent = [];
         $parent[] = ['val' => 0, 'title' => '根菜单'];
-        foreach ($menu->tree() as $val) {
+        foreach (Utils::buildTree($menu->select(), false, '└―') as $val) {
             $parent[] = ['val' => $val['id'], 'title' => $val['label']];
         }
         $form->select()->name('parent_id')->label('上级菜单')->options($parent);
         $form->text()->name('name')->label('菜单名称')->rules('required');
-        $form->icon()->name('icon')->label('ICON')->rules('required', 'ICON必须选择')->value('layui-icon-circle-dot');
+        $form->icon()->name('icon')->label('ICON')->rules('required', true, 10, 100, 'ICON必须选择')->value('layui-icon-circle-dot');
         $form->number()->name('order')->label('排序')->value(1000);
         $form->text()->name('uri')->label('URI')->placeholder('请输入URI');
         $permission = [];

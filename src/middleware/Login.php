@@ -8,9 +8,7 @@ class Login
 {
     public function handle($request, \Closure $next)
     {
-        $path = $request->path();
-
-        $check = \thans\layuiAdmin\facade\Auth::isLogin('/' . $path);
+        $check = \thans\layuiAdmin\facade\Auth::userId();
 
         if (!$check) {
             session('error_msg', "请先登录系统");

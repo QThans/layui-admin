@@ -43,7 +43,7 @@ class Form
     //请求成功状态码
     public $successStatusCode = 0;
 
-    //请求成功后脚本  null 或  continue 或 msg
+    //请求成功后脚本  null 或  continue 或 msg 或者 refresh
     public $successEndScript = 'continue';
 
     //提交前脚本

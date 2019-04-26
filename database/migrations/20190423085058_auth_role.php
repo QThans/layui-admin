@@ -40,13 +40,13 @@ class AuthRole extends Migrator
             ->addIndex(['name'], array('unique' => false))
             ->addIndex(['alias'], array('unique' => false))
             ->create();
-        $defaultUser = [
+        $default = [
             'name'=>'Administrator',
             'alias'=> 'administrator',
             'create_time'=> time(),
             'update_time'=> time(),
         ];
-        $table->insert($defaultUser);
+        $table->insert($default);
         $table->saveData();
     }
 }

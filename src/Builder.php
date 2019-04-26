@@ -30,7 +30,7 @@ class Builder
 
     public $css = [
         'layui' => 'vendor/layui-admin/layui/css/layui.css',
-        'iconfont' => 'vendor/layui-admin/layui/modules/css/layui-icon-extend/iconfont.css',
+        'fa-iconfont' => 'vendor/layui-admin/font-awesome/css/font-awesome.min.css',
         'admin' => 'vendor/layui-admin/css/admin.css',
     ];
 

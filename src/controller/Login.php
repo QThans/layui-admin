@@ -5,10 +5,12 @@ namespace thans\layuiAdmin\controller;
 
 use thans\layuiAdmin\facade\Auth;
 use thans\layuiAdmin\facade\Json;
+use thans\layuiAdmin\facade\Jump;
 use thans\layuiAdmin\Login as LoginView;
 use think\Exception;
 use think\exception\HttpException;
 use think\facade\Config;
+use think\facade\Session;
 use think\Loader;
 use think\Request;
 
@@ -41,5 +43,14 @@ class Login
         } catch (HttpException $e) {
             Json::error($e->getMessage(), 400);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Session::clear();
+        if ($request->isAjax()) {
+            Json::success("退出成功");
+        }
+        Jump::success("退出成功", url('thans\layuiAdmin\controller\Login@index'));
     }
 }

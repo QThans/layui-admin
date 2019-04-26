@@ -39,13 +39,13 @@ class AuthRolePermission extends Migrator
             ->addIndex(['role_id'], array('unique' => false))
             ->addIndex(['permission_id'], array('unique' => false))
             ->create();
-        $defaultUser = [
+        $default = [
             'role_id' => 1,
             'permission_id' => 1,
             'create_time' => time(),
             'update_time' => time(),
         ];
-        $table->insert($defaultUser);
+        $table->insert($default);
         $table->saveData();
     }
 }

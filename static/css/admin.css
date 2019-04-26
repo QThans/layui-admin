@@ -2,6 +2,10 @@ html {
     background-color: #f2f2f2;
 }
 
+.layui-icon {
+    font-family: layui-icon, FontAwesome !important;
+}
+
 .admin-body-shade {
     position: fixed;
     display: none;
@@ -427,7 +431,7 @@ html {
     margin: auto 0;
 }
 
-.search .layui-form-item div{
+.search .layui-form-item div {
     margin-bottom: 5px;
     margin-right: 5px;
 }
@@ -438,7 +442,7 @@ html {
 
 .admin-table .search button {
     margin-top: 4px;
-    width:60px;
+    width: 60px;
 }
 
 @media screen and (max-width: 768px) {
@@ -524,50 +528,58 @@ html {
 .pass-tips a {
     color: blue;
 }
-.profile-avatar-div{
+
+.profile-avatar-div {
     position: relative;
     margin: 0 auto;
     width: 100px;
     height: 100px;
 }
-.profile-avatar-img{
+
+.profile-avatar-img {
     width: 100px;
     height: 100px;
 }
-#profile_avatar_upload{
+
+#profile_avatar_upload {
     position: absolute;
     right: 0;
     top: 40%;
-    cursor:default;
+    cursor: default;
 }
 
-.richtext-tips{
+.richtext-tips {
     margin-left: 130px;
 }
-.review img{
-    width:100px;
+
+.review img {
+    width: 100px;
     border-bottom: 1px solid #fff;
 }
-.review{
-    margin-top:10px;
+
+.review {
+    margin-top: 10px;
     margin-left: 130px;
 }
 
-.dim{
-    opacity:0.6; filter: alpha(opacity=60);
-}   
-.dimback{
+.dim {
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+
+.dimback {
     background: #000;
-    color:#fff;
+    color: #fff;
     text-align: center;
-    width:100px;
+    width: 100px;
     display: inline-block;
     margin-right: 10px;
     font-size: 12px;
-} 
-.layui-upload-files{
+}
+
+.layui-upload-files {
     background: #fff;
     color: #000;
-    height:100px;
+    height: 100px;
     border: 1px solid #ccc;
 }

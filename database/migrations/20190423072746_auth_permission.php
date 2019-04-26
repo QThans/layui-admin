@@ -32,16 +32,16 @@ class AuthPermission extends Migrator
         $table = $this->table('auth_permission');
 
         $table->addColumn('name', 'string', array('limit' => 100))
-            ->addColumn('alias', 'string', array('limit' => 20))
+            ->addColumn('alias', 'string', array('limit' => 100))
             ->addColumn('http_method', 'string', array('limit' => 50, 'default' => null, 'null' => true))
-            ->addColumn('path', 'string', array('limit' => 100))
+            ->addColumn('path', 'text', array('null' => true))
             ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => 0])
             ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => 0])
             ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => null, 'null' => true])
             ->addIndex(['name'], array('unique' => false))
             ->addIndex(['alias'], array('unique' => false))
             ->create();
-        $defaultUser = [
+        $default = [
             'name' => 'All',
             'alias' => '*',
             'http_method' => '',
@@ -49,7 +49,7 @@ class AuthPermission extends Migrator
             'create_time' => time(),
             'update_time' => time(),
         ];
-        $table->insert($defaultUser);
+        $table->insert($default);
         $table->saveData();
     }
 }

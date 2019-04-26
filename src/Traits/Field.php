@@ -71,10 +71,10 @@ trait Field
         return $this;
     }
 
-    public function rules($rules = '', $tips = '', $required = true, $min = 0, $max = 0)
+    public function rules($rules = '', $required = true, $min = 0, $max = 0, $tips = '')
     {
         $id = uniqid();
-        $this->rules =  'rule_' . $id;
+        $this->rules = 'rule_' . $id;
         $this->obj->rules[] = [
             'id' => $id,
             'rules' => $rules,

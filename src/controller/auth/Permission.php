@@ -112,7 +112,7 @@ class Permission
         $form->data($data);
         $form->url($url);
         $form->text()->name('name')->label('权限名称')->rules('required');
-        $form->text()->name('alias')->label('别名')->tips('仅支持字母、下划线、"."，必须字母开头')->rules('/^[a-zA-Z][a-zA-Z0-9_.-]+$/', '请输入正确的别名');
+        $form->text()->name('alias')->label('别名')->tips('仅支持字母、下划线、"."，必须字母开头')->rules('/^[a-zA-Z][a-zA-Z0-9_.-]+$/', true, 1, 100, '请输入正确的别名');
         $methods = [];
         $methods[] = ['val' => 'GET', 'title' => 'GET'];
         $methods[] = ['val' => 'POST', 'title' => 'POST'];

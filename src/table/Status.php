@@ -24,9 +24,15 @@ class Status
 
     public $field = 'status';
 
-    public function option($val, $title, $type='primary')
+    public function option($val, $title, $type = 'primary')
     {
-        $this->options[] = ['val'=>$val,'title'=>$title,'type'=>$type];
+        $this->options[] = ['val' => $val, 'title' => $title, 'type' => $type];
+        return $this;
+    }
+
+    public function options($arr = [])
+    {
+        $this->options = array_merge($this->options, $arr);
         return $this;
     }
 }

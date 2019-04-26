@@ -35,17 +35,18 @@ class User extends Migrator
             ->addColumn('salt', 'string', array('limit' => 20))
             ->addColumn('password', 'string', array('limit' => 128))
             ->addColumn('nickname', 'string', array('limit' => 100))
-            ->addColumn('email', 'string', array('limit' => 100,'null'=>true))
-            ->addColumn('mobile', 'string', array('limit' => 11,'null'=>true))
-            ->addColumn('activation_key', 'string', array('limit' => 255,'null'=>true))
-            ->addColumn('status', 'integer', array('limit' => MysqlAdapter::INT_TINY,'default' => 0,'null' => false))
-            ->addColumn('admin', 'integer', array('limit' => MysqlAdapter::INT_TINY,'default' => 0,'null' => false))
-            ->addColumn('register_ip', 'string', ['limit' => 15, 'comment'=>'注册IP','default'=>''])
-            ->addColumn('last_login_ip', 'string', ['limit' => 15, 'comment'=>'最后登录IP','default'=>''])
-            ->addColumn('last_login_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0, 'comment'=>'最后登录时间'])
-            ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
-            ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
-            ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>null,'null' => true])
+            ->addColumn('avatar', 'string', array('limit' => 255, 'default' => ''))
+            ->addColumn('email', 'string', array('limit' => 100, 'null' => true))
+            ->addColumn('mobile', 'string', array('limit' => 11, 'null' => true))
+            ->addColumn('activation_key', 'string', array('limit' => 255, 'null' => true))
+            ->addColumn('status', 'integer', array('limit' => MysqlAdapter::INT_TINY, 'default' => 0, 'null' => false))
+            ->addColumn('admin', 'integer', array('limit' => MysqlAdapter::INT_TINY, 'default' => 0, 'null' => false))
+            ->addColumn('register_ip', 'string', ['limit' => 15, 'comment' => '注册IP', 'default' => ''])
+            ->addColumn('last_login_ip', 'string', ['limit' => 15, 'comment' => '最后登录IP', 'default' => ''])
+            ->addColumn('last_login_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => 0, 'comment' => '最后登录时间'])
+            ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => 0])
+            ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => 0])
+            ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => null, 'null' => true])
             ->addIndex(['nickname'], array('unique' => false))
             ->addIndex(['name'], array('unique' => false))
             ->addIndex(['email'], array('unique' => false))
@@ -53,15 +54,16 @@ class User extends Migrator
             ->create();
         $salt = random_str(20);
         $password = encrypt_password('123456', $salt);
-        $defaultUser = [
-            'name'=>'admin',
-            'salt'=> $salt,
-            'password'=> $password,
-            'nickname'=> 'admin',
-            'create_time'=> time(),
-            'update_time'=> time(),
+        $default = [
+            'name' => 'admin',
+            'salt' => $salt,
+            'password' => $password,
+            'nickname' => 'admin',
+            'admin' => 1,
+            'create_time' => time(),
+            'update_time' => time(),
         ];
-        $table->insert($defaultUser);
+        $table->insert($default);
         $table->saveData();
     }
 }

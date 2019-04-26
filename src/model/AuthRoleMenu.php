@@ -4,10 +4,10 @@
 namespace thans\layuiAdmin\model;
 
 
-use think\Model;
 use think\model\concern\SoftDelete;
+use think\model\Pivot;
 
-class AuthRoleMenu extends Model
+class AuthRoleMenu extends Pivot
 {
     use SoftDelete;
 

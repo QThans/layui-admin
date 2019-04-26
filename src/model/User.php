@@ -14,7 +14,14 @@ use think\Model;
 
 class User extends Model
 {
+    protected $hidden = ['password', 'salt'];
+
     protected $name = 'user';
+
+    public $status = [
+        0 => '正常',
+        1 => '禁用'
+    ];
 
     public function meta()
     {
@@ -26,4 +33,19 @@ class User extends Model
         return $this->belongsToMany('AuthRole', 'thans\layuiAdmin\model\AuthRoleUser', 'role_id', 'user_id');
     }
 
+    public function hidden($array = [], $override = false)
+    {
+        parent::hidden(array_merge($this->hidden, $array), $override);
+        return $this;
+    }
+
+    public function getLastLoginTimeAttr($value)
+    {
+        return date('Y-m-d H:i:s', $value);
+    }
+
+    public function getStatusTextAttr($value, $data)
+    {
+        return $this->status[$data['status']];
+    }
 }

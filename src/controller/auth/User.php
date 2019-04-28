@@ -8,6 +8,7 @@ use thans\layuiAdmin\facade\Auth;
 use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\Form;
+use thans\layuiAdmin\model\AuthRole;
 use thans\layuiAdmin\Table;
 use thans\layuiAdmin\model\User as UserModel;
 use think\Exception;
@@ -42,15 +43,11 @@ class User
         if (Auth::check($url)) {
             $tb->tool('编辑', $url);
         }
-        $url = url('thans\layuiAdmin\controller\auth\User@role', 'id={{ d.id }}');
-        if (Auth::check($url)) {
-            $tb->tool('权限组分配', $url);
-        }
         $url = url('thans\layuiAdmin\controller\auth\User/create');
         if (Auth::check($url)) {
             $tb->action('新增管理员', $url);
         }
-        $tb->toolWidth(150);
+        $tb->toolWidth(70);
         return $tb->render();
     }
 
@@ -71,11 +68,10 @@ class User
             $data['password'] = encrypt_password($data['password'], $data['salt']);
             $data['admin'] = 1;
             $user = UserModel::create($data);
-            if ($user) {
-                Json::success('保存成功');
-            } else {
-                Json::error('保存失败');
+            if ($data['roles']) {
+                $user->roles()->save(explode(',', $data['roles']));
             }
+            Json::success('保存成功');
         } catch (Exception $e) {
             Json::error($e->getMessage());
         }
@@ -84,7 +80,7 @@ class User
     public function edit($id)
     {
         $user = new UserModel();
-        $user = $user->hidden()->get($id);
+        $user = $user->hidden()->get($id, 'roles');
         return $this->buildForm(url('thans\layuiAdmin\controller\auth\User/update', 'id=' . $id), 'PUT', $user);
     }
 
@@ -106,12 +102,12 @@ class User
             $user->mobile = $data['mobile'];
             $user->email = $data['email'];
             $user->status = $data['status'];
-            $user = $user->save();
-            if ($user) {
-                Json::success('更新成功');
-            } else {
-                Json::error('更新失败');
+            $user->save();
+            $user->roles()->detach();
+            if ($data['roles']) {
+                $user->roles()->save(explode(',', $data['roles']));
             }
+            Json::success('更新成功');
         } catch (Exception $e) {
             Json::error($e->getMessage());
         }
@@ -137,14 +133,13 @@ class User
             ['title' => '禁用', 'val' => 1]
         ];
         $form->select()->label('状态')->name('status')->options($op);
+        $op = [];
+        $roles = AuthRole::select();
+        foreach ($roles as $val) {
+            $op[] = ['title' => $val['name'], 'val' => $val['id']];
+        }
+        $data['roles'] = isset($data['roles']) && $data['roles'] ? implode(',', array_column($data->roles->toArray(), 'id')) : '';
+        $form->multiSelect()->label('权限组选择')->name('roles')->options($op);
         return $form->render();
     }
-
-    public function role($id, Request $request)
-    {
-        if ($request->isPost()) {
-
-        }
-    }
-
 }

@@ -59,6 +59,15 @@ trait Field
         return $this;
     }
 
+    public function disabled($disabled = true)
+    {
+        unset($this->attr['disabled']);
+        if($disabled){
+            $this->attr['disabled'] = false;
+        }
+        return $this;
+    }
+
     public function render()
     {
         if (method_exists($this, 'end')) {

@@ -61,7 +61,7 @@ class User
         $data = $request->param();
         try {
             $validate = new \thans\layuiAdmin\validate\User();
-            if (!$validate->scene('admin')->check($data)) {
+            if (!$validate->scene('insert')->check($data)) {
                 Json::error($validate->getError());
             }
             $data['salt'] = random_str(20);
@@ -89,7 +89,7 @@ class User
         $data = $request->param();
         try {
             $validate = new \thans\layuiAdmin\validate\User();
-            if (!$validate->scene('adminEdit')->check($data)) {
+            if (!$validate->scene('edit')->check($data)) {
                 Json::error($validate->getError());
             }
             $user = UserModel::get($id);

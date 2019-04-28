@@ -171,7 +171,7 @@ EOD;
                 }
                 $tmp = "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
                 if ($val['condition']) {
-                    $tmp = '{{#  if(' . $val['condition'] . '){ }}' . $tmp . '{{#  } }} ';//条件
+                    $tmp = '{{#  if(' . $val['condition'] . '){ }}' . $tmp . '{{#  } }}';//条件
                 }
                 $html .= $tmp;
             }

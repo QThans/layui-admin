@@ -149,8 +149,7 @@ layui.define(["layer", "upload"], function (exports) {
         layer.msg(data.msg);
         if (refresh) {
           $("#layui-icon-refresh-" + refresh, parent.document).click();
-        } else {
-          $(".layui-icon-refresh", parent.document).click();
+          $("#layui-icon-refresh-" + refresh).click();
         }
       },
       "",
@@ -171,8 +170,7 @@ layui.define(["layer", "upload"], function (exports) {
           layer.msg(data.msg);
           if (refresh) {
             $("#layui-icon-refresh-" + refresh, parent.document).click();
-          } else {
-            $(".layui-icon-refresh", parent.document).click();
+            $("#layui-icon-refresh-" + refresh).click();
           }
         },
         "",
@@ -438,7 +436,7 @@ layui.define(["layer", "upload"], function (exports) {
       var succCallback =
         succCallback ||
         function (data) {
-          var wait = data.wait*1000 || 1000;
+          var wait = data.wait * 1000 || 1000;
           if (!data.code) {
             layer.msg(
               data.msg,

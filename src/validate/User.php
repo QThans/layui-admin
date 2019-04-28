@@ -27,14 +27,14 @@ class User extends Validate
         'code' => '请输入正确的验证码',
     ];
 
-    public function sceneAdmin()
+    public function sceneInsert()
     {
         return $this->only(['name', 'nickname', 'password', 'email', 'mobile'])
             ->remove('mobile', 'require')
             ->remove('email', 'require');
     }
 
-    public function sceneAdminEdit()
+    public function sceneEdit()
     {
         return $this->only(['name', 'nickname', 'password', 'email', 'mobile'])
             ->remove('mobile', 'require')

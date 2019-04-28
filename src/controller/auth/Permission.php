@@ -25,7 +25,7 @@ class Permission
             Json::success('获取成功', $list, 200, ['total' => $total]);
         }
         $tb = new Table();
-        $tb->title('权限列表');
+        $tb->title('权限管理');
         $tb->url(url('thans\layuiAdmin\controller\auth\Permission/index'));
 
 

@@ -41,7 +41,7 @@ class User extends Model
 
     public function getLastLoginTimeAttr($value)
     {
-        return date('Y-m-d H:i:s', $value);
+        return $value ? date('Y-m-d H:i:s', $value) : '未登录过';
     }
 
     public function getStatusTextAttr($value, $data)

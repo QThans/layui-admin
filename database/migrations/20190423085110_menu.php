@@ -53,7 +53,7 @@ class Menu extends Migrator
             'update_time' => time(),
         ];
         $default[] = [
-            'name' => '菜单列表',
+            'name' => '菜单管理',
             'parent_id' => 1,
             'order' => 2,
             'icon' => '',
@@ -62,7 +62,7 @@ class Menu extends Migrator
             'update_time' => time(),
         ];
         $default[] = [
-            'name' => '权限列表',
+            'name' => '权限管理',
             'parent_id' => 1,
             'order' => 3,
             'icon' => '',
@@ -71,7 +71,7 @@ class Menu extends Migrator
             'update_time' => time(),
         ];
         $default[] = [
-            'name' => '权限组列表',
+            'name' => '权限组',
             'parent_id' => 1,
             'order' => 4,
             'icon' => '',
@@ -89,7 +89,7 @@ class Menu extends Migrator
             'update_time' => time(),
         ];
         $default[] = [
-            'name' => '管理员列表',
+            'name' => '管理员',
             'parent_id' => 5,
             'order' => 6,
             'icon' => '',
@@ -98,7 +98,7 @@ class Menu extends Migrator
             'update_time' => time(),
         ];
         $default[] = [
-            'name' => '用户列表',
+            'name' => '本站用户',
             'parent_id' => 5,
             'order' => 7,
             'icon' => '',

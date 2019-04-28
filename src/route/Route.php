@@ -19,6 +19,8 @@ Route::group('admin', function () {
         Route::resource('permission', 'thans\layuiAdmin\controller\auth\Permission');
         Route::resource('role', 'thans\layuiAdmin\controller\auth\Role');
         Route::resource('auth/user', 'thans\layuiAdmin\controller\auth\User')->except(['delete']);
+        Route::get('user/lock/:id', 'thans\layuiAdmin\controller\User@lock');
+        Route::get('user/unlock/:id', 'thans\layuiAdmin\controller\User@unlock');
         Route::resource('user', 'thans\layuiAdmin\controller\User')->except(['delete']);
     })->middleware([thans\layuiAdmin\middleware\Login::class, thans\layuiAdmin\middleware\Auth::class]);
 });

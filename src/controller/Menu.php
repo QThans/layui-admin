@@ -27,12 +27,16 @@ class Menu
         }
         $tb = new Table();
         $tb->url(url('thans\layuiAdmin\controller\Menu/index'));
-        $tb->column('id', 'ID');
+        $tb->column('id', 'ID', 100);
         $tb->column('label', '菜单名称', 300);
         $tb->icon();
-        $tb->column('icon', 'ICON', 200, 'icon', ['align' => 'center']);
+        $tb->column('icon', 'ICON', 100, 'icon', ['align' => 'center']);
         $tb->column('uri', 'URI', 200);
         $tb->column('permission', '权限绑定', 200);
+        $tb->status()->option(0, '显示')->option(1, '隐藏','danger');
+        $tb->column('status', '状态', 100, 'status', ['align' => 'center']);
+        $tb->column('create_time', '创建时间', 200);
+        $tb->column('update_time', '更新时间', 200);
         $url = url('thans\layuiAdmin\controller\Menu/create');
         if (Auth::check($url)) {
             $tb->action('新增菜单', $url);

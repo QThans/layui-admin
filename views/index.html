@@ -12,11 +12,17 @@
                 {/volist}
             </ul>
             <ul class="layui-nav layui-layout-right">
+
+                {if $self->topRightMenu}
+                {volist name="$self->topRightMenu" id="vo"}
                 <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:;" data-href="http://uinge.com" lay-text="消息中心">
-                        <i class="layui-icon layui-icon-notice"></i>
+                    <a href="javascript:;" {if isset($vo.attr)}{volist
+                       name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} data-href="{$vo.href}" lay-text="{$vo.text}">
+                        {$vo.title|raw}
                     </a>
                 </li>
+                {/volist}
+                {/if}
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;" admin-event="refresh">
                         <i class="layui-icon layui-icon-refresh"></i>
@@ -56,7 +62,8 @@
                         {volist name="$vo['children']" id="vv"}
                         <dl class="layui-nav-child">
                             <dd class="">
-                                <a {if $vv.uri}data-href='{:url($vv.uri)}' {/if} href="javascript:;">{php}echo str_repeat('&nbsp;&nbsp;',
+                                <a {if $vv.uri}data-href='{:url($vv.uri)}' {/if} href="javascript:;">{php}echo
+                                str_repeat('&nbsp;&nbsp;',
                                 $vv['deep']);{/php}<span>{$vv.name|raw}</span></a>
                                 {if isset($vv['children']) && $vo.children}
                                 {volist name="$vv['children']" id="v"}

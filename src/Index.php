@@ -24,6 +24,8 @@ class Index
 
     public $userMenu = [];// title  href  attr
 
+    public $topRightMenu = [];// top right menu
+
     public $tmpl = 'index';
 
     public $firstTabName = '';
@@ -39,9 +41,21 @@ class Index
     public function userMenu($title, $href = '', $attr = [])
     {
         $this->userMenu[] = [
-            'title'=>$title,
-            'href'=>$href,
-            'attr'=>$attr
+            'title' => $title,
+            'href' => $href,
+            'attr' => $attr
+        ];
+        return $this;
+    }
+
+    public function topRightMenu($title, $href = '', $text = '', $attr = [])
+    {
+        $text = $text ? $text : $title;
+        $this->userMenu[] = [
+            'title' => $title,
+            'text' => $text,
+            'href' => $href,
+            'attr' => $attr
         ];
         return $this;
     }
@@ -55,10 +69,10 @@ class Index
     public function child($title, $href = '', $icon = '', $attr = [])
     {
         $this->menu[$this->child]['child'] = [
-            'title'=>$title,
-            'icon'=>$icon,
-            'href'=>$href,
-            'attr'=>$attr
+            'title' => $title,
+            'icon' => $icon,
+            'href' => $href,
+            'attr' => $attr
         ];
         return $this;
     }

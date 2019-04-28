@@ -4,10 +4,13 @@
 namespace thans\layuiAdmin\controller\auth;
 
 //管理员管理
+use thans\layuiAdmin\facade\Auth;
 use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\facade\Json;
+use thans\layuiAdmin\Form;
 use thans\layuiAdmin\Table;
 use thans\layuiAdmin\model\User as UserModel;
+use think\Exception;
 use think\Request;
 
 class User
@@ -35,11 +38,19 @@ class User
         $tb->column('create_time', '创建时间');
         $tb->column('update_time', '更新时间');
         $tb->status(['field' => 'status'])->option(0, '正常')->option(1, '禁用', 'danger');
-        $tb->tool('编辑', url('thans\layuiAdmin\controller\auth\User/edit', 'id={{ d.id }}'));
-        $tb->tool('权限组分配', url('thans\layuiAdmin\controller\auth\User@role', 'id={{ d.id }}'));
-        $tb->tool('菜单分配', url('thans\layuiAdmin\controller\auth\User@menu', 'id={{ d.id }}'));
-        $tb->action('新增管理员', url('thans\layuiAdmin\controller\auth\User/create'));
-        $tb->toolWidth(220);
+        $url = url('thans\layuiAdmin\controller\auth\User/edit', 'id={{ d.id }}');
+        if (Auth::check($url)) {
+            $tb->tool('编辑', $url);
+        }
+        $url = url('thans\layuiAdmin\controller\auth\User@role', 'id={{ d.id }}');
+        if (Auth::check($url)) {
+            $tb->tool('权限组分配', $url);
+        }
+        $url = url('thans\layuiAdmin\controller\auth\User/create');
+        if (Auth::check($url)) {
+            $tb->action('新增管理员', $url);
+        }
+        $tb->toolWidth(150);
         return $tb->render();
     }
 
@@ -48,9 +59,26 @@ class User
         return $this->buildForm(url('thans\layuiAdmin\controller\auth\User/save'));
     }
 
-    public function save()
+    public function save(Request $request)
     {
-
+        $data = $request->param();
+        try {
+            $validate = new \thans\layuiAdmin\validate\User();
+            if (!$validate->scene('admin')->check($data)) {
+                Json::error($validate->getError());
+            }
+            $data['salt'] = random_str(20);
+            $data['password'] = encrypt_password($data['password'], $data['salt']);
+            $data['admin'] = 1;
+            $user = UserModel::create($data);
+            if ($user) {
+                Json::success('保存成功');
+            } else {
+                Json::error('保存失败');
+            }
+        } catch (Exception $e) {
+            Json::error($e->getMessage());
+        }
     }
 
     public function edit($id)
@@ -62,12 +90,54 @@ class User
 
     public function update($id, Request $request)
     {
-
+        $data = $request->param();
+        try {
+            $validate = new \thans\layuiAdmin\validate\User();
+            if (!$validate->scene('adminEdit')->check($data)) {
+                Json::error($validate->getError());
+            }
+            $user = UserModel::get($id);
+            if (isset($data['password']) && $data['password']) {
+                $user->salt = random_str(20);
+                $user->password = encrypt_password($data['password'], $user->salt);
+            }
+            $user->name = $data['name'];
+            $user->nickname = $data['nickname'];
+            $user->mobile = $data['mobile'];
+            $user->email = $data['email'];
+            $user->status = $data['status'];
+            $user = $user->save();
+            if ($user) {
+                Json::success('更新成功');
+            } else {
+                Json::error('更新失败');
+            }
+        } catch (Exception $e) {
+            Json::error($e->getMessage());
+        }
     }
 
     public function buildForm($url, $method = 'POST', $data = [])
     {
-
+        $form = new Form();
+        $form->url($url);
+        $form->method($method);
+        $form->data($data);
+        $form->text()->label('用户名')->name('name')->placeholder('请输入用户名')->rules('account')->tips("用户名支持中英文、数字、下划线，不支持数字开头");
+        $form->text()->label('昵称')->name('nickname')->placeholder('请输入昵称')->rules('required', true, 5, 100);
+        $placeholder = '请输入密码';
+        if ($data) {
+            $placeholder = '留空不更新密码';
+        }
+        $form->text()->label('密码')->name('password')->placeholder($placeholder)->rules('password', (boolean)!$data)->tips('密码必须6到24位，且不能出现空格');
+        $form->text()->label('邮箱')->name('email')->placeholder('请输入邮箱')->rules('email', false);
+        $form->text()->label('手机号')->name('mobile')->placeholder('请输入手机号')->rules('mobile', false);
+        $op = [
+            ['title' => '正常', 'val' => 0],
+            ['title' => '禁用', 'val' => 1]
+        ];
+        $form->select()->label('状态')->name('status')->options($op);
+        return $form->render();
     }
 
     public function role($id, Request $request)
@@ -77,10 +147,4 @@ class User
         }
     }
 
-    public function menu($id, Request $request)
-    {
-        if ($request->isPost()) {
-
-        }
-    }
 }

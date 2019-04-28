@@ -64,12 +64,20 @@ class Auth
     public function menu()
     {
         $roles = $this->isAdmin();
+        if (!$roles) {
+            return false;
+        }
+        $menus = [];
+        $menu = Menu::where('status', 0)->order('order asc');
         foreach ($roles as $role) {
             if ($role['id'] == 1) {
-                return \thans\layuiAdmin\facade\Utils::buildTree(Menu::select()->toArray(), true);
+                return \thans\layuiAdmin\facade\Utils::buildTree($menu->select()->toArray(), true);
             }
-
+            $menus = array_merge($menus, $role->menus->toArray());
+            $menus = array_merge($menus, $role->menus->toArray());
         }
+        $menus = assoc_unique($menus, 'id');
+        return \thans\layuiAdmin\facade\Utils::buildTree($menus, true);
     }
 
     public function isAdmin()
@@ -87,7 +95,13 @@ class Auth
         $path = trim($path, '/');
         $path = trim($path, '.html');
         $roles = $this->isAdmin();
+        if (!$roles) {
+            return false;
+        }
         foreach ($roles as $role) {
+            if ($role->status !== 0) {
+                continue;
+            }
             //查找所有权限
             $permissions = $role->permissions()->select();
             if (!$permissions) {
@@ -119,8 +133,6 @@ class Auth
     {
         if (strpos($http_method, $method) !== false || $http_method == "") {
             return true;
-        } else {
-            return false;
         }
     }
 }

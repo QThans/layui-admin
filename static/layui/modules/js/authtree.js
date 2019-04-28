@@ -282,13 +282,13 @@ layui.define(['jquery', 'form'], function(exports){
                     }
                     node['name'] = item[opt.nameKey];
                     node['value'] = item[opt.valueKey];
-                    // 已选中节点的两种渲染方式
+                    // 已checkAll节点的两种渲染方式
                     if (typeof opt.checkedKey === "string" || typeof opt.checkedKey === 'number') {
                         node['checked'] = item[opt.checkedKey];
                     } else if(typeof opt.checkedKey === 'object') {
                         if ($.inArray(item[opt.valueKey], opt.checkedKey) != -1) {
                             node['checked'] = true;
-                        } else {
+                        } else {checkedKey
                             node['checked'] = false;
                         }
                     } else {
@@ -456,7 +456,6 @@ layui.define(['jquery', 'form'], function(exports){
         // 全选
         checkAll: function(dst){
             var origin = $(dst);
-
             origin.find('.authtree-checkitem:not(:disabled):not(:checked)').prop('checked', true);
             form.render('checkbox');
             form.render('radio');

@@ -19,9 +19,9 @@ class Index
         $home->menu($menu);
         $home->firstTabUrl(url('thans\layuiAdmin\controller\Index@dashboard'));
         $home->firstTabName("控制台");
-        $home->logo('LayuiAdmin-Tp');
-        $home->userMenu('个人设置',url('thans\layuiAdmin\controller\Personal@setting'));
-        $home->userMenu('退出登录','',['target'=>'_top','href'=>url('thans\layuiAdmin\controller\Login@logout')]);
+        $home->logo('LayuiAdmin-TP');
+        $home->userMenu('个人设置', url('thans\layuiAdmin\controller\Personal@setting'));
+        $home->userMenu('退出登录', '', ['target' => '_top', 'href' => url('thans\layuiAdmin\controller\Login@logout')]);
         return $home->render();
     }
 
@@ -38,10 +38,12 @@ class Index
             'PHP版本' => phpversion(),
             'MySql版本' => $mysql,
             '剩余空间' => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
+        ]);
+        $dashbord->card()->title('联系信息')->datas([
+            '官网' => '<a href=\'https://layuiadmin.com\' target="_blank">LayuiAdmin-TP</a></a>',
             '商务联系' => '<img src="http://cdn.inge.vip/thans.jpeg">',
             '为我点赞' => '<a href=\'https://gitee.com/thans/layuiAdmin/stargazers\'><img src=\'https://gitee.com/thans/layuiAdmin/badge/star.svg?theme=white\' alt=\'star\'></img></a>',
         ]);
-
         return $dashbord->render();
     }
 }

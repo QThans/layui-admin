@@ -18,7 +18,7 @@ class User extends Model
 
     protected $name = 'user';
 
-    public $status = [
+    public $statusText = [
         0 => '正常',
         1 => '禁用'
     ];
@@ -46,6 +46,45 @@ class User extends Model
 
     public function getStatusTextAttr($value, $data)
     {
-        return $this->status[$data['status']];
+        return $this->statusText[$data['status']];
+    }
+
+    public static function init()
+    {
+        self::event('before_insert', function ($user) {
+            self::existUser($user);
+        });
+        self::event('before_update', function ($user) {
+            self::existUser($user, $user['id']);
+        });
+    }
+
+    public static function existUser($user, $user_id = '')
+    {
+        if (self::exist('name', $user['name'], $user_id)) {
+            exception("用户已存在");
+        }
+        if (self::exist('nickname', $user['nickname'], $user_id)) {
+            exception("昵称已存在");
+        }
+        if (self::exist('mobile', $user['mobile'], $user_id)) {
+            exception("手机号已存在");
+        }
+        if (self::exist('email', $user['email'], $user_id)) {
+            exception("邮箱已存在");
+        }
+    }
+
+    public static function exist($field, $value, $user_id = '')
+    {
+        $where = [];
+        if ($user_id) {
+            $where[] = ['id', 'neq', $user_id];
+        }
+        $model = self::where($where);
+        if ($value && $model->where($field, $value)->find()) {
+            return true;
+        }
+        return false;
     }
 }

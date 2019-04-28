@@ -22,4 +22,10 @@ class AuthRole extends Model
     {
         return $this->belongsToMany('Menu', 'thans\layuiAdmin\model\AuthRoleMenu', 'menu_id', 'role_id');
     }
+
+    //中间表，不获取用户
+    public function roleUser()
+    {
+        return $this->hasMany('AuthRoleUser', 'role_id','id');
+    }
 }

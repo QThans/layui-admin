@@ -76,9 +76,12 @@ form.on('submit(form-{$self->id})', function (data) {
                         title: '提示',
                         btn: ['继续', '返回']
                     }, function (index) {
+                        if ($(".layui-icon-refresh", parent.document)) {
+                            $(".layui-icon-refresh", parent.document).click();
+                        }
                         location.reload();
                     }, function () {
-                        admin.closeSelf()
+                        admin.closeSelf();
                     });
                 {/case}
                 {case end}

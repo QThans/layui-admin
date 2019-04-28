@@ -28,7 +28,7 @@ class Personal
             }
             try {
                 $user->nickname = $data['nickname'];
-                $user->avatar = $data['avatar'];
+                isset($data['avatar']) && $data['avatar'] ? $user->avatar = $data['avatar'] : '';
                 if ($data['password']) {
                     $salt = random_str(20);
                     $user->password = encrypt_password($data['password'], $salt);

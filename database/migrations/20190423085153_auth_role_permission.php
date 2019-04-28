@@ -35,7 +35,6 @@ class AuthRolePermission extends Migrator
             ->addColumn('permission_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
             ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
             ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
-            ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>null,'null' => true])
             ->addIndex(['role_id'], array('unique' => false))
             ->addIndex(['permission_id'], array('unique' => false))
             ->create();

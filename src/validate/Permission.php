@@ -12,7 +12,7 @@ class Permission extends Validate
         'name' => 'require|max:100',
         'http_method' => 'max:50',
         'path' => 'require',
-        'alias' => ['require', 'max' => 100, 'regex' => '/^[a-zA-Z][a-zA-Z0-9_.-]+$/'],
+        'alias' => ['require', 'max' => 100, 'regex' => '/^[a-zA-Z0-9\\\*]+$/'],
     ];
 
     protected $message = [

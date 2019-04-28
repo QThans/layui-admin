@@ -11,15 +11,14 @@ Route::group('admin', function () {
         Route::group('personal', function () {
             Route::rule('setting', 'thans\layuiAdmin\controller\Personal@setting', 'GET|POST');
         });
-    })->middleware([thans\layuiAdmin\middleware\Login::class]);
+    })->middleware([thans\layuiAdmin\middleware\Login::class, [thans\layuiAdmin\middleware\Auth::class, false]]);
 
     Route::group('', function () {
         Route::get('dashboard', 'thans\layuiAdmin\controller\Index@dashboard');
         Route::resource('menu', 'thans\layuiAdmin\controller\Menu');
         Route::resource('permission', 'thans\layuiAdmin\controller\auth\Permission');
         Route::resource('role', 'thans\layuiAdmin\controller\auth\Role');
-        Route::rule('auth/user/role', 'thans\layuiAdmin\controller\auth\User@role', 'GET|POST');
-        Route::rule('auth/user/menu', 'thans\layuiAdmin\controller\auth\User@menu', 'GET|POST');
+        Route::rule('auth/user/role/:id', 'thans\layuiAdmin\controller\auth\User@role', 'GET|POST');
         Route::resource('auth/user', 'thans\layuiAdmin\controller\auth\User')->except(['delete']);
         Route::resource('user', 'thans\layuiAdmin\controller\User')->except(['delete']);
     })->middleware([thans\layuiAdmin\middleware\Login::class, thans\layuiAdmin\middleware\Auth::class]);

@@ -129,7 +129,7 @@ EOD;
         return $this;
     }
 
-    public function tool($title, $url, $action = 'formLayer', $type = 'primary', $method = 'get', $condition = '')
+    public function tool($title, $url, $action = 'formLayer', $type = 'primary', $method = 'get', $condition = '', $tips = '')
     {
         $this->tools[] = [
             'title' => $title,
@@ -138,6 +138,7 @@ EOD;
             'url' => urldecode($url),
             'type' => $type,
             'condition' => $condition,
+            'tips' => $tips,
         ];
         return $this;
     }
@@ -163,9 +164,10 @@ EOD;
                 } else {
                     $class = '';
                 }
-                $val['title-tips'] = $val['title'];
                 if ($val['action'] == 'confirmAjax') {
-                    $val['title-tips'] = '确定' . $val['title-tips'] . '吗？';
+                    $val['title-tips'] = $val['tips'] ? $val['tips'] : '确定' . $val['title'] . '吗？';
+                } else {
+                    $val['title-tips'] = $val['tips'] ? $val['tips'] : $val['title'];
                 }
                 $tmp = "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
                 if ($val['condition']) {

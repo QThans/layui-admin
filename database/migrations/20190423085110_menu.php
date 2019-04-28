@@ -53,7 +53,7 @@ class Menu extends Migrator
             'update_time' => time(),
         ];
         $default[] = [
-            'name' => '菜单管理',
+            'name' => '菜单列表',
             'parent_id' => 1,
             'order' => 2,
             'icon' => '',
@@ -62,7 +62,7 @@ class Menu extends Migrator
             'update_time' => time(),
         ];
         $default[] = [
-            'name' => '权限管理',
+            'name' => '权限列表',
             'parent_id' => 1,
             'order' => 3,
             'icon' => '',
@@ -71,18 +71,27 @@ class Menu extends Migrator
             'update_time' => time(),
         ];
         $default[] = [
+            'name' => '权限组列表',
+            'parent_id' => 1,
+            'order' => 4,
+            'icon' => '',
+            'uri' => 'admin/role',
+            'create_time' => time(),
+            'update_time' => time(),
+        ];
+        $default[] = [
             'name' => '用户管理',
             'parent_id' => 0,
-            'order' => 4,
+            'order' => 5,
             'icon' => 'layui-icon-user',
             'uri' => '',
             'create_time' => time(),
             'update_time' => time(),
         ];
         $default[] = [
-            'name' => '管理员',
-            'parent_id' => 4,
-            'order' => 5,
+            'name' => '管理员列表',
+            'parent_id' => 5,
+            'order' => 6,
             'icon' => '',
             'uri' => 'admin/auth/user',
             'create_time' => time(),
@@ -90,8 +99,8 @@ class Menu extends Migrator
         ];
         $default[] = [
             'name' => '用户列表',
-            'parent_id' => 4,
-            'order' => 6,
+            'parent_id' => 5,
+            'order' => 7,
             'icon' => '',
             'uri' => 'admin/user',
             'create_time' => time(),

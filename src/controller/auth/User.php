@@ -20,8 +20,8 @@ class User
     {
         if ($request->isAjax()) {
             list($where, $order, $page, $limit) = Utils::buildParams('name|nickname|email|mobile');
-            $user = UserModel::where($where);
             $where[] = ['admin', 'eq', 1];
+            $user = UserModel::where($where);
             $list = $user->order($order)->page($page)->limit($limit)->select();
             $total = $user->count();
             Json::success('获取成功', $list, 200, ['total' => $total]);

@@ -1,57 +1,50 @@
-# layui-admin
 
-## 极速构建后台模板
+<h1><p align="center">layui-admin</p></h1>
+<p align="center"> 基于thinkphp的后台管理系统。</p>
 
-### 开发文档 
+<p align="center">
+<a href="https://www.kancloud.cn/sanshinet/layui-admin">开发文档</a>
+<a href="http://demo.layuiadmin.com/admin/login.html">DEMO</a>
+</p>
 
-[文档地址：https://www.kancloud.cn/sanshinet/layui-admin](https://www.kancloud.cn/sanshinet/layui-admin)
+## 特性
 
-
-## 版本:1.0 beta
-
-## 说明
-
-测试版，未正式上线。请慎重使用。
-
-文档未完善，readme 简单看下，或者看代码。
-
+1. 基于tp5.1
+2. 基于layui前端框架
+3. 内置用户和权限管理
+4. Form类快速构建表单
+5. 包含多种表单组件
+6. Table类快速构建列表
 
 ## 安装方式
 
-beta版本安装
-
+第一步：
 ```shell
-$ composer rquire thans/layui-admin:1.*@beta
+$ composer rquire thans/layui-admin
+```
+第二步：
+```shell
+$ php think layuiAdmin:install
+```
+第三步：
+```shell
+$ php think migrate:run
 ```
 
-## 安装完成后初始化
+## 包含组件：
 
-```php
-php think layuiAdmin:install
+* 富文本编辑框【ckeditor4】
+* 文本输入框
+* 数字输入框
+* TextArea输入框
+* 单[多]文件[图片]上传
+* 开关
+* 下拉单选
+* 下拉多选
+* checkbox
+* 权限树
+* ICON选择器
 
-```
-
-## 界面展示
-
--   登录页面：
-
-![登录页面](https://images.gitee.com/uploads/images/2018/1225/200501_74760169_543050.jpeg "登录页面")
-
--   后台主页面：
-
-![后台主页面](https://images.gitee.com/uploads/images/2018/1225/215518_c7a9650e_543050.jpeg "后台主页面：")
-
--   表单
-
-![表单](https://images.gitee.com/uploads/images/2019/0312/173400_3897a005_543050.png "表单")
-
--   表格
-
-![表格](https://images.gitee.com/uploads/images/2019/0312/173444_236b14f9_543050.png "表格")
-
--   权限树
-
-![表格](https://images.gitee.com/uploads/images/2019/0312/174121_45545bad_543050.png "表格")
 
 ## License
 

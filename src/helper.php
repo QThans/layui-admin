@@ -13,7 +13,7 @@
 ]);
 
 bind([
-    'auth' => \thans\layuiAdmin\Auth::class,
+    'auth' => \thans\layuiAdmin\tool\Auth::class,
 ]);
 
 require_once 'route' . DIRECTORY_SEPARATOR . 'Route.php';

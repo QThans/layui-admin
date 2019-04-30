@@ -22,7 +22,7 @@ class Permission
             $permission = AuthPermission::where($where)->order($order);
             $list = $permission->page($page)->limit($limit)->select();
             $total = $permission->count();
-            Json::success('获取成功', $list, 200, ['total' => $total]);
+            Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
         $tb->title('权限管理');

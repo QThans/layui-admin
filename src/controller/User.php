@@ -22,7 +22,7 @@ class User
             $user = UserModel::where($where);
             $list = $user->order($order)->page($page)->limit($limit)->select();
             $total = $user->count();
-            Json::success('获取成功', $list, 200, ['total' => $total]);
+            Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
         $tb->url(url('thans\layuiAdmin\controller\User/index'));

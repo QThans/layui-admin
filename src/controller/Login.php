@@ -39,7 +39,7 @@ class Login
         try {
             $user = Auth::login($account, $password);
             session('admin', $user->admin);
-            Json::success('登录成功...', [], 200, [], $redirect ? $redirect : url('thans\layuiAdmin\controller\Index@index'), 2);
+            Json::success('登录成功...', [], [], $redirect ? $redirect : url('thans\layuiAdmin\controller\Index@index'), 2);
         } catch (HttpException $e) {
             Json::error($e->getMessage(), 400);
         }

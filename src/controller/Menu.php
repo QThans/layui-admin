@@ -23,7 +23,7 @@ class Menu
             $list = $menu->select();
             $list = Utils::buildTree($list, false, '└―');
             $count = $menu->where($where)->count();
-            Json::success('success', $list, 200, ['total' => $count]);
+            Json::success('获取成功', $list, ['total' => $count]);
         }
         $tb = new Table();
         $tb->url(url('thans\layuiAdmin\controller\Menu/index'));

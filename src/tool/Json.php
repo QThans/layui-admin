@@ -20,7 +20,7 @@ class Json
      * @param array $header 发送的Header信息
      * @return void
      */
-    public function success($msg = '', $data = '', $statusCode = '200', array $res = [], $url = null, $wait = 3, array $header = [])
+    public function success($msg = '', $data = '', array $res = [], $url = null, $wait = 3, $statusCode = '200', array $header = [])
     {
         if (is_null($url)) {
             $url = '';

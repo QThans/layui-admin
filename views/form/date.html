@@ -1,0 +1,7 @@
+<div class="layui-form-item">
+    <label class="layui-form-label">{$self->label}</label>
+    <div class="layui-input-inline">
+        <input class="layui-input" id="{$self->id}" readonly placeholder="{$self->placeholder|default=''}" type="text" lay-verify="{$self->rules}" {volist name="$self->attr" id="vo"}{$key}="{$vo}" {/volist} name="{$self->name}" value="{$self->value}" {$self->disabled}>
+    </div>
+    <div class="layui-form-mid layui-word-aux">{$self->tips|raw}</div>
+</div>

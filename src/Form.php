@@ -65,6 +65,7 @@ class Form
         'richtext' => form\Richtext::class,
         'upload' => form\Upload::class,
         'icon' => form\Icon::class,
+        'date' => form\Date::class,
     ];
 
     public $formVerify = [

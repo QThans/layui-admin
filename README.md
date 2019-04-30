@@ -44,7 +44,7 @@ $ php think migrate:run
 * checkbox
 * 权限树
 * ICON选择器
-
+* 日期选择，支持多种格式。支持范围。
 
 ## License
 

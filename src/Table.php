@@ -43,7 +43,7 @@ class Table
 
     public $tools = [];
 
-    public $toolWidth = 120;
+    public $toolWidth = 'auto';
 
 
     /**

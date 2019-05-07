@@ -27,7 +27,9 @@ class Utils
         }
         if ($filter) {
             foreach ($filter as $key => $value) {
-                $where[] = [$key, '=', $value];
+                if($value !== ''){
+                    $where[] = [$key, '=', $value];
+                }
             }
         }
 

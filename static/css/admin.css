@@ -576,11 +576,27 @@ html {
     margin-right: 10px;
     font-size: 12px;
 }
-
+.dimback-file{
+    width: 50%;
+    display: block;
+}
 .layui-upload-files {
     background: #fff;
     color: #000;
     height: 100px;
     word-break: break-all;
     border: 1px solid #ccc;
+}
+.layui-upload-file-name{
+    text-align: left;
+    width: 90%;
+    height: auto;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+}
+.layui-upload-file-name a{
+    color:white;
 }

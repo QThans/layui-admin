@@ -10,32 +10,64 @@
     <div class="layui-form-mid layui-word-aux">{$self->tips|raw}</div>
 </div>
 <div class="review">
-        <div class="layui-upload-list" id="{$self->id}_upload_list">
-            {php}
-            if(!is_array($self->value) && $self->value){
-                $id = uniqid();
-            {/php}
-                <div id="dim_id_{$id}" class="dimback">
-                    <img id="img_id_{$id}" src="{$self->value}" class="layui-upload-img">
-                    <span class="status_{$id}">已上传</span>
-                    <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
-                </div>
-                <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$self->value}">
-            {php}
-            }else if(is_array($self->value)){
-            {/php}
-                {volist name="$self->value" id="vo"}
-                {php}$id = uniqid();{/php}
-                <div id="dim_id_{$id}" class="dimback">
-                    <img id="img_id_{$id}" src="{$vo}" class="layui-upload-img">
-                    <span class="status_{$id}">已上传</span>
-                    <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
-                </div>
-                <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$vo}">
-                {/volist}
-            {php}
-            }
-            {/php}
-        
+    <div class="layui-upload-list" id="{$self->id}_upload_list">
+        {php}
+        if(!is_array($self->value) && $self->value){
+        $id = uniqid();
+        {/php}
+        {php}if($self->uploadType == 'image'){{/php}
+        <div id="dim_id_{$id}" class="dimback">
+            <img id="img_id_{$id}" src="{$self->value}" class="layui-upload-img">
+            <span class="status_{$id}">已上传</span>
+            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
         </div>
+        <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$self->value}">
+        {php}
+        }else{
+        {/php}
+        <div id="dim_id_{$id}" class="dimback dimback-file">
+            <p id="img_id_{$id}" src="{$self->value}" class="layui-upload-file-name "> <a target="_blank" href="{$self->value}">{$self->value}</a></p>
+            <span class="status_{$id}">已上传</span>
+            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
+        </div>
+        <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$self->value}">
+        {php}
+        }
+        {/php}
+
+        {php}
+        }else if(is_array($self->value)){
+        {/php}
+        {php}if($self->uploadType == 'image'){{/php}
+        {volist name="$self->value" id="vo"}
+        {php}$id = uniqid();{/php}
+        <div id="dim_id_{$id}" class="dimback">
+            <img id="img_id_{$id}" src="{$vo}" class="layui-upload-img">
+            <span class="status_{$id}">已上传</span>
+            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
+        </div>
+        <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$vo}">
+        {/volist}
+        {php}
+        }else{
+        {/php}
+
+        {volist name="$self->value" id="vo"}
+        {php}$id = uniqid();{/php}
+        <div id="dim_id_{$id}" class="dimback dimback-file">
+            <p id="img_id_{$id}" src="{$vo}" class="layui-upload-file-name"><a target="_blank" href="{$vo}">{$vo}</a></p>
+            <span class="status_{$id}">已上传</span>
+            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
+        </div>
+        <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$vo}">
+        {/volist}
+        {php}
+        }
+        {/php}
+
+        {php}
+        }
+        {/php}
+
+    </div>
 </div>

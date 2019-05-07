@@ -581,5 +581,6 @@ html {
     background: #fff;
     color: #000;
     height: 100px;
+    word-break: break-all;
     border: 1px solid #ccc;
 }

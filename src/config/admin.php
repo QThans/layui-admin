@@ -30,6 +30,10 @@ return [
         'image' => [
             'size' => 1024000,//KB
             'ext' => 'jpg,png,jpeg'
+        ],
+        'file' => [
+            'size' => 1024000,//KB
+            'ext' => '*'
         ]
     ]
 ];

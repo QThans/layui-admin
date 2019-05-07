@@ -82,7 +82,7 @@
                         {/volist}
                         {/if}
                         {else /}
-                        <a href="javascript:;" {if isset($vo.uri)}data-href="{:url($vo.uri)}" {/if} {if
+                        <a href="javascript:;" {if $vo.uri}data-href="{:url($vo.uri)}" {/if} {if
                         isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if}><i
                         class=" layui-icon {$vo.icon}"></i><span>{$vo.name}</span></a>
                         {/if}

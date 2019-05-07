@@ -33,7 +33,7 @@ class User extends Model
         return $this->belongsToMany('AuthRole', 'thans\layuiAdmin\model\AuthRoleUser', 'role_id', 'user_id');
     }
 
-    public function hidden($array = [], $override = false)
+    public function hidden(array $array = [], $override = false)
     {
         parent::hidden(array_merge($this->hidden, $array), $override);
         return $this;

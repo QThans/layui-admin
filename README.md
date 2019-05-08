@@ -3,8 +3,8 @@
 <p align="center"> 基于thinkphp的后台管理系统。</p>
 
 <p align="center">
-<a href="https://www.kancloud.cn/sanshinet/layui-admin">开发文档</a>
-<a href="http://demo.layuiadmin.com/admin/login.html">DEMO</a>
+<a target="_blank" href="https://www.kancloud.cn/sanshinet/layui-admin">开发文档[拟写中]</a>
+<a target="_blank" href="http://demo.layuiadmin.com/admin/login.html">DEMO[备案中]</a>
 </p>
 
 ## 特性

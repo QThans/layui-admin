@@ -21,10 +21,12 @@ class Richtext
     public $tmpl = 'form/richtext';
     //图片上传接口开发参考：https://ckeditor.com/docs/ckeditor4/latest/guide/dev_file_upload.html
     public $imageUploadUrl = '';
+
     public function init()
     {
         $this->obj->builder->js('richtext', 'vendor/layui-admin/ckeditor/ckeditor.js');
     }
+
     public function end()
     {
         $config = '';
@@ -42,9 +44,10 @@ class Richtext
         });
 EOD
 );
-        $setValueScript = $this->name?"$('textarea[name=\"{$this->name}\"]').html(data.data.{$this->name});richtext_{$this->id}.setData(data.data.{$this->name});":'';
-        $this->obj->setValueScript('richtext_'.$this->id,$setValueScript);
+        $setValueScript = $this->name ? "$('textarea[name=\"{$this->name}\"]').html(data.data.{$this->name});richtext_{$this->id}.setData(data.data.{$this->name});" : '';
+        $this->obj->setValueScript('richtext_'.$this->id, $setValueScript);
     }
+
     public function config($key, $value)
     {
         $this->config[$key] = $value;

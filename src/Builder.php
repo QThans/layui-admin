@@ -23,15 +23,15 @@ class Builder
     public $tmpl = '';
 
     public $module = [
-        'admin'
+        'admin',
     ];
 
     public $view;
 
     public $css = [
-        'layui' => 'vendor/layui-admin/layui/css/layui.css',
+        'layui'       => 'vendor/layui-admin/layui/css/layui.css',
         'fa-iconfont' => 'vendor/layui-admin/font-awesome/css/font-awesome.min.css',
-        'admin' => 'vendor/layui-admin/css/admin.css',
+        'admin'       => 'vendor/layui-admin/css/admin.css',
     ];
 
     public $js = [
@@ -54,27 +54,31 @@ class Builder
     final public function css($key, $css)
     {
         $this->css[$key] = $css;
+
         return $this;
     }
 
     final public function js($key, $js)
     {
         $this->js[$key] = $js;
+
         return $this;
     }
 
     final public function html($key, $html)
     {
         $this->html[$key] = $html;
+
         return $this;
     }
 
     final public function script($key, $script)
     {
         $this->script[$key] = $script;
+
         return $this;
     }
-    
+
     final public function module($module)
     {
         if ($module == 'element') {
@@ -83,12 +87,14 @@ class Builder
         }
         $this->module[] = $module;
         $this->module = array_unique($this->module);
+
         return $this;
     }
 
     final public function style($key, $style)
     {
         $this->style[$key] = $style;
+
         return $this;
     }
 
@@ -101,14 +107,17 @@ class Builder
         }
         $this->engineConfig['view_path'] = view_path();
         $tmpl = $this->tmpl;
+
         return $this->view->fetch($tmpl, $vars, $this->engineConfig);
     }
-    
+
     public function display($tmpl, $vars = [])
     {
         $this->view->engine->layout(false);
+
         return $this->view->fetch($tmpl, $vars);
     }
+
     //加载其他组件
     public function load($obj)
     {

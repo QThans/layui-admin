@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Thans
  * Date: 2018/12/7
- * Time: 00:33
+ * Time: 00:33.
  */
 
 namespace thans\layuiAdmin\Traits;
@@ -27,6 +27,7 @@ trait Load
             } else {
                 $this->$name = $arguments[0] ?? '';
             }
+
             return $this;
         }
         //判断是否builder类存在对应变量
@@ -40,10 +41,12 @@ trait Load
             } else {
                 $this->builder->$name = $arguments[0] ?? '';
             }
+
             return $this;
         }
         if (isset($this->classMap) && isset($this->classMap[$name]) && class_exists($this->classMap[$name])) {
             $class = new $this->classMap[$name](isset($arguments[0]) ? $arguments[0] : '', $this);
+
             return $class;
         }
     }
@@ -51,6 +54,7 @@ trait Load
     public function tmpl($tmpl)
     {
         $this->builder->tmpl = $tmpl;
+
         return $this;
     }
 
@@ -69,15 +73,16 @@ EOT
         if (method_exists($this, 'end')) {
             $this->end();
         }
+
         return $this->builder->fetch($vars = [
-            'self' => $this
+            'self' => $this,
         ], $component);
     }
 
     public function display($tmpl)
     {
         return $this->builder->display($tmpl, $vars = [
-            'self' => $this
+            'self' => $this,
         ]);
     }
 

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace thans\layuiAdmin\tool;
-
 
 use think\facade\Request;
 
@@ -18,22 +16,22 @@ class Utils
         $filter = Request::param('filter');
 
         if (isset($filter['keyword'])) {
-            $where[] = [$searchField, 'like', '%' . $filter['keyword'] . '%'];
+            $where[] = [$searchField, 'like', '%'.$filter['keyword'].'%'];
             unset($filter['keyword']);
         }
         $keyword = Request::param('keyword');
         if ($keyword) {
-            $where[] = [$searchField, 'like', '%' . $keyword . '%'];
+            $where[] = [$searchField, 'like', '%'.$keyword.'%'];
         }
         if ($filter) {
             foreach ($filter as $key => $value) {
-                if($value !== ''){
+                if ($value !== '') {
                     $where[] = [$key, '=', $value];
                 }
             }
         }
 
-        $order = 'id desc';//TODO 排序
+        $order = 'id desc'; //TODO 排序
 
         $page = Request::param('page/d', 1);
 
@@ -49,7 +47,7 @@ class Utils
         }
         foreach ($data as $key => $val) {
             if ($val[$this->treeParentKey] == $parent) {
-                $val['label'] = str_repeat($label, $deep) . $val[$this->treeTitleColumn];
+                $val['label'] = str_repeat($label, $deep).$val[$this->treeTitleColumn];
                 $val['deep'] = $deep;
                 if (!$child) {
                     $tree[] = $val;
@@ -63,6 +61,7 @@ class Utils
                 }
             }
         }
+
         return $tree;
     }
 }

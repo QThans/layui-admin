@@ -1,8 +1,6 @@
 <?php
 
-
 namespace thans\layuiAdmin\tool;
-
 
 use think\Container;
 use think\exception\HttpResponseException;
@@ -11,13 +9,14 @@ use think\Response;
 class Json
 {
     /**
-     * 操作成功跳转的快捷方法
-     * @access protected
-     * @param mixed $msg 提示信息
-     * @param string $url 跳转的URL地址
-     * @param mixed $data 返回的数据
-     * @param integer $wait 跳转等待时间
-     * @param array $header 发送的Header信息
+     * 操作成功跳转的快捷方法.
+     *
+     * @param mixed  $msg    提示信息
+     * @param string $url    跳转的URL地址
+     * @param mixed  $data   返回的数据
+     * @param int    $wait   跳转等待时间
+     * @param array  $header 发送的Header信息
+     *
      * @return void
      */
     public function success($msg = '', $data = '', array $res = [], $url = null, $wait = 3, $statusCode = '200', array $header = [])
@@ -29,11 +28,11 @@ class Json
         }
 
         $result = [
-            'code' => 0,
-            'msg' => $msg,
-            'data' => $data,
+            'code'     => 0,
+            'msg'      => $msg,
+            'data'     => $data,
             'redirect' => $url,
-            'wait' => $wait,
+            'wait'     => $wait,
         ];
 
         $response = Response::create(array_merge($res, $result), 'json', $statusCode)->header($header);
@@ -42,14 +41,15 @@ class Json
     }
 
     /**
-     * 操作错误跳转的快捷方法
-     * @access protected
-     * @param mixed $msg 提示信息
-     * @param mixed $statusCode 错误HTTP代码
-     * @param string $url 跳转的URL地址
-     * @param mixed $data 返回的数据
-     * @param integer $wait 跳转等待时间
-     * @param array $header 发送的Header信息
+     * 操作错误跳转的快捷方法.
+     *
+     * @param mixed  $msg        提示信息
+     * @param mixed  $statusCode 错误HTTP代码
+     * @param string $url        跳转的URL地址
+     * @param mixed  $data       返回的数据
+     * @param int    $wait       跳转等待时间
+     * @param array  $header     发送的Header信息
+     *
      * @return void
      */
     public function error($msg = '', $statusCode = '400', $url = null, $data = '', $wait = 3, array $header = [])
@@ -62,9 +62,9 @@ class Json
 
         $result = [
             'error_msg' => $msg,
-            'data' => $data,
-            'redirect' => $url,
-            'wait' => $wait,
+            'data'      => $data,
+            'redirect'  => $url,
+            'wait'      => $wait,
         ];
 
         $response = Response::create($result, 'json', $statusCode)->header($header);

@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Thans
  * Date: 2018/12/9
- * Time: 16:50
+ * Time: 16:50.
  */
 
 namespace thans\layuiAdmin\form;

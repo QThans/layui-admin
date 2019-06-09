@@ -39,6 +39,7 @@ trait Compoents
         if (method_exists($this, 'init')) {
             $this->init();
         }
+
         return $this;
     }
 
@@ -53,19 +54,22 @@ trait Compoents
             $this->end();
         }
         $render = $this->obj->builder->display($this->tmpl, [
-            'self' => $this
+            'self' => $this,
         ], true);
         $this->obj->builder->html[] = $render;
+
         return $this;
     }
+
     public function __call($name, $value)
     {
         if (isset($value[0]) && is_array($value[0])) {
             return $this;
         }
         if (isset($this->$name)) {
-            $this->$name = $value[0]?:'';
+            $this->$name = $value[0] ?: '';
         }
+
         return $this;
     }
 }

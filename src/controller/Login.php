@@ -1,6 +1,5 @@
 <?php
 
-
 namespace thans\layuiAdmin\controller;
 
 use thans\layuiAdmin\facade\Auth;
@@ -19,6 +18,7 @@ class Login
     public function index()
     {
         $login = new LoginView();
+
         try {
             foreach (Config::get('admin.login') as $key => $val) {
                 $key = Loader::parseName($key, 1, false);
@@ -28,6 +28,7 @@ class Login
             abort('404', '参数错误');
         }
         $login->url(url('thans\layuiAdmin\controller\Login@doLogin'));
+
         return $login->render();
     }
 
@@ -36,6 +37,7 @@ class Login
         $account = $request->param('account');
         $password = $request->param('password');
         $redirect = $request->param('redirect', '');
+
         try {
             $user = Auth::login($account, $password);
             session('admin', $user->admin);
@@ -49,8 +51,8 @@ class Login
     {
         Session::clear();
         if ($request->isAjax()) {
-            Json::success("退出成功");
+            Json::success('退出成功');
         }
-        Jump::success("退出成功", url('thans\layuiAdmin\controller\Login@index'));
+        Jump::success('退出成功', url('thans\layuiAdmin\controller\Login@index'));
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace thans\layuiAdmin\middleware;
-
 
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\facade\Jump;
@@ -16,7 +14,7 @@ class Auth
             if (!$request->isAjax()) {
                 Jump::result('没有权限', 'close', '您可以刷新重试或返回上一页，亦可联系我们');
             } else {
-                Json::error("没有权限");
+                Json::error('没有权限');
             }
         }
         if ($auth === false) {
@@ -28,9 +26,10 @@ class Auth
             if (!$request->isAjax()) {
                 Jump::result('没有权限', 'close', '您可以刷新重试或返回上一页，亦可联系我们');
             } else {
-                Json::error("没有权限");
+                Json::error('没有权限');
             }
         }
+
         return $next($request);
     }
 }

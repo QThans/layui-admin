@@ -1,8 +1,6 @@
 <?php
 
-
 namespace thans\layuiAdmin\middleware;
-
 
 class Login
 {
@@ -11,7 +9,8 @@ class Login
         $check = \thans\layuiAdmin\facade\Auth::userId();
 
         if (!$check) {
-            session('error_msg', "请先登录系统");
+            session('error_msg', '请先登录系统');
+
             return redirect(url('thans\layuiAdmin\controller\Login@index'));
         }
 

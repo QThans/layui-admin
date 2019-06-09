@@ -38,21 +38,23 @@ class Auth
         session('user_info', $user);
         session('user_meta', $user->meta);
         $this->clearCache();
+
         return $user;
     }
 
     public function clearCache()
     {
-        Cache::rm('user_' . session('user_id'));
+        Cache::rm('user_'.session('user_id'));
     }
 
     public function user()
     {
-        $user = Cache::get('user_' . session('user_id'));
+        $user = Cache::get('user_'.session('user_id'));
         if (!$user) {
             $user = User::get(session('user_id'), 'meta');
-            Cache::set('user_' . session('user_id'), $user, 3600);
+            Cache::set('user_'.session('user_id'), $user, 3600);
         }
+
         return $user;
     }
 
@@ -77,6 +79,7 @@ class Auth
             $menus = array_merge($menus, $role->menus->toArray());
         }
         $menus = assoc_unique($menus, 'id');
+
         return \thans\layuiAdmin\facade\Utils::buildTree($menus, true);
     }
 
@@ -86,6 +89,7 @@ class Auth
         if (!$user || !$user->admin) {
             return false;
         }
+
         return $user->roles;
     }
 
@@ -120,18 +124,19 @@ class Auth
                     $pattern = trim($pattern, '.html');
                     $pattern = preg_quote($pattern, '#');
                     $pattern = str_replace('\*', '.*', $pattern);
-                    if (preg_match('#^' . $pattern . '\z#u', $path) === 1) {
+                    if (preg_match('#^'.$pattern.'\z#u', $path) === 1) {
                         return $this->chekMethod($val['http_method'], $method);
                     }
                 }
             }
         }
+
         return false;
     }
 
     private function chekMethod($http_method, $method)
     {
-        if (strpos($http_method, $method) !== false || $http_method == "") {
+        if (strpos($http_method, $method) !== false || $http_method == '') {
             return true;
         }
     }

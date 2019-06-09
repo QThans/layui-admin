@@ -1,8 +1,6 @@
 <?php
 
-
 namespace thans\layuiAdmin\controller\auth;
-
 
 use thans\layuiAdmin\facade\Auth;
 use thans\layuiAdmin\facade\Json;
@@ -28,7 +26,6 @@ class Permission
         $tb->title('权限管理');
         $tb->url(url('thans\layuiAdmin\controller\auth\Permission/index'));
 
-
         $tb->column('id', 'ID');
 
         $tb->column('name', '权限名称');
@@ -47,6 +44,7 @@ class Permission
         if (Auth::check($url)) {
             $tb->action('新增权限', $url);
         }
+
         return $tb->render();
     }
 
@@ -58,6 +56,7 @@ class Permission
     public function save(Request $request)
     {
         $data = $request->param();
+
         try {
             $validate = new \thans\layuiAdmin\validate\Permission();
 
@@ -75,12 +74,14 @@ class Permission
     public function edit($id)
     {
         $permission = AuthPermission::get($id);
-        return $this->buildForm(url('thans\layuiAdmin\controller\auth\Permission/update', 'id=' . $id), 'PUT', $permission);
+
+        return $this->buildForm(url('thans\layuiAdmin\controller\auth\Permission/update', 'id='.$id), 'PUT', $permission);
     }
 
     public function update($id, Request $request)
     {
         $data = $request->param();
+
         try {
             $validate = new \thans\layuiAdmin\validate\Permission();
 
@@ -99,10 +100,10 @@ class Permission
     public function delete($id)
     {
         if ($id === 1) {
-            Json::error("无法删除默认数据");
+            Json::error('无法删除默认数据');
         }
         AuthPermission::destroy($id);
-        Json::success("删除完成");
+        Json::success('删除完成');
     }
 
     private function buildForm($url, $method = 'POST', $data = [])
@@ -124,6 +125,7 @@ class Permission
         $form->multiSelect()->name('http_method')->options($methods)->label('HTTP Method')->tips('留空支持所有');
         $form->textarea()->name('path')->label('HTTP地址')->tips('换行分割')->rule('required');
         $form->hiddenSubmit(!Auth::check($url, $method));
+
         return $form->render();
     }
 }

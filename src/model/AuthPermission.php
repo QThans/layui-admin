@@ -1,8 +1,6 @@
 <?php
 
-
 namespace thans\layuiAdmin\model;
-
 
 use think\Model;
 use think\model\concern\SoftDelete;

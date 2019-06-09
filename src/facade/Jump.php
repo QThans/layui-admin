@@ -1,8 +1,6 @@
 <?php
 
-
 namespace thans\layuiAdmin\facade;
-
 
 use think\Facade;
 

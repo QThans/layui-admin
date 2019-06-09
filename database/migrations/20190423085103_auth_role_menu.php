@@ -2,7 +2,6 @@
 
 use Phinx\Db\Adapter\MysqlAdapter;
 use think\migration\Migrator;
-use think\migration\db\Column;
 
 class AuthRoleMenu extends Migrator
 {
@@ -29,14 +28,14 @@ class AuthRoleMenu extends Migrator
      */
     public function change()
     {
-        $table = $this->table('auth_role_menu',array('id'=>false));
+        $table = $this->table('auth_role_menu', ['id'=>false]);
 
-        $table->addColumn('role_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
-            ->addColumn('menu_id', 'integer', array('limit' => MysqlAdapter::INT_REGULAR))
-            ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
-            ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
-            ->addIndex(['role_id'], array('unique' => false))
-            ->addIndex(['menu_id'], array('unique' => false))
+        $table->addColumn('role_id', 'integer', ['limit' => MysqlAdapter::INT_REGULAR])
+            ->addColumn('menu_id', 'integer', ['limit' => MysqlAdapter::INT_REGULAR])
+            ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default'=>0])
+            ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default'=>0])
+            ->addIndex(['role_id'], ['unique' => false])
+            ->addIndex(['menu_id'], ['unique' => false])
             ->create();
     }
 }

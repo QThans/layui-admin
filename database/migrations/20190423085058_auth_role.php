@@ -2,7 +2,6 @@
 
 use Phinx\Db\Adapter\MysqlAdapter;
 use think\migration\Migrator;
-use think\migration\db\Column;
 
 class AuthRole extends Migrator
 {
@@ -31,18 +30,18 @@ class AuthRole extends Migrator
     {
         $table = $this->table('auth_role');
 
-        $table->addColumn('name', 'string', array('limit' => 100))
-            ->addColumn('alias', 'string', array('limit' => 20))
-            ->addColumn('status', 'integer', array('limit' => MysqlAdapter::INT_TINY,'default' => 0,'null' => false))
-            ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
-            ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>0])
-            ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'default'=>null,'null' => true])
-            ->addIndex(['name'], array('unique' => false))
-            ->addIndex(['alias'], array('unique' => false))
+        $table->addColumn('name', 'string', ['limit' => 100])
+            ->addColumn('alias', 'string', ['limit' => 20])
+            ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 0, 'null' => false])
+            ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default'=>0])
+            ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default'=>0])
+            ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default'=>null, 'null' => true])
+            ->addIndex(['name'], ['unique' => false])
+            ->addIndex(['alias'], ['unique' => false])
             ->create();
         $default = [
-            'name'=>'Administrator',
-            'alias'=> 'administrator',
+            'name'       => 'Administrator',
+            'alias'      => 'administrator',
             'create_time'=> time(),
             'update_time'=> time(),
         ];

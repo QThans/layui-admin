@@ -30,6 +30,7 @@ trait Field
     public function value($val = '')
     {
         $this->value = $val;
+
         return $this;
     }
 
@@ -37,34 +38,39 @@ trait Field
     {
         if (isset($this->$type)) {
             $this->$type = $val;
+
             return $this;
         }
         $this->attr[$type] = $val;
+
         return $this;
     }
 
     public function placeholder($val = '')
     {
         $this->placeholder = $val;
+
         return $this;
     }
 
     public function hide()
     {
         if (isset($this->attr['style'])) {
-            $this->attr['style'] = 'display:none;' . $this->attr['style'];
+            $this->attr['style'] = 'display:none;'.$this->attr['style'];
         } else {
             $this->attr['style'] = 'display:none;';
         }
+
         return $this;
     }
 
     public function disabled($disabled = true)
     {
         unset($this->attr['disabled']);
-        if($disabled){
+        if ($disabled) {
             $this->attr['disabled'] = false;
         }
+
         return $this;
     }
 
@@ -74,24 +80,26 @@ trait Field
             $this->end();
         }
         $render = $this->obj->builder->display($this->tmpl, [
-            'self' => $this
+            'self' => $this,
         ], true);
         $this->obj->field[] = $render;
+
         return $this;
     }
 
     public function rules($rules = '', $required = true, $min = 0, $max = 0, $tips = '')
     {
         $id = uniqid();
-        $this->rules = 'rule_' . $id;
+        $this->rules = 'rule_'.$id;
         $this->obj->rules[] = [
-            'id' => $id,
-            'rules' => $rules,
+            'id'       => $id,
+            'rules'    => $rules,
             'required' => $required,
-            'min' => $min,
-            'max' => $max,
-            'tips' => $tips
+            'min'      => $min,
+            'max'      => $max,
+            'tips'     => $tips,
         ];
+
         return $this;
     }
 }

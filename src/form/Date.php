@@ -1,6 +1,5 @@
 <?php
 
-
 namespace thans\layuiAdmin\form;
 
 use thans\layuiAdmin\Traits\Field;
@@ -27,7 +26,7 @@ class Date
 
     public $showBottom = true;
 
-    public $btns = ["clear","now","confirm"];
+    public $btns = ['clear', 'now', 'confirm'];
 
     public $lang = 'cn';
 
@@ -36,6 +35,7 @@ class Date
     public function btns($val = [])
     {
         $this->btns = $val;
+
         return $this;
     }
 
@@ -43,11 +43,11 @@ class Date
     {
         $this->obj->module('laydate');
         $this->range = $this->range ? 'true' : 'false';
-        $format = $this->format ? ',format:' . $this->format : '';
+        $format = $this->format ? ',format:'.$this->format : '';
         $isInitValue = $this->isInitValue ? ',isInitValue:true' : ',isInitValue:false';
         $showBottom = $this->showBottom ? ',showBottom:true' : ',showBottom:false';
         $this->btns = json_encode($this->btns);
-        $this->obj->script('laydate_' . $this->id, <<<EOT
+        $this->obj->script('laydate_'.$this->id, <<<EOT
 laydate.render({ 
   elem: '#{$this->id}'
   ,type: '{$this->type}'

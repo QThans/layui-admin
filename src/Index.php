@@ -22,9 +22,9 @@ class Index
 
     public $userName = '';
 
-    public $userMenu = [];// title  href  attr
+    public $userMenu = []; // title  href  attr
 
-    public $topRightMenu = [];// top right menu
+    public $topRightMenu = []; // top right menu
 
     public $tmpl = 'index';
 
@@ -42,9 +42,10 @@ class Index
     {
         $this->userMenu[] = [
             'title' => $title,
-            'href' => $href,
-            'attr' => $attr
+            'href'  => $href,
+            'attr'  => $attr,
         ];
+
         return $this;
     }
 
@@ -53,16 +54,18 @@ class Index
         $text = $text ? $text : $title;
         $this->userMenu[] = [
             'title' => $title,
-            'text' => $text,
-            'href' => $href,
-            'attr' => $attr
+            'text'  => $text,
+            'href'  => $href,
+            'attr'  => $attr,
         ];
+
         return $this;
     }
 
     public function menu($menu)
     {
         $this->menu = $menu;
+
         return $this;
     }
 
@@ -70,10 +73,11 @@ class Index
     {
         $this->menu[$this->child]['child'] = [
             'title' => $title,
-            'icon' => $icon,
-            'href' => $href,
-            'attr' => $attr
+            'icon'  => $icon,
+            'href'  => $href,
+            'attr'  => $attr,
         ];
+
         return $this;
     }
 

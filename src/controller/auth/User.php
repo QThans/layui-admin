@@ -1,16 +1,15 @@
 <?php
 
-
 namespace thans\layuiAdmin\controller\auth;
 
 //管理员管理
 use thans\layuiAdmin\facade\Auth;
-use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\facade\Json;
+use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
 use thans\layuiAdmin\model\AuthRole;
-use thans\layuiAdmin\Table;
 use thans\layuiAdmin\model\User as UserModel;
+use thans\layuiAdmin\Table;
 use think\Exception;
 use think\Request;
 
@@ -48,6 +47,7 @@ class User
             $tb->action('新增管理员', $url);
         }
         $tb->toolWidth(70);
+
         return $tb->render();
     }
 
@@ -59,6 +59,7 @@ class User
     public function save(Request $request)
     {
         $data = $request->param();
+
         try {
             $validate = new \thans\layuiAdmin\validate\User();
             if (!$validate->scene('insert')->check($data)) {
@@ -81,12 +82,14 @@ class User
     {
         $user = new UserModel();
         $user = $user->hidden()->get($id, 'roles');
-        return $this->buildForm(url('thans\layuiAdmin\controller\auth\User/update', 'id=' . $id), 'PUT', $user);
+
+        return $this->buildForm(url('thans\layuiAdmin\controller\auth\User/update', 'id='.$id), 'PUT', $user);
     }
 
     public function update($id, Request $request)
     {
         $data = $request->param();
+
         try {
             $validate = new \thans\layuiAdmin\validate\User();
             if (!$validate->scene('edit')->check($data)) {
@@ -119,18 +122,18 @@ class User
         $form->url($url);
         $form->method($method);
         $form->data($data);
-        $form->text()->label('用户名')->name('name')->placeholder('请输入用户名')->rules('account')->tips("用户名支持中英文、数字、下划线，不支持数字开头");
+        $form->text()->label('用户名')->name('name')->placeholder('请输入用户名')->rules('account')->tips('用户名支持中英文、数字、下划线，不支持数字开头');
         $form->text()->label('昵称')->name('nickname')->placeholder('请输入昵称')->rules('required', true, 5, 100);
         $placeholder = '请输入密码';
         if ($data) {
             $placeholder = '留空不更新密码';
         }
-        $form->text()->label('密码')->name('password')->placeholder($placeholder)->rules('password', (boolean)!$data)->tips('密码必须6到24位，且不能出现空格');
+        $form->text()->label('密码')->name('password')->placeholder($placeholder)->rules('password', (bool) !$data)->tips('密码必须6到24位，且不能出现空格');
         $form->text()->label('邮箱')->name('email')->placeholder('请输入邮箱')->rules('email', false);
         $form->text()->label('手机号')->name('mobile')->placeholder('请输入手机号')->rules('mobile', false);
         $op = [
             ['title' => '正常', 'val' => 0],
-            ['title' => '禁用', 'val' => 1]
+            ['title' => '禁用', 'val' => 1],
         ];
         $form->select()->label('状态')->name('status')->options($op);
         $op = [];
@@ -140,6 +143,7 @@ class User
         }
         $data['roles'] = isset($data['roles']) && $data['roles'] ? implode(',', array_column($data->roles->toArray(), 'id')) : '';
         $form->multiSelect()->label('权限组选择')->name('roles')->options($op);
+
         return $form->render();
     }
 }

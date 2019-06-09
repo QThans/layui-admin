@@ -1,17 +1,15 @@
 <?php
 
-
 namespace thans\layuiAdmin\controller;
-
 
 use thans\layuiAdmin\facade\Auth;
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
+use thans\layuiAdmin\model\Menu as MenuModel;
 use thans\layuiAdmin\Table;
 use think\Exception;
 use think\Request;
-use thans\layuiAdmin\model\Menu as MenuModel;
 
 class Menu
 {
@@ -33,7 +31,7 @@ class Menu
         $tb->column('icon', 'ICON', 100, 'icon', ['align' => 'center']);
         $tb->column('uri', 'URI', 200);
         $tb->column('permission', '权限绑定', 200);
-        $tb->status()->option(0, '显示')->option(1, '隐藏','danger');
+        $tb->status()->option(0, '显示')->option(1, '隐藏', 'danger');
         $tb->column('status', '状态', 100, 'status', ['align' => 'center']);
         $tb->column('create_time', '创建时间', 200);
         $tb->column('update_time', '更新时间', 200);
@@ -57,7 +55,7 @@ class Menu
     public function delete($id)
     {
         MenuModel::destroy($id);
-        Json::success("删除完成");
+        Json::success('删除完成');
     }
 
     public function create()
@@ -68,6 +66,7 @@ class Menu
     public function save(Request $request)
     {
         $data = $request->param();
+
         try {
             $validate = new \thans\layuiAdmin\validate\Menu();
 
@@ -85,12 +84,14 @@ class Menu
     public function edit(Request $request, $id)
     {
         $menu = MenuModel::get($id);
-        return $this->buildForm(url('thans\layuiAdmin\controller\Menu/update', 'id=' . $id), 'PUT', $menu);
+
+        return $this->buildForm(url('thans\layuiAdmin\controller\Menu/update', 'id='.$id), 'PUT', $menu);
     }
 
     public function update(Request $request, $id)
     {
         $data = $request->param();
+
         try {
             $validate = new \thans\layuiAdmin\validate\Menu();
 
@@ -105,7 +106,6 @@ class Menu
             Json::error($e->getMessage(), 500);
         }
     }
-
 
     private function buildForm($url, $method = 'POST', $data = [])
     {

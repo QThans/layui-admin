@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Thans
  * Date: 2019/1/6
- * Time: 11:13
+ * Time: 11:13.
  */
 
 namespace thans\layuiAdmin\form;
@@ -39,6 +39,7 @@ class Authtree
     public function items($val = [])
     {
         $this->items = json_encode($val, JSON_NUMERIC_CHECK);
+
         return $this;
     }
 

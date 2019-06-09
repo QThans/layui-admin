@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Thans
  * Date: 2018/12/8
- * Time: 00:32
+ * Time: 00:32.
  */
 
 namespace thans\layuiAdmin\form;
@@ -17,7 +17,7 @@ class MultiSelect extends Select
         }
         $this->obj->module('formSelects');
         $this->obj->css($this->id, 'vendor/layui-admin/layui/modules/css/formSelects.css');
-        $this->attr('xm-select', 'xm-' . $this->id);
+        $this->attr('xm-select', 'xm-'.$this->id);
         $this->obj->module('jquery');
         $this->obj->script($this->id, "formSelects.render('xm-{$this->id}');");
         $val = isset($this->obj->data[$this->name]) ? $this->obj->data[$this->name] : '';

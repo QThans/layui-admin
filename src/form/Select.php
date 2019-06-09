@@ -3,12 +3,13 @@
  * Created by PhpStorm.
  * User: Thans
  * Date: 2018/12/8
- * Time: 00:32
+ * Time: 00:32.
  */
 
 namespace thans\layuiAdmin\form;
 
 use thans\layuiAdmin\Traits\Field;
+
 class Select
 {
     use Field;
@@ -23,16 +24,21 @@ class Select
     {
         if (is_array($val)) {
             $this->options = array_merge($this->options, $val);
+
             return $this;
         }
-        $this->options[] = ['val'=>$val,'title'=>$title];
+        $this->options[] = ['val'=>$val, 'title'=>$title];
+
         return $this;
     }
+
     public function options($vals)
     {
         $this->options = $vals;
+
         return $this;
     }
+
     //TODO AJAX关联数据
     public function relation($url, $label, $value)
     {
@@ -54,6 +60,7 @@ class Select
         }, '', 'get',false);
 EOD;
         array_unshift($this->obj->script, $js);
+
         return $this;
     }
 }

@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Thans
  * Date: 2019/1/4
- * Time: 16:07
+ * Time: 16:07.
  */
 
 namespace thans\layuiAdmin;
@@ -30,7 +30,7 @@ class Table
 
     public $classMap = [
         'status' => table\Status::class,
-        'icon' => table\Icon::class,
+        'icon'   => table\Icon::class,
     ];
 
     public $filter = [];
@@ -45,19 +45,22 @@ class Table
 
     public $toolWidth = 'auto';
 
-
     /**
      * 增加筛选条件。支持type类型：input\select。
+     *
      * @param string $title
      * @param string $name
      * @param string $type
-     * @param array $options 如果select必须包含：title和value。
-     * @return $this
+     * @param array  $options 如果select必须包含：title和value。
+     *
      * @throws
+     *
+     * @return $this
      */
     public function filter($title, $name, $type = 'input', $options = [])
     {
         $this->createFilter($title, $name, $type, $options);
+
         return $this;
     }
 
@@ -65,23 +68,27 @@ class Table
     {
         $id = uniqid();
         $this->filter[] = [
-            'title' => $title,
-            'name' => $name,
-            'type' => $type,
-            'id' => $id,
-            'options' => $options
+            'title'   => $title,
+            'name'    => $name,
+            'type'    => $type,
+            'id'      => $id,
+            'options' => $options,
         ];
+
         return $id;
     }
 
     /**
      * 日期筛选。支持 type 类型：year，month，date，time，datetime。传入options
      * options支持参数：range 开启范围面板
+     *
      * @param $title
      * @param $name
      * @param array $options
-     * @return void
+     *
      * @throws
+     *
+     * @return void
      */
     public function timeFilter($title, $name, $options = [])
     {
@@ -102,8 +109,9 @@ EOD;
     {
         $this->action[] = [
             'title' => $title,
-            'href' => $href
+            'href'  => $href,
         ];
+
         return $this;
     }
 
@@ -118,35 +126,37 @@ EOD;
     public function end()
     {
         $this->toolParse();
-        $code = $this->display(__DIR__ . DIRECTORY_SEPARATOR . 'table' . DIRECTORY_SEPARATOR . 'stub' . DIRECTORY_SEPARATOR . 'table.js.stub');
+        $code = $this->display(__DIR__.DIRECTORY_SEPARATOR.'table'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'table.js.stub');
         $this->builder->script('table', $code);
     }
 
     public function column($field, $title, $width = 200, $tpl = '', $attr = [])
     {
-        $column = ['field' => $field, 'title' => $title, 'width' => $width, 'templet' => $tpl ? '#' . $tpl : ''];
+        $column = ['field' => $field, 'title' => $title, 'width' => $width, 'templet' => $tpl ? '#'.$tpl : ''];
         $this->fields[] = array_merge($column, $attr);
+
         return $this;
     }
 
     public function tool($title, $url, $action = 'formLayer', $type = 'primary', $method = 'get', $condition = '', $tips = '')
     {
         $this->tools[] = [
-            'title' => $title,
-            'action' => $action,
-            'method' => $method,
-            'url' => urldecode($url),
-            'type' => $type,
+            'title'     => $title,
+            'action'    => $action,
+            'method'    => $method,
+            'url'       => urldecode($url),
+            'type'      => $type,
             'condition' => $condition,
-            'tips' => $tips,
+            'tips'      => $tips,
         ];
+
         return $this;
     }
 
     public function htmlTool($html = '')
     {
         $this->tools[] = [
-            'html' => $html
+            'html' => $html,
         ];
     }
 
@@ -160,18 +170,18 @@ EOD;
                     continue;
                 }
                 if ($val['type']) {
-                    $class = 'layui-btn-' . $val['type'];
+                    $class = 'layui-btn-'.$val['type'];
                 } else {
                     $class = '';
                 }
                 if ($val['action'] == 'confirmAjax') {
-                    $val['title-tips'] = $val['tips'] ? $val['tips'] : '确定' . $val['title'] . '吗？';
+                    $val['title-tips'] = $val['tips'] ? $val['tips'] : '确定'.$val['title'].'吗？';
                 } else {
                     $val['title-tips'] = $val['tips'] ? $val['tips'] : $val['title'];
                 }
                 $tmp = "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
                 if ($val['condition']) {
-                    $tmp = '{{#  if(' . $val['condition'] . '){ }}' . $tmp . '{{#  } }}';//条件
+                    $tmp = '{{#  if('.$val['condition'].'){ }}'.$tmp.'{{#  } }}'; //条件
                 }
                 $html .= $tmp;
             }

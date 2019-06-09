@@ -2,7 +2,6 @@
 
 use Phinx\Db\Adapter\MysqlAdapter;
 use think\migration\Migrator;
-use think\migration\db\Column;
 
 class AuthPermission extends Migrator
 {
@@ -31,21 +30,21 @@ class AuthPermission extends Migrator
     {
         $table = $this->table('auth_permission');
 
-        $table->addColumn('name', 'string', array('limit' => 100))
-            ->addColumn('alias', 'string', array('limit' => 100))
-            ->addColumn('http_method', 'string', array('limit' => 50, 'default' => null, 'null' => true))
-            ->addColumn('path', 'text', array('null' => true))
+        $table->addColumn('name', 'string', ['limit' => 100])
+            ->addColumn('alias', 'string', ['limit' => 100])
+            ->addColumn('http_method', 'string', ['limit' => 50, 'default' => null, 'null' => true])
+            ->addColumn('path', 'text', ['null' => true])
             ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => 0])
             ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => 0])
             ->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => null, 'null' => true])
-            ->addIndex(['name'], array('unique' => false))
-            ->addIndex(['alias'], array('unique' => false))
+            ->addIndex(['name'], ['unique' => false])
+            ->addIndex(['alias'], ['unique' => false])
             ->create();
         $default = [
-            'name' => 'All',
-            'alias' => '*',
+            'name'        => 'All',
+            'alias'       => '*',
             'http_method' => '',
-            'path' => '*',
+            'path'        => '*',
             'create_time' => time(),
             'update_time' => time(),
         ];

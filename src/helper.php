@@ -12,15 +12,16 @@
     \thans\layuiAdmin\Command::class,
 ]);
 
-require_once 'route' . DIRECTORY_SEPARATOR . 'Route.php';
+require_once 'route'.DIRECTORY_SEPARATOR.'Route.php';
 
 if (!function_exists('scan_dir')) {
     /**
-     * 扫描目录
+     * 扫描目录.
      *
      * @param string 目录
-     * @param integer 层级
-     * @param integer 当前层级
+     * @param int 层级
+     * @param int 当前层级
+     *
      * @return array
      */
     function scan_dir($dir, $depth = 0, $now = 0)
@@ -40,17 +41,19 @@ if (!function_exists('scan_dir')) {
                 }
             }
         }
+
         return $dirs;
     }
 }
 
 if (!function_exists('copy_dir')) {
     /**
-     * 复制目录
+     * 复制目录.
      *
-     * @param string $dir 目录
+     * @param string $dir  目录
      * @param string $dest 目标目录
-     * @return boolean
+     *
+     * @return bool
      */
     function copy_dir($dir, $dest = '')
     {
@@ -60,41 +63,43 @@ if (!function_exists('copy_dir')) {
         @mkdir($dest, 0777, true);
         $resources = scandir($dir);
         foreach ($resources as $item) {
-            if (is_dir($dir . DIRECTORY_SEPARATOR . $item) && $item != '.' && $item != '..') {
-                copy_dir($dir . DIRECTORY_SEPARATOR . $item, $dest . DIRECTORY_SEPARATOR . $item);
-            } elseif (is_file($dir . DIRECTORY_SEPARATOR . $item)) {
-                copy($dir . DIRECTORY_SEPARATOR . $item, $dest . DIRECTORY_SEPARATOR . $item);
+            if (is_dir($dir.DIRECTORY_SEPARATOR.$item) && $item != '.' && $item != '..') {
+                copy_dir($dir.DIRECTORY_SEPARATOR.$item, $dest.DIRECTORY_SEPARATOR.$item);
+            } elseif (is_file($dir.DIRECTORY_SEPARATOR.$item)) {
+                copy($dir.DIRECTORY_SEPARATOR.$item, $dest.DIRECTORY_SEPARATOR.$item);
             }
         }
+
         return true;
     }
 }
 if (!function_exists('view_path')) {
     /**
-     * 获取模板具体目录
+     * 获取模板具体目录.
      *
      * @return string
      */
     function view_path()
     {
-        return __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
+        return __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR;
     }
 }
 if (!function_exists('encrypt_password')) {
     /**
-     * 密码加密
+     * 密码加密.
      *
      * @param string $password 原密码
-     * @param string $salt 盐值
+     * @param string $salt     盐值
+     *
      * @return string
      */
     function encrypt_password($password, $salt)
     {
         $block_count = ceil(strlen($salt) / strlen($password));
-        $output = "";
+        $output = '';
         for ($i = 1; $i <= $block_count; $i++) {
             // $i encoded as 4 bytes, big endian.
-            $last = $salt . pack("N", $i);
+            $last = $salt.pack('N', $i);
             // first iteration
             $last = $xorsum = hash_hmac('sha256', $last, $password, true);
             // perform the other $count - 1 iterations
@@ -103,16 +108,18 @@ if (!function_exists('encrypt_password')) {
             }
             $output .= $xorsum;
         }
+
         return bin2hex(hash_hmac('sha512', $salt, $output, true));
     }
 }
 if (!function_exists('random_str')) {
     /**
-     * 随机字符串
+     * 随机字符串.
      *
-     * @param integer $length 随机长度
-     * @param boolean $numeric 是否只取数字
-     * @param boolean $lower 是否小写
+     * @param int  $length  随机长度
+     * @param bool $numeric 是否只取数字
+     * @param bool $lower   是否小写
+     *
      * @return string
      */
     function random_str($length = 6, $numeric = false, $lower = false)
@@ -123,13 +130,14 @@ if (!function_exists('random_str')) {
         for ($i = 0; $i < $length; $i++) {
             $str .= $map[rand(0, $maxLength)];
         }
+
         return $lower ? strtolower($str) : $str;
     }
 }
 if (!function_exists('assoc_unique')) {
     function assoc_unique($arr, $key)
     {
-        $tmp_arr = array();
+        $tmp_arr = [];
         foreach ($arr as $k => $v) {
             if (in_array($v[$key], $tmp_arr)) {//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
                 unset($arr[$k]);
@@ -139,6 +147,5 @@ if (!function_exists('assoc_unique')) {
         }
         sort($arr); //sort函数对数组进行排序
         return $arr;
-
     }
 }

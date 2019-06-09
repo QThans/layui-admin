@@ -1,6 +1,5 @@
 <?php
 
-
 namespace thans\layuiAdmin\model;
 
 use think\model\Pivot;

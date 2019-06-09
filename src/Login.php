@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Thans
  * Date: 2018/12/25
- * Time: 17:07
+ * Time: 17:07.
  */
 
 namespace thans\layuiAdmin;
@@ -61,9 +61,9 @@ class Login
     public function end()
     {
         $this->builder->module('form');
-        $this->builder->module('jquery');//有函数需要
+        $this->builder->module('jquery'); //有函数需要
         $this->builder->css['login'] = 'vendor/layui-admin/css/login.css';
-        $code = $this->display(__DIR__ . DIRECTORY_SEPARATOR.'login'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'login.js.stub');
+        $code = $this->display(__DIR__.DIRECTORY_SEPARATOR.'login'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'login.js.stub');
         $this->builder->script('login', $code);
     }
 }

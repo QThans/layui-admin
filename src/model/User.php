@@ -20,7 +20,7 @@ class User extends Model
 
     public $statusText = [
         0 => '正常',
-        1 => '禁用'
+        1 => '禁用',
     ];
 
     public function meta()
@@ -36,6 +36,7 @@ class User extends Model
     public function hidden(array $array = [], $override = false)
     {
         parent::hidden(array_merge($this->hidden, $array), $override);
+
         return $this;
     }
 
@@ -62,16 +63,16 @@ class User extends Model
     public static function existUser($user, $user_id = '')
     {
         if (self::exist('name', $user['name'], $user_id)) {
-            exception("用户已存在");
+            exception('用户已存在');
         }
         if (self::exist('nickname', $user['nickname'], $user_id)) {
-            exception("昵称已存在");
+            exception('昵称已存在');
         }
         if (self::exist('mobile', $user['mobile'], $user_id)) {
-            exception("手机号已存在");
+            exception('手机号已存在');
         }
         if (self::exist('email', $user['email'], $user_id)) {
-            exception("邮箱已存在");
+            exception('邮箱已存在');
         }
     }
 
@@ -85,6 +86,7 @@ class User extends Model
         if ($value && $model->where($field, $value)->find()) {
             return true;
         }
+
         return false;
     }
 }

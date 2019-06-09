@@ -16,7 +16,12 @@
 5. 包含多种表单组件
 6. Table类快速构建列表
 
-## 安装方式
+## Requirement
+
+1. php >= 7.0
+2. thinkphp >=5.1.10
+
+## Installation
 第一步：
 ```shell
 $ composer create-project topthink/think tp5 && cd tp5
@@ -40,7 +45,7 @@ $ php think migrate:run
 
 安装完成。访问：http://hostname/admin/login.html
 
-## 包含组件：
+## Compoents
 
 * 富文本编辑框【ckeditor4】
 * 文本输入框
@@ -55,7 +60,7 @@ $ php think migrate:run
 * ICON选择器
 * 日期选择，支持多种格式。支持范围。
 
-## 界面预览
+## Demo
 
 > 登录界面
 ![login](http://files.git.oschina.net/group1/M00/07/9B/PaAvDFzSe7CAG2EaAALjwC3zdtE362.png?token=ec0705afbe71e1f57b4c1120ca3a26b7&ts=1557298098&attname=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-05-08%2014.47.20.png&disposition=inline)

@@ -12,10 +12,6 @@
     \thans\layuiAdmin\Command::class,
 ]);
 
-bind([
-    'auth' => \thans\layuiAdmin\tool\Auth::class,
-]);
-
 require_once 'route' . DIRECTORY_SEPARATOR . 'Route.php';
 
 if (!function_exists('scan_dir')) {

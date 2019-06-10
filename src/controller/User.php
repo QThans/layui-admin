@@ -123,6 +123,17 @@ class User
         ];
         $form->select()->label('状态')->name('status')->options($op);
 
+        $form->beforeUpdate(
+            function (Form $form, $model, $data) {
+                if (isset($data['password']) && $data['password']) {
+                    $data['salt']     = random_str(20);
+                    $data['password'] = encrypt_password(
+                        $data['password'], $data['salt']
+                    );
+                }
+            }
+        );
+
         return $form;
     }
 }

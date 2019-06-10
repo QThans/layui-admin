@@ -11,7 +11,6 @@ use thans\layuiAdmin\model\AuthRole;
 use thans\layuiAdmin\model\User as UserModel;
 use thans\layuiAdmin\Table;
 use thans\layuiAdmin\Traits\FormActions;
-use think\Exception;
 use think\Request;
 
 class User
@@ -25,10 +24,10 @@ class User
                 'name|nickname|email|mobile'
             );
             $where[] = ['admin', 'eq', 1];
-            $user    = UserModel::where($where);
-            $list    = $user->order($order)->page($page)->limit($limit)->select(
+            $user = UserModel::where($where);
+            $list = $user->order($order)->page($page)->limit($limit)->select(
             );
-            $total   = $user->count();
+            $total = $user->count();
             Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
@@ -76,11 +75,11 @@ class User
             $placeholder = '留空不更新密码';
         }
         $form->text()->label('密码')->name('password')->placeholder($placeholder)
-            ->rules('password', ! input('id'))->tips('密码必须6到24位，且不能出现空格');
+            ->rules('password', !input('id'))->tips('密码必须6到24位，且不能出现空格');
         $form->text()->label('确认密码')->name('confirm_password')->placeholder(
             $placeholder
         )
-            ->rules('password', ! input('id'));
+            ->rules('password', !input('id'));
 
         $form->text()->label('邮箱')->name('email')->placeholder('请输入邮箱')->rules(
             'email', false
@@ -92,7 +91,7 @@ class User
             ['title' => '禁用', 'val' => 1],
         ];
         $form->select()->label('状态')->name('status')->options($op);
-        $op    = [];
+        $op = [];
         $roles = AuthRole::select();
         foreach ($roles as $val) {
             $op[] = ['title' => $val['name'], 'val' => $val['id']];
@@ -111,16 +110,16 @@ class User
         );
 
         $form->beforeUpdate(
-            function (Form $form,$model,$data) {
+            function (Form $form, $model, $data) {
                 $model->roles()->detach();
-                if($data['roles']){
+                if ($data['roles']) {
                     $model->roles()->save(explode(',', $data['roles']));
                 }
             }
         );
 
-        $form->afterSave(function (Form $form,$data){
-            if($data['roles']){
+        $form->afterSave(function (Form $form, $data) {
+            if ($data['roles']) {
                 $form->model->roles()->save(explode(',', $data['roles']));
             }
         });

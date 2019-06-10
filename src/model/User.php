@@ -58,23 +58,23 @@ class User extends Model
     {
         self::event(
             'before_insert', function ($user) {
-            self::existUser($user);
-            $user['salt']     = random_str(20);
-            $user['password'] = encrypt_password(
+                self::existUser($user);
+                $user['salt'] = random_str(20);
+                $user['password'] = encrypt_password(
                 $user['password'], $user['salt']
             );
-        }
+            }
         );
         self::event(
             'before_update', function ($user) {
-            self::existUser($user, $user['id']);
-            if (isset($user['password']) && $user['password']) {
-                $user['salt']     = random_str(20);
-                $user['password'] = encrypt_password(
+                self::existUser($user, $user['id']);
+                if (isset($user['password']) && $user['password']) {
+                    $user['salt'] = random_str(20);
+                    $user['password'] = encrypt_password(
                     $user['password'], $user['salt']
                 );
+                }
             }
-        }
         );
     }
 

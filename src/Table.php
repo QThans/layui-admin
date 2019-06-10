@@ -46,6 +46,7 @@ class Table
     public $toolWidth = 'auto';
 
     public $toolTitleWidth = 0;
+
     /**
      * 增加筛选条件。支持type类型：input\select。
      *
@@ -192,8 +193,8 @@ EOD;
 {$html}
 </script>
 EOD;
-            if($this->toolWidth =='auto'){
-                $this->toolWidth = ($this->toolTitleWidth/3)*27.5;
+            if ($this->toolWidth == 'auto') {
+                $this->toolWidth = ($this->toolTitleWidth / 3) * 27.5;
             }
             $this->column('', '操作', $this->toolWidth, 'tools', ['fixed' => 'right']);
         }

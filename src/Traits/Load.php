@@ -49,6 +49,7 @@ trait Load
         if (isset($this->classMap) && isset($this->classMap[$name]) && class_exists($this->classMap[$name])) {
             $render = new $this->classMap[$name](isset($arguments[0]) ? $arguments[0] : '', $this);
             $this->compoents[] = $render;
+
             return $render;
         }
     }
@@ -73,7 +74,7 @@ EOT
             );
         }
 
-        foreach ($this->compoents as $compoent){
+        foreach ($this->compoents as $compoent) {
             if (method_exists($compoent, 'render')) {
                 $compoent->render();
             }
@@ -81,6 +82,7 @@ EOT
         if (method_exists($this, 'end')) {
             $this->end();
         }
+
         return $this->builder->fetch($vars = [
             'self' => $this,
         ], $component);
@@ -100,5 +102,4 @@ EOT
             $this->init();
         }
     }
-
 }

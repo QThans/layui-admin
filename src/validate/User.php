@@ -12,7 +12,7 @@ class User extends Validate
         'password'         => 'require|min:6|max:24',
         'confirm_password' => 'require|confirm:password',
         'mobile'           => 'require|mobile',
-        'email|邮箱'       => 'require|email',
+        'email|邮箱'         => 'require|email',
         'code'             => 'require|length:4',
     ];
 

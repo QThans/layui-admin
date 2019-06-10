@@ -14,6 +14,7 @@ use think\Request;
 class Menu
 {
     use FormActions;
+
     public function index(Request $request)
     {
         if ($request->isAjax()) {
@@ -56,7 +57,7 @@ class Menu
     private function buildForm()
     {
         $menu = new MenuModel();
-        $form = new Form($menu,new \thans\layuiAdmin\validate\Menu());
+        $form = new Form($menu, new \thans\layuiAdmin\validate\Menu());
         $parent = [];
         $parent[] = ['val' => 0, 'title' => '根菜单'];
         foreach (Utils::buildTree($menu->select(), false, '└―') as $val) {
@@ -74,6 +75,7 @@ class Menu
         $status[] = ['val' => 0, 'title' => '启用'];
         $status[] = ['val' => 1, 'title' => '禁用'];
         $form->select()->name('status')->label('状态')->options($status);
+
         return $form;
     }
 }

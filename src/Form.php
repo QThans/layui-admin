@@ -155,8 +155,8 @@ class Form
 
     public function edit($id, $method = 'PUT')
     {
-        $model        = $this->model->with($this->relations)->find($id);
-        $this->data   = $model;
+        $model = $this->model->with($this->relations)->find($id);
+        $this->data = $model;
         $this->method = $method;
         $this->callReading();
 
@@ -224,7 +224,6 @@ class Form
         }
     }
 
-
     public function afterUpdate(Closure $callback = null)
     {
         $this->afterUpdate[] = $callback;
@@ -239,12 +238,10 @@ class Form
         }
     }
 
-
     public function beforeDestroy(Closure $callback = null)
     {
         $this->beforeDestroy[] = $callback;
     }
-
 
     protected function callDestroying($model)
     {
@@ -254,7 +251,6 @@ class Form
             }
         }
     }
-
 
     public function destroy($id)
     {
@@ -270,9 +266,10 @@ class Form
     public function update($id, $data = null)
     {
         $data = $data ?? Request::param();
+
         try {
             $scene = $this->validateScene ? 'update' : null;
-            if ( ! $this->validate->scene($scene)->check($data)) {
+            if (!$this->validate->scene($scene)->check($data)) {
                 Json::error($this->validate->getError());
             }
             $model = $this->model->find($id);
@@ -283,16 +280,15 @@ class Form
         } catch (Exception $e) {
             Json::error($e->getMessage(), 500);
         }
-
     }
-
 
     public function save($data = null)
     {
         $data = $data ?? Request::param();
+
         try {
             $scene = $this->validateScene ? 'save' : null;
-            if ( ! $this->validate->scene($scene)->check($data)) {
+            if (!$this->validate->scene($scene)->check($data)) {
                 Json::error($this->validate->getError);
             }
             $this->callSaving($data);
@@ -317,11 +313,11 @@ class Form
     public function __construct($model = '', $validate = '',
         $validateScene = false
     ) {
-        $this->model         = $model;
-        $this->validate      = $validate;
+        $this->model = $model;
+        $this->validate = $validate;
         $this->validateScene = $validateScene;
-        $this->builder       = new Builder($this->tmpl);
-        $this->id            = uniqid();
+        $this->builder = new Builder($this->tmpl);
+        $this->id = uniqid();
         $this->builder->module('form');
         $this->builder->module('jquery');
     }

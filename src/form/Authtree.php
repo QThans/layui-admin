@@ -49,7 +49,7 @@ class Authtree
         $this->obj->module('authtree');
         if ($this->items) {
             if (isset($this->obj->data[$this->name]) && $this->obj->data[$this->name]) {
-                $values   = explode(',', $this->obj->data[$this->name]);
+                $values = explode(',', $this->obj->data[$this->name]);
                 $checked = array_combine($values, $values);
                 foreach ($this->items as &$item) {
                     if (isset($checked[$item[$ths->valueKey]])) {

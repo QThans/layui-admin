@@ -37,9 +37,8 @@ class AuthRole extends Model
     {
         self::event(
             'before_write', function ($role) {
-            $role['status'] = Request::param('status', null) == null ? 0 : 1;
-        }
+                $role['status'] = Request::param('status', null) == null ? 0 : 1;
+            }
         );
-
     }
 }

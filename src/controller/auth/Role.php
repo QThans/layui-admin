@@ -11,7 +11,6 @@ use thans\layuiAdmin\model\AuthRole;
 use thans\layuiAdmin\model\Menu;
 use thans\layuiAdmin\Table;
 use thans\layuiAdmin\Traits\FormActions;
-use think\Exception;
 use think\Request;
 
 class Role
@@ -25,9 +24,9 @@ class Role
                 'name|alias'
             );
             $authRole = AuthRole::where($where);
-            $list     = $authRole->order($order)->page($page)->limit($limit)
+            $list = $authRole->order($order)->page($page)->limit($limit)
                 ->select();
-            $total    = $authRole->count();
+            $total = $authRole->count();
             Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
@@ -77,13 +76,12 @@ class Role
             ->rules('required', true, 2, 20);
         $form->onoff()->label('是否禁用')->name('status')->value(1);
 
-
         $menus = Menu::where('status', 0)->select()->toArray();
 
         $form->authtree()->items($menus)->label('菜单选择')->name('menus');
 
         $permission = AuthPermission::select();
-        $op         = [];
+        $op = [];
         foreach ($permission as $val) {
             $op[] = ['title' => $val['name'], 'val' => $val['id']];
         }
@@ -102,7 +100,6 @@ class Role
                     ? implode(
                         ',', array_column($form->data->menus->toArray(), 'id')
                     ) : '';
-
             }
         );
 

@@ -9,12 +9,12 @@ use thans\layuiAdmin\Form;
 use thans\layuiAdmin\model\AuthPermission;
 use thans\layuiAdmin\Table;
 use thans\layuiAdmin\Traits\FormActions;
-use think\Exception;
 use think\Request;
 
 class Permission
 {
     use FormActions;
+
     public function index(Request $request)
     {
         if ($request->isAjax()) {
@@ -22,8 +22,8 @@ class Permission
                 'name|alias|path'
             );
             $permission = AuthPermission::where($where)->order($order);
-            $list       = $permission->page($page)->limit($limit)->select();
-            $total      = $permission->count();
+            $list = $permission->page($page)->limit($limit)->select();
+            $total = $permission->count();
             Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
@@ -48,7 +48,7 @@ class Permission
         );
         if (Auth::check($url, 'DELETE')) {
             $tb->tool(
-                '删除', $url, 'confirmAjax', 'danger', 'DELETE','d.id != 1'
+                '删除', $url, 'confirmAjax', 'danger', 'DELETE', 'd.id != 1'
             );
         }
         $url = url('thans\layuiAdmin\controller\auth\Permission/create');
@@ -62,7 +62,7 @@ class Permission
     private function buildForm()
     {
         $form = new Form(
-            new AuthPermission, new \thans\layuiAdmin\validate\Permission()
+            new AuthPermission(), new \thans\layuiAdmin\validate\Permission()
         );
         $form->text()->name('name')->label('权限名称')->rules('required');
         $form->text()->name('alias')->label('别名')->tips('仅支持字母、下划线、"."，必须字母开头')
@@ -81,11 +81,12 @@ class Permission
         $form->textarea()->name('path')->label('HTTP地址')->tips('换行分割')->rule(
             'required'
         );
-        $form->beforeDestroy(function (Form $form,$model){
-             if($model['id'] == 1){
-                 Json::error('无法删除默认数据');
-             }
+        $form->beforeDestroy(function (Form $form, $model) {
+            if ($model['id'] == 1) {
+                Json::error('无法删除默认数据');
+            }
         });
+
         return $form;
     }
 }

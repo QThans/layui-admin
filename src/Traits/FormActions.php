@@ -1,6 +1,5 @@
 <?php
 
-
 namespace thans\layuiAdmin\Traits;
 
 use thans\layuiAdmin\facade\Auth;
@@ -11,7 +10,7 @@ trait FormActions
     public function edit($id)
     {
         return $this->buildForm()->edit($id)->hiddenSubmit(
-            ! Auth::check(url(get_class($this).'/update'), 'put')
+            !Auth::check(url(get_class($this).'/update'), 'put')
         )->url(
             url(get_class($this).'/update', 'id='.$id)
         )->render();
@@ -34,9 +33,8 @@ trait FormActions
 
     public function create()
     {
-
         return $this->buildForm()->hiddenSubmit(
-            ! Auth::check(url(get_class($this).'/update'), 'put')
+            !Auth::check(url(get_class($this).'/update'), 'put')
         )->url(url(get_class($this).'/save'))->render();
     }
 }

@@ -22,8 +22,8 @@ class User
             list($where, $order, $page, $limit) = Utils::buildParams(
                 'name|nickname|email|mobile'
             );
-            $user  = UserModel::where($where);
-            $list  = $user->order($order)->page($page)->limit($limit)->select();
+            $user = UserModel::where($where);
+            $list = $user->order($order)->page($page)->limit($limit)->select();
             $total = $user->count();
             Json::success('获取成功', $list, ['total' => $total]);
         }
@@ -97,7 +97,7 @@ class User
     private function buildForm()
     {
         $model = new UserModel();
-        $form  = new Form($model, new \thans\layuiAdmin\validate\User(),true);
+        $form = new Form($model, new \thans\layuiAdmin\validate\User(), true);
         $form->text()->label('用户名')->name('name')->placeholder('请输入用户名')->rules(
             'account'
         )->tips('用户名支持中英文、数字、下划线，不支持数字开头');
@@ -122,6 +122,7 @@ class User
             ['title' => '禁用', 'val' => 1],
         ];
         $form->select()->label('状态')->name('status')->options($op);
+
         return $form;
     }
 }

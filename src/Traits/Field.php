@@ -74,19 +74,6 @@ trait Field
         return $this;
     }
 
-    public function render()
-    {
-        if (method_exists($this, 'end')) {
-            $this->end();
-        }
-        $render = $this->obj->builder->display($this->tmpl, [
-            'self' => $this,
-        ], true);
-        $this->obj->field[] = $render;
-
-        return $this;
-    }
-
     public function rules($rules = '', $required = true, $min = 0, $max = 0, $tips = '')
     {
         $id = uniqid();

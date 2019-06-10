@@ -18,10 +18,11 @@ class User extends Model
 
     protected $name = 'user';
 
-    public $statusText = [
-        0 => '正常',
-        1 => '禁用',
-    ];
+    public $statusText
+        = [
+            0 => '正常',
+            1 => '禁用',
+        ];
 
     public function meta()
     {
@@ -30,7 +31,10 @@ class User extends Model
 
     public function roles()
     {
-        return $this->belongsToMany('AuthRole', 'thans\layuiAdmin\model\AuthRoleUser', 'role_id', 'user_id');
+        return $this->belongsToMany(
+            'AuthRole', 'thans\layuiAdmin\model\AuthRoleUser', 'role_id',
+            'user_id'
+        );
     }
 
     public function hidden(array $array = [], $override = false)
@@ -52,12 +56,26 @@ class User extends Model
 
     public static function init()
     {
-        self::event('before_insert', function ($user) {
+        self::event(
+            'before_insert', function ($user) {
             self::existUser($user);
-        });
-        self::event('before_update', function ($user) {
+            $user['salt']     = random_str(20);
+            $user['password'] = encrypt_password(
+                $user['password'], $user['salt']
+            );
+        }
+        );
+        self::event(
+            'before_update', function ($user) {
             self::existUser($user, $user['id']);
-        });
+            if (isset($user['password']) && $user['password']) {
+                $user['salt']     = random_str(20);
+                $user['password'] = encrypt_password(
+                    $user['password'], $user['salt']
+                );
+            }
+        }
+        );
     }
 
     public static function existUser($user, $user_id = '')

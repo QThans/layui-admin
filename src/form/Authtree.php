@@ -38,7 +38,7 @@ class Authtree
 
     public function items($val = [])
     {
-        $this->items = json_encode($val, JSON_NUMERIC_CHECK);
+        $this->items = $val;
 
         return $this;
     }
@@ -48,10 +48,21 @@ class Authtree
         $this->id = uniqid();
         $this->obj->module('authtree');
         if ($this->items) {
+            if (isset($this->obj->data[$this->name]) && $this->obj->data[$this->name]) {
+                $values   = explode(',', $this->obj->data[$this->name]);
+                $checked = array_combine($values, $values);
+                foreach ($this->items as &$item) {
+                    if (isset($checked[$item[$ths->valueKey]])) {
+                        $item['checked'] = true;
+                    }
+                }
+            }
+
+            $items = json_encode($this->items, JSON_NUMERIC_CHECK);
             $this->obj->script(
                 'authtree',
                 <<<EOD
-                var trees = authtree.listConvert({$this->items}, {
+                var trees = authtree.listConvert({$items}, {
 				    primaryKey: '{$this->primaryKey}'
 					,startPid: {$this->startPid}
 					,parentKey: '{$this->parentKey}'
@@ -67,7 +78,7 @@ class Authtree
 				});
 EOD
             );
-        } else {
+        } elseif (isset($this->url) && $this->url) {
             $this->obj->script(
                 'authtree',
                 <<<EOD

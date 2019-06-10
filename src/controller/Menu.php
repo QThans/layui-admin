@@ -8,11 +8,12 @@ use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
 use thans\layuiAdmin\model\Menu as MenuModel;
 use thans\layuiAdmin\Table;
-use think\Exception;
+use thans\layuiAdmin\Traits\FormActions;
 use think\Request;
 
 class Menu
 {
+    use FormActions;
     public function index(Request $request)
     {
         if ($request->isAjax()) {
@@ -52,68 +53,10 @@ class Menu
         return $tb->render();
     }
 
-    public function delete($id)
+    private function buildForm()
     {
-        MenuModel::destroy($id);
-        Json::success('删除完成');
-    }
-
-    public function create()
-    {
-        return $this->buildForm(url('thans\layuiAdmin\controller\Menu/save'));
-    }
-
-    public function save(Request $request)
-    {
-        $data = $request->param();
-
-        try {
-            $validate = new \thans\layuiAdmin\validate\Menu();
-
-            if (!$validate->check($data)) {
-                Json::error($validate->getError());
-            }
-            $menu = new MenuModel();
-            $menu->allowField(true)->save($data);
-            Json::success('保存成功');
-        } catch (Exception $e) {
-            Json::error($e->getMessage(), 500);
-        }
-    }
-
-    public function edit(Request $request, $id)
-    {
-        $menu = MenuModel::get($id);
-
-        return $this->buildForm(url('thans\layuiAdmin\controller\Menu/update', 'id='.$id), 'PUT', $menu);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $data = $request->param();
-
-        try {
-            $validate = new \thans\layuiAdmin\validate\Menu();
-
-            if (!$validate->check($data)) {
-                Json::error($validate->getError());
-            }
-            $menu = new MenuModel();
-            $menu = $menu->get($id);
-            $menu->allowField(true)->save($data);
-            Json::success('更新成功');
-        } catch (Exception $e) {
-            Json::error($e->getMessage(), 500);
-        }
-    }
-
-    private function buildForm($url, $method = 'POST', $data = [])
-    {
-        $form = new Form();
-        $form->method($method);
         $menu = new MenuModel();
-        $form->data($data);
-        $form->url($url);
+        $form = new Form($menu,new \thans\layuiAdmin\validate\Menu());
         $parent = [];
         $parent[] = ['val' => 0, 'title' => '根菜单'];
         foreach (Utils::buildTree($menu->select(), false, '└―') as $val) {
@@ -121,7 +64,7 @@ class Menu
         }
         $form->select()->name('parent_id')->label('上级菜单')->options($parent);
         $form->text()->name('name')->label('菜单名称')->rules('required');
-        $form->icon()->name('icon')->label('ICON')->rules('required', true, 10, 100, 'ICON必须选择')->value('layui-icon-circle-dot');
+        $form->icon()->name('icon')->label('ICON');
         $form->number()->name('order')->label('排序')->value(1000);
         $form->text()->name('uri')->label('URI')->placeholder('请输入URI');
         $permission = [];
@@ -131,9 +74,6 @@ class Menu
         $status[] = ['val' => 0, 'title' => '启用'];
         $status[] = ['val' => 1, 'title' => '禁用'];
         $form->select()->name('status')->label('状态')->options($status);
-
-        $form->hiddenSubmit(!Auth::check($url, $method));
-
-        return $form->render();
+        return $form;
     }
 }

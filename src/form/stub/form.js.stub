@@ -1,5 +1,4 @@
 {if $self->dataUrl}
-layer.load(1);
 admin.ajax('{$self->dataUrl}','',function (data) {
     if (data.code == 1) {
         $.each(data.data,function(i,e){

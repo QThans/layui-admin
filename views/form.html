@@ -4,7 +4,7 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div class="layui-form" lwid100 iwid300 lay-filter="form-{$self->id}">
-                        {:implode($self->field)}
+                        {:implode($self->builder->compoents)}
                         {if !$self->hiddenSubmit}
                         <div class="layui-form-item">
                             <div class="layui-input-block">

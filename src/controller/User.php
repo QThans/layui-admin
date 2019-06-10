@@ -8,17 +8,22 @@ use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
 use thans\layuiAdmin\model\User as UserModel;
 use thans\layuiAdmin\Table;
+use thans\layuiAdmin\Traits\FormActions;
 use think\Exception;
 use think\Request;
 
 class User
 {
+    use FormActions;
+
     public function index(Request $request)
     {
         if ($request->isAjax()) {
-            list($where, $order, $page, $limit) = Utils::buildParams('name|nickname|email|mobile');
-            $user = UserModel::where($where);
-            $list = $user->order($order)->page($page)->limit($limit)->select();
+            list($where, $order, $page, $limit) = Utils::buildParams(
+                'name|nickname|email|mobile'
+            );
+            $user  = UserModel::where($where);
+            $list  = $user->order($order)->page($page)->limit($limit)->select();
             $total = $user->count();
             Json::success('获取成功', $list, ['total' => $total]);
         }
@@ -34,18 +39,24 @@ class User
         $tb->column('last_login_time', '最后登录时间');
         $tb->column('create_time', '创建时间');
         $tb->column('update_time', '更新时间');
-        $tb->status(['field' => 'status'])->option(0, '正常')->option(1, '禁用', 'danger');
+        $tb->status(['field' => 'status'])->option(0, '正常')->option(
+            1, '禁用', 'danger'
+        );
         $url = url('thans\layuiAdmin\controller\User/edit', 'id={{ d.id }}');
         if (Auth::check($url)) {
             $tb->tool('编辑', $url);
         }
         $url = url('thans\layuiAdmin\controller\User@lock', 'id={{ d.id }}');
         if (Auth::check($url)) {
-            $tb->tool('禁用', $url, 'confirmAjax', 'danger', 'get', 'd.status == 0');
+            $tb->tool(
+                '禁用', $url, 'confirmAjax', 'danger', 'get', 'd.status == 0'
+            );
         }
         $url = url('thans\layuiAdmin\controller\User@unlock', 'id={{ d.id }}');
         if (Auth::check($url)) {
-            $tb->tool('启用', $url, 'confirmAjax', 'default', 'get', 'd.status == 1');
+            $tb->tool(
+                '启用', $url, 'confirmAjax', 'default', 'get', 'd.status == 1'
+            );
         }
         $url = url('thans\layuiAdmin\controller\User/create');
         if (Auth::check($url)) {
@@ -83,84 +94,34 @@ class User
         }
     }
 
-    public function create()
+    private function buildForm()
     {
-        return $this->buildForm(url('thans\layuiAdmin\controller\User/save'));
-    }
-
-    public function edit($id)
-    {
-        $data = UserModel::get($id);
-
-        return $this->buildForm(url('thans\layuiAdmin\controller\User/update', 'id='.$id), 'PUT', $data);
-    }
-
-    public function save(Request $request)
-    {
-        $data = $request->param();
-
-        try {
-            $validate = new \thans\layuiAdmin\validate\User();
-            if (!$validate->scene('insert')->check($data)) {
-                Json::error($validate->getError());
-            }
-            $data['salt'] = random_str(20);
-            $data['password'] = encrypt_password($data['password'], $data['salt']);
-            $data['admin'] = 0;
-            UserModel::create($data);
-            Json::success('保存成功');
-        } catch (Exception $e) {
-            Json::error($e->getMessage());
-        }
-    }
-
-    public function update($id, Request $request)
-    {
-        $data = $request->param();
-
-        try {
-            $validate = new \thans\layuiAdmin\validate\User();
-            if (!$validate->scene('edit')->check($data)) {
-                Json::error($validate->getError());
-            }
-            $user = UserModel::get($id);
-            if (isset($data['password']) && $data['password']) {
-                $user->salt = random_str(20);
-                $user->password = encrypt_password($data['password'], $user->salt);
-            }
-            $user->name = $data['name'];
-            $user->nickname = $data['nickname'];
-            $user->mobile = $data['mobile'];
-            $user->email = $data['email'];
-            $user->status = $data['status'];
-            $user->save();
-            Json::success('更新成功');
-        } catch (Exception $e) {
-            Json::error($e->getMessage());
-        }
-    }
-
-    private function buildForm($url, $method = 'POST', $data = [])
-    {
-        $form = new Form();
-        $form->url($url);
-        $form->method($method);
-        $form->data($data);
-        $form->text()->label('用户名')->name('name')->placeholder('请输入用户名')->rules('account')->tips('用户名支持中英文、数字、下划线，不支持数字开头');
-        $form->text()->label('昵称')->name('nickname')->placeholder('请输入昵称')->rules('required', true, 5, 100);
+        $model = new UserModel();
+        $form  = new Form($model, new \thans\layuiAdmin\validate\User(),true);
+        $form->text()->label('用户名')->name('name')->placeholder('请输入用户名')->rules(
+            'account'
+        )->tips('用户名支持中英文、数字、下划线，不支持数字开头');
+        $form->text()->label('昵称')->name('nickname')->placeholder('请输入昵称')
+            ->rules('required', true, 5, 100);
         $placeholder = '请输入密码';
-        if ($data) {
+        if (input('id')) {
             $placeholder = '留空不更新密码';
         }
-        $form->text()->label('密码')->name('password')->placeholder($placeholder)->rules('password', (bool) !$data)->tips('密码必须6到24位，且不能出现空格');
-        $form->text()->label('邮箱')->name('email')->placeholder('请输入邮箱')->rules('email', false);
-        $form->text()->label('手机号')->name('mobile')->placeholder('请输入手机号')->rules('mobile', false);
+        $form->text()->label('密码')->name('password')->placeholder($placeholder)
+            ->rules('password', !input('id'))->tips('密码必须6到24位，且不能出现空格');
+        $form->text()->label('确认密码')->name('confirm_password')->placeholder($placeholder)
+            ->rules('password', !input('id'));
+
+        $form->text()->label('邮箱')->name('email')->placeholder('请输入邮箱')->rules(
+            'email', false
+        );
+        $form->text()->label('手机号')->name('mobile')->placeholder('请输入手机号')
+            ->rules('mobile', false);
         $op = [
             ['title' => '正常', 'val' => 0],
             ['title' => '禁用', 'val' => 1],
         ];
         $form->select()->label('状态')->name('status')->options($op);
-
-        return $form->render();
+        return $form;
     }
 }

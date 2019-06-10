@@ -14,6 +14,8 @@ trait Load
 {
     public $builder;
 
+    protected $compoents = [];
+
     public function addClassMap($name, $class)
     {
         $this->classMap[$name] = $class;
@@ -45,9 +47,9 @@ trait Load
             return $this;
         }
         if (isset($this->classMap) && isset($this->classMap[$name]) && class_exists($this->classMap[$name])) {
-            $class = new $this->classMap[$name](isset($arguments[0]) ? $arguments[0] : '', $this);
-
-            return $class;
+            $render = new $this->classMap[$name](isset($arguments[0]) ? $arguments[0] : '', $this);
+            $this->compoents[] = $render;
+            return $render;
         }
     }
 
@@ -70,10 +72,15 @@ trait Load
 EOT
             );
         }
+
+        foreach ($this->compoents as $compoent){
+            if (method_exists($compoent, 'render')) {
+                $compoent->render();
+            }
+        }
         if (method_exists($this, 'end')) {
             $this->end();
         }
-
         return $this->builder->fetch($vars = [
             'self' => $this,
         ], $component);
@@ -93,4 +100,5 @@ EOT
             $this->init();
         }
     }
+
 }

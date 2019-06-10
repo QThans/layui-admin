@@ -22,21 +22,27 @@ class Builder
 
     public $tmpl = '';
 
-    public $module = [
-        'admin',
-    ];
+    public $module
+        = [
+            'admin',
+        ];
 
     public $view;
 
-    public $css = [
-        'layui'       => 'vendor/layui-admin/layui/css/layui.css',
-        'fa-iconfont' => 'vendor/layui-admin/font-awesome/css/font-awesome.min.css',
-        'admin'       => 'vendor/layui-admin/css/admin.css',
-    ];
+    public $css
+        = [
+            'layui'       => 'vendor/layui-admin/layui/css/layui.css',
+            'fa-iconfont' => 'vendor/layui-admin/font-awesome/css/font-awesome.min.css',
+            'admin'       => 'vendor/layui-admin/css/admin.css',
+        ];
 
-    public $js = [
-        'layui' => 'vendor/layui-admin/layui/layui.js',
-    ];
+    public $js
+        = [
+            'layui' => 'vendor/layui-admin/layui/layui.js',
+        ];
+
+
+    public $compoents = [];
 
     private $engineConfig = [];
 
@@ -45,9 +51,9 @@ class Builder
         if ($init) {
             $this->html = [];
         }
-        $this->view = new View();
+        $this->view                      = new View();
         $this->engineConfig['view_path'] = view_path();
-        $this->tmpl = $tmpl;
+        $this->tmpl                      = $tmpl;
         $this->view->init($this->engineConfig);
     }
 
@@ -79,14 +85,20 @@ class Builder
         return $this;
     }
 
+    final public function compoents($key, $html)
+    {
+        $this->compoents[$key] = $html;
+        return $this;
+    }
+
     final public function module($module)
     {
         if ($module == 'element') {
-            $module = $this->module[0];
+            $module          = $this->module[0];
             $this->module[0] = 'element';
         }
         $this->module[] = $module;
-        $this->module = array_unique($this->module);
+        $this->module   = array_unique($this->module);
 
         return $this;
     }
@@ -106,7 +118,7 @@ class Builder
             unset($this->engineConfig['layout_name']);
         }
         $this->engineConfig['view_path'] = view_path();
-        $tmpl = $this->tmpl;
+        $tmpl                            = $this->tmpl;
 
         return $this->view->fetch($tmpl, $vars, $this->engineConfig);
     }
@@ -122,8 +134,8 @@ class Builder
     public function load($obj)
     {
         $this->html[] = $obj->render(true);
-        $vars = get_object_vars($this);
-        foreach ($vars as $key=>$val) {
+        $vars         = get_object_vars($this);
+        foreach ($vars as $key => $val) {
             if (is_array($this->$key)) {
                 $this->$key = array_merge($this->$key, $obj->builder->$key);
             }

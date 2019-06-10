@@ -79,6 +79,9 @@
         </div>
     </div>
 </div>
+{volist name="$self->builder->compoents" id="vo"}
+{:htmlspecialchars_decode($vo)}
+{/volist}
 {volist name="$self->builder->html" id="vo"}
 {:htmlspecialchars_decode($vo)}
 {/volist}

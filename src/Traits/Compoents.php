@@ -39,14 +39,9 @@ trait Compoents
         if (method_exists($this, 'init')) {
             $this->init();
         }
-
         return $this;
     }
 
-    public function __destruct()
-    {
-        $this->render();
-    }
 
     public function render()
     {
@@ -56,9 +51,10 @@ trait Compoents
         $render = $this->obj->builder->display($this->tmpl, [
             'self' => $this,
         ], true);
-        $this->obj->builder->html[] = $render;
 
-        return $this;
+        $this->obj->builder->compoents[] = $render;
+
+        return $render;
     }
 
     public function __call($name, $value)

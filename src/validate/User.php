@@ -12,7 +12,7 @@ class User extends Validate
         'password'         => 'require|min:6|max:24',
         'confirm_password' => 'require|confirm:password',
         'mobile'           => 'require|mobile',
-        'email'            => 'require|email',
+        'email|邮箱'       => 'require|email',
         'code'             => 'require|length:4',
     ];
 
@@ -25,14 +25,14 @@ class User extends Validate
         'code'             => '请输入正确的验证码',
     ];
 
-    public function sceneInsert()
+    public function sceneSave()
     {
         return $this->only(['name', 'nickname', 'password', 'email', 'mobile'])
             ->remove('mobile', 'require')
             ->remove('email', 'require');
     }
 
-    public function sceneEdit()
+    public function sceneUpdate()
     {
         return $this->only(['name', 'nickname', 'password', 'email', 'mobile'])
             ->remove('mobile', 'require')

@@ -1,5 +1,5 @@
-var number_{$self->id} = $('input[name="{$self->name}"]').length;
-var files;
+var number_{$self->id} = 0;
+
 var uploadInst_{$self->id} = upload.render({
     elem: '#{$self->id}' //绑定元素
     ,url: '{$self->url}' //上传接口
@@ -23,21 +23,18 @@ var uploadInst_{$self->id} = upload.render({
             $('.status_'+index).html(res.msg);
         }
         layer.closeAll('loading');
-        return delete files[index];
     }
     ,error: function(index, upload){
         layer.closeAll('loading');
         $('.status_'+index).html('上传失败');
         number_{$self->id}--;
-        return delete files[index];
     }
     ,choose: function(obj){
-        files = obj.pushFile();
         obj.preview(function(index, file, result){
             if(number_{$self->id}+1 > {$self->number}){
-                delete files[index];
+                files = [];
                 layer.msg("最多只能长传{$self->number}个文件",{icon:2});
-                return;
+                return true;
             }
             number_{$self->id}++;
             {switch $self->uploadType}
@@ -55,5 +52,4 @@ $(document).on('click','.removeimg',function(){
     var index = $(this).attr('data-id');
     $('#dim_id_'+index).remove();
     number_{$self->id}--;
-    return delete files[index];
 });

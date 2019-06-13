@@ -70,6 +70,7 @@ class Upload
     {
         return <<<EOD
 $('#{$this->id}_upload_list').append('<input name="{$this->name}" type="hidden" class="value_0" value="{$val}">');
+number_{$this->id}++;
 EOD;
     }
 

@@ -7,12 +7,15 @@ use think\Request;
 
 trait FormActions
 {
-    public function edit($id)
+    public function edit($id, Request $request)
     {
+        $url = $request->controller() ? url($request->module().'\\'
+            .$request->controller().'\\update', 'id='.$id)
+            : url(get_class($this).'/update', 'id='.$id);
         return $this->buildForm()->edit($id)->hiddenSubmit(
-            !Auth::check(url(get_class($this).'/update'), 'put')
+            ! Auth::check($url, 'put')
         )->url(
-            url(get_class($this).'/update', 'id='.$id)
+            url($url, 'id='.$id)
         )->render();
     }
 
@@ -31,10 +34,13 @@ trait FormActions
         $this->buildForm()->destroy($id);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $url = $request->controller() ? url($request->module().'/'
+            .$request->controller().'/save') : url(get_class($this).'/save');
+
         return $this->buildForm()->hiddenSubmit(
-            !Auth::check(url(get_class($this).'/update'), 'put')
-        )->url(url(get_class($this).'/save'))->render();
+            ! Auth::check($url, 'put')
+        )->url($url)->render();
     }
 }

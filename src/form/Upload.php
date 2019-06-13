@@ -41,10 +41,48 @@ class Upload
     public function end()
     {
         $this->obj->module('upload');
-        $code = $this->obj->builder->display(__DIR__.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'upload.js.stub', $vars = [
-            'self'=> $this,
+        $code = $this->obj->builder->display(__DIR__.DIRECTORY_SEPARATOR.'stub'
+            .DIRECTORY_SEPARATOR.'upload.js.stub', $vars = [
+            'self' => $this,
         ]);
         $this->obj->script('upload_js_'.$this->id, $code);
-        $this->obj->submitStartSctipt('upload_start_script_'.$this->id, 'delete data.field.'.$this->field.';');
+        $this->obj->submitStartSctipt('upload_start_script_'.$this->id,
+            'delete data.field.'.$this->field.';');
+        $val    = isset($this->obj->data[$this->name])
+            ? $this->obj->data[$this->name] : '';
+        $script = '';
+        if (is_array($val)) {
+            foreach ($val as $k => $v) {
+                $script .= $script = $this->appendInput($val);
+            }
+
+            $script .= $this->appendView(0, $val);
+
+        } else {
+            $script = $this->appendInput($val);
+            $script .= $this->appendView(0, $val);
+        }
+
+        $this->obj->setValueScript('upload_'.$this->id, $script);
+    }
+
+    protected function appendInput($val)
+    {
+        return <<<EOD
+$('#{$this->id}_upload_list').append('<input name="{$this->name}" type="hidden" class="value_0" value="{$val}">');
+EOD;
+    }
+
+    protected function appendView($k, $v)
+    {
+        if ($this->uploadType == 'image') {
+            return <<<EOD
+                $('#{$this->id}_upload_list').append('<div id="dim_id_$k" class="dimback"><img id="img_id_$k" src="$v" alt="" class="layui-upload-img" ><span class="status_$k">已上传</span><i data-id="$k" class="layui-icon-close layui-icon removeimg"></i></div>');
+EOD;
+        } else {
+            return <<<EOD
+                $('#{$this->id}_upload_list').append('<div id="dim_id_$k" class="dimback dimback-file"><p id="img_id_$k"  class="layui-upload-file-name" >$v</p><span class="status_$k">已上传</span><i data-id="$k" class="layui-icon-close layui-icon removeimg"></i></div>');
+EOD;
+        }
     }
 }

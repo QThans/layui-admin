@@ -9,13 +9,13 @@ trait FormActions
 {
     public function edit($id, Request $request)
     {
-        $url = $request->controller() ? url($request->module().'\\'
-            .$request->controller().'\\update', 'id='.$id)
+        $url = $request->controller() ? url($request->module().'/'
+            .$request->controller().'/update', 'id='.$id)
             : url(get_class($this).'/update', 'id='.$id);
         return $this->buildForm()->edit($id)->hiddenSubmit(
             ! Auth::check($url, 'put')
         )->url(
-            url($url, 'id='.$id)
+            $url
         )->render();
     }
 

@@ -92,7 +92,7 @@ layui.define(['laypage', 'form'], function (exports) {
 
         // 默认图标
         if (ORIGINAL_ELEM_VALUE === '') {
-          ORIGINAL_ELEM_VALUE = 'layui-icon-circle-dot';
+          ORIGINAL_ELEM_VALUE = '';
         }
 
         oriIcon = '<i class="fa layui-icon ' + ORIGINAL_ELEM_VALUE + '">';

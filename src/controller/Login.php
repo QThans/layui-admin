@@ -8,6 +8,7 @@ use thans\layuiAdmin\facade\Jump;
 use thans\layuiAdmin\Login as LoginView;
 use think\Exception;
 use think\exception\HttpException;
+use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Session;
 use think\Loader;
@@ -40,6 +41,10 @@ class Login
 
         try {
             $user = Auth::login($account, $password);
+            session('user_id', $user->id);
+            session('user_info', $user);
+            session('user_meta', $user->meta);
+            Cache::rm('user_'.session('user_id'));
             session('admin', $user->admin);
             Json::success('登录成功...', [], [], $redirect ? $redirect : url('thans\layuiAdmin\controller\Index@index'), 2);
         } catch (HttpException $e) {
@@ -49,6 +54,7 @@ class Login
 
     public function logout(Request $request)
     {
+        Cache::rm('user_'.session('user_id'));
         Session::clear();
         if ($request->isAjax()) {
             Json::success('退出成功');

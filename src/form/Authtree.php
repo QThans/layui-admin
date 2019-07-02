@@ -52,7 +52,7 @@ class Authtree
                 $values = explode(',', $this->obj->data[$this->name]);
                 $checked = array_combine($values, $values);
                 foreach ($this->items as &$item) {
-                    if (isset($checked[$item[$ths->valueKey]])) {
+                    if (isset($checked[$item[$this->valueKey]])) {
                         $item['checked'] = true;
                     }
                 }

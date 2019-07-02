@@ -10,7 +10,7 @@ class Menu extends Validate
         'name'       => 'require|max:100',
         'parent_id'  => 'number',
         'order'      => 'number|between:-32768,32768',
-        'icon'       => 'require|max:100',
+        'icon'       => 'max:100',
         'uri'        => 'max:200',
         'status'     => 'number',
         'permission' => 'max:200',

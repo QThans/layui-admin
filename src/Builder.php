@@ -120,7 +120,7 @@ class Builder
         $this->engineConfig['view_path'] = view_path();
         $tmpl                            = $this->tmpl;
 
-        return $this->view->fetch(DIRECTORY_SEPARATOR.$tmpl, $vars,
+        return $this->view->fetch($tmpl, $vars,
             $this->engineConfig);
     }
 
@@ -128,7 +128,7 @@ class Builder
     {
         $this->view->engine->layout(false);
 
-        return $this->view->fetch(DIRECTORY_SEPARATOR.$tmpl, $vars);
+        return $this->view->fetch($tmpl, $vars);
     }
 
     //加载其他组件

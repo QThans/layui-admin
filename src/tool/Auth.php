@@ -20,7 +20,7 @@ class Auth
 {
     public function login($account, $password)
     {
-        $field = Validate::isEmail($account) ? 'email' : Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'name';
+        $field = Validate::isEmail($account) ? 'email' : (Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'name');
         $user = User::where($field, $account)->find();
         if (!$user) {
             throw new \think\exception\HttpException(401, '账户不存在');
@@ -34,17 +34,7 @@ class Auth
         $user->last_login_ip = Request::ip();
         $user->last_login_time = time();
         $user->save();
-        session('user_id', $user->id);
-        session('user_info', $user);
-        session('user_meta', $user->meta);
-        $this->clearCache();
-
         return $user;
-    }
-
-    public function clearCache()
-    {
-        Cache::rm('user_'.session('user_id'));
     }
 
     public function user()

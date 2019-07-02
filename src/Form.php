@@ -270,7 +270,7 @@ class Form
         try {
             if ($this->validate) {
                 $scene = $this->validateScene ? 'update' : null;
-                if ( ! $this->validate->scene($scene)->check($data)) {
+                if (! $this->validate->scene($scene)->check($data)) {
                     Json::error($this->validate->getError());
                 }
             }
@@ -291,7 +291,7 @@ class Form
         try {
             if ($this->validate) {
                 $scene = $this->validateScene ? 'save' : null;
-                if ( ! $this->validate->scene($scene)->check($data)) {
+                if (! $this->validate->scene($scene)->check($data)) {
                     Json::error($this->validate->getError());
                 }
             }

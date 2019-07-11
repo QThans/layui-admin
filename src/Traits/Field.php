@@ -76,7 +76,7 @@ trait Field
 
     public function rules($rules = '', $required = true, $min = 0, $max = 0, $tips = '')
     {
-        $id = uniqid();
+        $id = rand_uniqid();
         $this->rules = 'rule_'.$id;
         $this->obj->rules[] = [
             'id'       => $id,

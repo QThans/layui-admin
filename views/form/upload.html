@@ -13,7 +13,7 @@
     <div class="layui-upload-list" id="{$self->id}_upload_list">
         {php}
         if(!is_array($self->value) && $self->value){
-        $id = uniqid();
+        $id = rand_uniqid();
         {/php}
         {php}if($self->uploadType == 'image'){{/php}
         <div id="dim_id_{$id}" class="dimback">
@@ -40,7 +40,7 @@
         {/php}
         {php}if($self->uploadType == 'image'){{/php}
         {volist name="$self->value" id="vo"}
-        {php}$id = uniqid();{/php}
+        {php}$id = rand_uniqid();{/php}
         <div id="dim_id_{$id}" class="dimback">
             <img id="img_id_{$id}" src="{$vo}" class="layui-upload-img">
             <span class="status_{$id}">已上传</span>
@@ -53,7 +53,7 @@
         {/php}
 
         {volist name="$self->value" id="vo"}
-        {php}$id = uniqid();{/php}
+        {php}$id = rand_uniqid();{/php}
         <div id="dim_id_{$id}" class="dimback dimback-file">
             <p id="img_id_{$id}" src="{$vo}" class="layui-upload-file-name"><a target="_blank" href="{$vo}">{$vo}</a></p>
             <span class="status_{$id}">已上传</span>

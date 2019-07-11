@@ -149,3 +149,11 @@ if (!function_exists('assoc_unique')) {
         return $arr;
     }
 }
+/**
+ * 获取唯一值
+ */
+if(!function_exists('rand_uniqid')){
+    function rand_uniqid(){
+        return md5(uniqid(rand()));
+    }
+}

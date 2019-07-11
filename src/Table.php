@@ -68,7 +68,7 @@ class Table
 
     private function createFilter($title, $name, $type = 'input', $options = [])
     {
-        $id = uniqid();
+        $id = rand_uniqid();
         $this->filter[] = [
             'title'   => $title,
             'name'    => $name,

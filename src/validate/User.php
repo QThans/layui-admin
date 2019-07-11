@@ -7,7 +7,7 @@ use think\Validate;
 class User extends Validate
 {
     protected $rule = [
-        'name'             => ['require', 'regex' => '/^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9_\u4e00-\u9fa5]{4,50}$/'],
+        'name'             => ['require', 'regex' => '/^[a-z_A-Z\x{4e00}-\x{9fa5}][a-zA-Z0-9_\x{4e00}-\x{9fa5}]{4,50}$/u'],
         'nickname'         => 'require|max:50|min:5',
         'password'         => 'require|min:6|max:24',
         'confirm_password' => 'require|confirm:password',

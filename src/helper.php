@@ -14,20 +14,20 @@
 
 require_once 'route'.DIRECTORY_SEPARATOR.'Route.php';
 
-if (!function_exists('scan_dir')) {
+if ( ! function_exists('scan_dir')) {
     /**
      * 扫描目录.
      *
-     * @param string 目录
-     * @param int 层级
-     * @param int 当前层级
+     * @param  string 目录
+     * @param  int 层级
+     * @param  int 当前层级
      *
      * @return array
      */
     function scan_dir($dir, $depth = 0, $now = 0)
     {
         $dirs = [];
-        if (!is_dir($dir) || ($now >= $depth && $depth != 0)) {
+        if ( ! is_dir($dir) || ($now >= $depth && $depth != 0)) {
             return false;
         }
         $dirArr = glob("$dir/*");
@@ -46,34 +46,38 @@ if (!function_exists('scan_dir')) {
     }
 }
 
-if (!function_exists('copy_dir')) {
+if ( ! function_exists('copy_dir')) {
     /**
      * 复制目录.
      *
-     * @param string $dir  目录
-     * @param string $dest 目标目录
+     * @param  string  $dir   目录
+     * @param  string  $dest  目标目录
      *
      * @return bool
      */
     function copy_dir($dir, $dest = '')
     {
-        if (!is_dir($dir)) {
+        if ( ! is_dir($dir)) {
             return false;
         }
         @mkdir($dest, 0777, true);
         $resources = scandir($dir);
         foreach ($resources as $item) {
-            if (is_dir($dir.DIRECTORY_SEPARATOR.$item) && $item != '.' && $item != '..') {
-                copy_dir($dir.DIRECTORY_SEPARATOR.$item, $dest.DIRECTORY_SEPARATOR.$item);
+            if (is_dir($dir.DIRECTORY_SEPARATOR.$item) && $item != '.'
+                && $item != '..'
+            ) {
+                copy_dir($dir.DIRECTORY_SEPARATOR.$item,
+                    $dest.DIRECTORY_SEPARATOR.$item);
             } elseif (is_file($dir.DIRECTORY_SEPARATOR.$item)) {
-                copy($dir.DIRECTORY_SEPARATOR.$item, $dest.DIRECTORY_SEPARATOR.$item);
+                copy($dir.DIRECTORY_SEPARATOR.$item,
+                    $dest.DIRECTORY_SEPARATOR.$item);
             }
         }
 
         return true;
     }
 }
-if (!function_exists('view_path')) {
+if ( ! function_exists('view_path')) {
     /**
      * 获取模板具体目录.
      *
@@ -81,22 +85,23 @@ if (!function_exists('view_path')) {
      */
     function view_path()
     {
-        return __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR;
+        return __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'views'
+            .DIRECTORY_SEPARATOR;
     }
 }
-if (!function_exists('encrypt_password')) {
+if ( ! function_exists('encrypt_password')) {
     /**
      * 密码加密.
      *
-     * @param string $password 原密码
-     * @param string $salt     盐值
+     * @param  string  $password  原密码
+     * @param  string  $salt      盐值
      *
      * @return string
      */
     function encrypt_password($password, $salt)
     {
         $block_count = ceil(strlen($salt) / strlen($password));
-        $output = '';
+        $output      = '';
         for ($i = 1; $i <= $block_count; $i++) {
             // $i encoded as 4 bytes, big endian.
             $last = $salt.pack('N', $i);
@@ -112,21 +117,22 @@ if (!function_exists('encrypt_password')) {
         return bin2hex(hash_hmac('sha512', $salt, $output, true));
     }
 }
-if (!function_exists('random_str')) {
+if ( ! function_exists('random_str')) {
     /**
      * 随机字符串.
      *
-     * @param int  $length  随机长度
-     * @param bool $numeric 是否只取数字
-     * @param bool $lower   是否小写
+     * @param  int   $length   随机长度
+     * @param  bool  $numeric  是否只取数字
+     * @param  bool  $lower    是否小写
      *
      * @return string
      */
     function random_str($length = 6, $numeric = false, $lower = false)
     {
-        $map = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLOMNOPQRSTUVWXYZ';
+        $map
+                   = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLOMNOPQRSTUVWXYZ';
         $maxLength = $numeric ? 9 : 62;
-        $str = '';
+        $str       = '';
         for ($i = 0; $i < $length; $i++) {
             $str .= $map[rand(0, $maxLength)];
         }
@@ -134,26 +140,30 @@ if (!function_exists('random_str')) {
         return $lower ? strtolower($str) : $str;
     }
 }
-if (!function_exists('assoc_unique')) {
+if ( ! function_exists('assoc_unique')) {
     function assoc_unique($arr, $key)
     {
         $tmp_arr = [];
         foreach ($arr as $k => $v) {
-            if (in_array($v[$key], $tmp_arr)) {//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
+            if (in_array($v[$key],
+                $tmp_arr)
+            ) {//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
                 unset($arr[$k]);
             } else {
                 $tmp_arr[] = $v[$key];
             }
         }
         sort($arr); //sort函数对数组进行排序
+
         return $arr;
     }
 }
 /**
  * 获取唯一值
  */
-if(!function_exists('rand_uniqid')){
-    function rand_uniqid(){
+if ( ! function_exists('rand_uniqid')) {
+    function rand_uniqid()
+    {
         return md5(uniqid(rand()));
     }
 }

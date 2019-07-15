@@ -20,6 +20,7 @@ class Index
         $home->firstTabUrl(url('thans\layuiAdmin\controller\Index@dashboard'));
         $home->firstTabName('控制台');
         $home->logo('LayuiAdmin-TP');
+        $home->sLogo('Admin');
         $home->userMenu('个人设置', url('thans\layuiAdmin\controller\Personal@setting'));
         $home->userMenu('退出登录', '', ['target' => '_top', 'href' => url('thans\layuiAdmin\controller\Login@logout')]);
 

@@ -97,7 +97,7 @@ EOT
 
     public function __construct()
     {
-        $this->builder = new Builder($this->tmpl);
+        $this->builder = new Builder(DIRECTORY_SEPARATOR.$this->tmpl);
         if (method_exists($this, 'init')) {
             $this->init();
         }

@@ -322,7 +322,7 @@ class Form
         $this->model         = $model;
         $this->validate      = $validate;
         $this->validateScene = $validateScene;
-        $this->builder       = new Builder($this->tmpl);
+        $this->builder       = new Builder(DIRECTORY_SEPARATOR.$this->tmpl);
         $this->id            = uniqid();
         $this->builder->module('form');
         $this->builder->module('jquery');

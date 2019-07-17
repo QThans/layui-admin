@@ -104,18 +104,18 @@ class Auth
             }
             foreach ($permissions as $val) {
                 if ($val['alias'] == $path) {
-                    return $this->chekMethod($val['http_method'], $method);
+                    return $this->checkMethod($val['http_method'], $method);
                 }
                 foreach (explode("\r\n", $val['path']) as $v) {
                     if ($v == $path) {
-                        return $this->chekMethod($val['http_method'], $method);
+                        return $this->checkMethod($val['http_method'], $method);
                     }
                     $pattern = trim($v, '/');
                     $pattern = trim($pattern, '.html');
                     $pattern = preg_quote($pattern, '#');
                     $pattern = str_replace('\*', '.*', $pattern);
                     if (preg_match('#^'.$pattern.'\z#u', $path) === 1) {
-                        return $this->chekMethod($val['http_method'], $method);
+                        return $this->checkMethod($val['http_method'], $method);
                     }
                 }
             }
@@ -124,7 +124,7 @@ class Auth
         return false;
     }
 
-    private function chekMethod($http_method, $method)
+    private function checkMethod($http_method, $method)
     {
         if (strpos($http_method, $method) !== false || $http_method == '') {
             return true;

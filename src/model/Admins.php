@@ -12,11 +12,11 @@ namespace thans\layuiAdmin\model;
 
 use think\Model;
 
-class User extends Model
+class Admins extends Model
 {
     protected $hidden = ['password', 'salt'];
 
-    protected $name = 'user';
+    protected $name = 'admins';
 
     public $statusText
         = [
@@ -24,16 +24,11 @@ class User extends Model
             1 => '禁用',
         ];
 
-    public function meta()
-    {
-        return $this->hasMany('user_meta')->whereNull('delete_time');
-    }
-
     public function roles()
     {
         return $this->belongsToMany(
-            'AuthRole', 'thans\layuiAdmin\model\AuthRoleUser', 'role_id',
-            'user_id'
+            'AuthRole', 'thans\layuiAdmin\model\AuthRoleAdmins', 'role_id',
+            'admins_id'
         );
     }
 
@@ -57,42 +52,42 @@ class User extends Model
     public static function init()
     {
         self::event(
-            'before_insert', function ($user) {
-                self::existUser($user);
-                $user['salt'] = random_str(20);
-                $user['password'] = encrypt_password(
-                $user['password'], $user['salt']
+            'before_insert', function ($admins) {
+                self::existAdmins($admins);
+                $admins['salt'] = random_str(20);
+                $admins['password'] = encrypt_password(
+                $admins['password'], $admins['salt']
             );
             }
         );
         self::event(
-            'before_update', function ($user) {
-                self::existUser($user, $user['id']);
+            'before_update', function ($admins) {
+                self::existAdmins($admins, $admins['id']);
             }
         );
     }
 
-    public static function existUser($user, $user_id = '')
+    public static function existAdmins($admins, $admins_id = '')
     {
-        if (self::exist('name', $user['name'], $user_id)) {
-            exception('用户已存在');
+        if (self::exist('name', $admins['name'], $admins_id)) {
+            exception('管理员已存在');
         }
-        if (self::exist('nickname', $user['nickname'], $user_id)) {
+        if (self::exist('nickname', $admins['nickname'], $admins_id)) {
             exception('昵称已存在');
         }
-        if (self::exist('mobile', $user['mobile'], $user_id)) {
+        if (self::exist('mobile', $admins['mobile'], $admins_id)) {
             exception('手机号已存在');
         }
-        if (self::exist('email', $user['email'], $user_id)) {
+        if (self::exist('email', $admins['email'], $admins_id)) {
             exception('邮箱已存在');
         }
     }
 
-    public static function exist($field, $value, $user_id = '')
+    public static function exist($field, $value, $admins_id = '')
     {
         $where = [];
-        if ($user_id) {
-            $where[] = ['id', 'neq', $user_id];
+        if ($admins_id) {
+            $where[] = ['id', 'neq', $admins_id];
         }
         $model = self::where($where);
         if ($value && $model->where($field, $value)->find()) {

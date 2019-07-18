@@ -27,7 +27,7 @@ class AuthRole extends Model
         );
     }
 
-    //中间表，不获取用户
+    //中间表，不获取管理员
     public function roleUser()
     {
         return $this->hasMany('AuthRoleUser', 'role_id', 'id');

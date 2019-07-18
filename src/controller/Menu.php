@@ -2,10 +2,11 @@
 
 namespace thans\layuiAdmin\controller;
 
-use thans\layuiAdmin\facade\Auth;
+use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
+use thans\layuiAdmin\model\AuthPermission;
 use thans\layuiAdmin\model\Menu as MenuModel;
 use thans\layuiAdmin\Table;
 use thans\layuiAdmin\Traits\FormActions;
@@ -38,15 +39,15 @@ class Menu
         $tb->column('create_time', '创建时间', 200);
         $tb->column('update_time', '更新时间', 200);
         $url = url('thans\layuiAdmin\controller\Menu/create');
-        if (Auth::check($url)) {
+        if (AdminsAuth::check($url)) {
             $tb->action('新增菜单', $url);
         }
         $url = url('thans\layuiAdmin\controller\Menu/edit', 'id={{ d.id }}');
-        if (Auth::check($url)) {
+        if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url, 'formLayer');
         }
         $url = url('thans\layuiAdmin\controller\Menu/delete', 'id={{ d.id }}');
-        if (Auth::check($url, 'DELETE')) {
+        if (AdminsAuth::check($url, 'DELETE')) {
             $tb->tool('删除', $url, 'confirmAjax', 'danger', 'DELETE');
         }
         $tb->title('菜单管理');
@@ -68,9 +69,6 @@ class Menu
         $form->icon()->name('icon')->label('ICON');
         $form->number()->name('order')->label('排序')->value(1000);
         $form->text()->name('uri')->label('URI')->placeholder('请输入URI');
-        $permission = [];
-        $permission[] = ['val' => '', 'title' => '不绑定权限'];
-        $form->select()->name('permission')->label('权限选择')->options($permission);
         $status = [];
         $status[] = ['val' => 0, 'title' => '启用'];
         $status[] = ['val' => 1, 'title' => '禁用'];

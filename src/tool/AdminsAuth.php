@@ -11,61 +11,67 @@
 namespace thans\layuiAdmin\tool;
 
 use thans\layuiAdmin\model\Menu;
-use thans\layuiAdmin\model\User;
+use thans\layuiAdmin\model\Admins;
 use think\facade\Cache;
 use think\facade\Request;
 use think\facade\Validate;
 
-class Auth
+class AdminsAuth
 {
     public function login($account, $password)
     {
-        $field = Validate::isEmail($account) ? 'email' : (Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'name');
-        $user = User::where($field, $account)->find();
-        if (!$user) {
+        $field  = Validate::isEmail($account) ? 'email'
+            : (Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'name');
+        $admins = Admins::where($field, $account)->find();
+        if ( ! $admins) {
             throw new \think\exception\HttpException(401, '账户不存在');
         }
-        if ($user->status !== 0) {
+        if ($admins->status !== 0) {
             throw new \think\exception\HttpException(401, '账户被锁定');
         }
-        if ($user->password != encrypt_password($password, $user->salt)) {
+        if ($admins->password != encrypt_password($password, $admins->salt)) {
             throw new \think\exception\HttpException(401, '密码错误');
         }
-        $user->last_login_ip = Request::ip();
-        $user->last_login_time = time();
-        $user->save();
-        return $user;
+        $admins->last_login_ip   = Request::ip();
+        $admins->last_login_time = time();
+        $admins->save();
+
+        return $admins;
     }
 
-    public function user()
+    public function info()
     {
-        $user = Cache::get('user_'.session('user_id'));
-        if (!$user) {
-            $user = User::get(session('user_id'), 'meta');
-            Cache::set('user_'.session('user_id'), $user, 3600);
+        $info = Cache::get('admins_'.session('admins_id'));
+        if ( ! $info) {
+            $info = Admins::get(session('admins_id'));
+            Cache::set('admins_'.session('admins_id'), $info, 3600);
         }
 
-        return $user;
+        return $info;
     }
 
-    public function userId()
+    public function clearCache()
     {
-        return session('user_id');
+        return Cache::rm('admins_'.session('admins_id'));
+    }
+
+    public function id()
+    {
+        return session('admins_id');
     }
 
     public function menu()
     {
-        $roles = $this->isAdmin();
-        if (!$roles) {
-            return false;
-        }
         $menus = [];
-        $menu = Menu::where('status', 0)->order('order asc');
-        foreach ($roles as $role) {
-            if ($role['id'] == 1) {
-                return \thans\layuiAdmin\facade\Utils::buildTree($menu->select()->toArray(), true);
+        $menu  = Menu::where('status', 0)->order('order asc');
+        foreach ($this->info()->roles as $role) {
+            if ($role->status !== 0) {
+                continue;
             }
-            $menus = array_merge($menus, $role->menus->toArray());
+            if ($role['id'] == 1) {
+                return \thans\layuiAdmin\facade\Utils::buildTree($menu->select()
+                    ->toArray(), true);
+            }
             $menus = array_merge($menus, $role->menus->toArray());
         }
         $menus = assoc_unique($menus, 'id');
@@ -73,32 +79,18 @@ class Auth
         return \thans\layuiAdmin\facade\Utils::buildTree($menus, true);
     }
 
-    public function isAdmin()
-    {
-        $user = $this->user();
-        if (!$user || !$user->admin) {
-            return false;
-        }
-
-        return $user->roles;
-    }
-
     public function check($path, $method = 'GET')
     {
         $path = parse_url($path)['path'];
         $path = trim($path, '/');
         $path = trim($path, '.html');
-        $roles = $this->isAdmin();
-        if (!$roles) {
-            return false;
-        }
-        foreach ($roles as $role) {
+        foreach ($this->info()->roles as $role) {
             if ($role->status !== 0) {
                 continue;
             }
             //查找所有权限
             $permissions = $role->permissions()->select();
-            if (!$permissions) {
+            if ( ! $permissions) {
                 //本次权限组无权限，跳出本次循环
                 continue;
             }
@@ -126,7 +118,7 @@ class Auth
 
     private function checkMethod($http_method, $method)
     {
-        if (strpos($http_method, $method) !== false || $http_method == '') {
+        if (strpos($http_method, strtoupper($method)) !== false || $http_method == '') {
             return true;
         }
     }

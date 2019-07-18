@@ -100,7 +100,7 @@ class Jump
         $page->builder->script('jump_close', <<<'EOT'
         document.getElementById('close').onclick = function () {
             if (self.frameElement && self.frameElement.tagName == "IFRAME") {
-                admin.closeSelf();
+                window.top.layui.admin.closeSelf();
             }else{
                 location.href = 'about:blank';
             }

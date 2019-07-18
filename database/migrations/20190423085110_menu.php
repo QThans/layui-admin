@@ -88,20 +88,11 @@ class Menu extends Migrator
             'update_time' => time(),
         ];
         $default[] = [
-            'name'        => '管理员',
+            'name'        => '本站管理员',
             'parent_id'   => 5,
             'order'       => 6,
             'icon'        => '',
-            'uri'         => 'admin/auth/user',
-            'create_time' => time(),
-            'update_time' => time(),
-        ];
-        $default[] = [
-            'name'        => '本站用户',
-            'parent_id'   => 5,
-            'order'       => 7,
-            'icon'        => '',
-            'uri'         => 'admin/user',
+            'uri'         => 'admin/auth/admins',
             'create_time' => time(),
             'update_time' => time(),
         ];

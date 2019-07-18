@@ -2,7 +2,7 @@
 
 namespace thans\layuiAdmin\controller;
 
-use thans\layuiAdmin\facade\Auth;
+use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\facade\Jump;
 use thans\layuiAdmin\Login as LoginView;
@@ -40,12 +40,10 @@ class Login
         $redirect = $request->param('redirect', '');
 
         try {
-            $user = Auth::login($account, $password);
-            session('user_id', $user->id);
-            session('user_info', $user);
-            session('user_meta', $user->meta);
-            Cache::rm('user_'.session('user_id'));
-            session('admin', $user->admin);
+            $admins = AdminsAuth::login($account, $password);
+            session('admins_id', $admins->id);
+            session('admins_info', $admins);
+            Cache::rm('admins_'.$admins->id);
             Json::success('登录成功...', [], [], $redirect ? $redirect : url('thans\layuiAdmin\controller\Index@index'), 2);
         } catch (HttpException $e) {
             Json::error($e->getMessage(), 400);
@@ -54,7 +52,7 @@ class Login
 
     public function logout(Request $request)
     {
-        Cache::rm('user_'.session('user_id'));
+        Cache::rm('admins_'.session('admins_id'));
         Session::clear();
         if ($request->isAjax()) {
             Json::success('退出成功');

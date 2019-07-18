@@ -9,20 +9,26 @@ Route::group('admin', function () {
     Route::group('', function () {
         Route::get('', 'thans\layuiAdmin\controller\Index@index');
         Route::group('personal', function () {
-            Route::rule('setting', 'thans\layuiAdmin\controller\Personal@setting', 'GET|POST');
+            Route::rule('setting',
+                'thans\layuiAdmin\controller\Personal@setting', 'GET|POST');
         });
-    })->middleware([thans\layuiAdmin\middleware\Login::class, [thans\layuiAdmin\middleware\Auth::class, false]]);
+    })->middleware([
+        thans\layuiAdmin\middleware\Login::class,
+        [thans\layuiAdmin\middleware\AdminsAuth::class, false],
+    ]);
 
     Route::group('', function () {
         Route::get('dashboard', 'thans\layuiAdmin\controller\Index@dashboard');
         Route::resource('menu', 'thans\layuiAdmin\controller\Menu');
-        Route::resource('permission', 'thans\layuiAdmin\controller\auth\Permission');
+        Route::resource('permission',
+            'thans\layuiAdmin\controller\auth\Permission');
         Route::resource('role', 'thans\layuiAdmin\controller\auth\Role');
-        Route::resource('auth/user', 'thans\layuiAdmin\controller\auth\User')->except(['delete']);
-        Route::get('user/lock/:id', 'thans\layuiAdmin\controller\User@lock');
-        Route::get('user/unlock/:id', 'thans\layuiAdmin\controller\User@unlock');
-        Route::resource('user', 'thans\layuiAdmin\controller\User')->except(['delete']);
-    })->middleware([thans\layuiAdmin\middleware\Login::class, thans\layuiAdmin\middleware\Auth::class]);
+        Route::resource('auth/admins',
+            'thans\layuiAdmin\controller\auth\Admins')->except(['delete']);
+    })->middleware([
+        thans\layuiAdmin\middleware\Login::class,
+        thans\layuiAdmin\middleware\AdminsAuth::class,
+    ]);
 });
 Route::group('', function () {
     Route::get('logout', 'thans\layuiAdmin\controller\Login@logout');

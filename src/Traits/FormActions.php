@@ -2,7 +2,7 @@
 
 namespace thans\layuiAdmin\Traits;
 
-use thans\layuiAdmin\facade\Auth;
+use thans\layuiAdmin\facade\AdminsAuth;
 use think\Request;
 
 trait FormActions
@@ -13,7 +13,7 @@ trait FormActions
             .$request->controller().'/update', 'id='.$id)
             : url(get_class($this).'/update', 'id='.$id);
         return $this->buildForm()->edit($id)->hiddenSubmit(
-            ! Auth::check($url, 'put')
+            ! AdminsAuth::check($url, 'put')
         )->url(
             $url
         )->render();
@@ -40,7 +40,7 @@ trait FormActions
             .$request->controller().'/save') : url(get_class($this).'/save');
 
         return $this->buildForm()->hiddenSubmit(
-            ! Auth::check($url, 'put')
+            ! AdminsAuth::check($url, 'put')
         )->url($url)->render();
     }
 }

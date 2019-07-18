@@ -33,7 +33,7 @@ class Login
     public $forget = '';
     //注册账号
     public $register = '';
-    //记住用户名
+    //记住管理员名
     public $remeber = '';
     //底部信息
     public $footer = '';
@@ -41,11 +41,11 @@ class Login
     public $captcha = '';
     //验证码表单name
     public $captchaName = '';
-    //登录用户名 laceholder
+    //登录管理员名 laceholder
     public $loginPlaceholder = '';
-    //登录用户名 name
+    //登录管理员名 name
     public $loginName = '';
-    //登录用户的验证规则名称，非常规需要自己添加正则
+    //登录管理员的验证规则名称，非常规需要自己添加正则
     public $loginVerify = 'account';
 
     //登录密码 laceholder

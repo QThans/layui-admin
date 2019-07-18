@@ -35,7 +35,7 @@
                     {if $self->userMenu}
                     <dl class="layui-nav-child">
                         {volist name="$self->userMenu" id="vo"}
-                        <dd lay-unselect><a {if $vo.href}data-href="{$vo.href}" {/if} {if isset($vo.attr)}{volist
+                        <dd lay-unselect><a {if $vo.href}data-href="{$vo.href}"  lay-text="{$vo.title|raw}" {/if} {if isset($vo.attr)}{volist
                             name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if} ><span>{$vo.title}</span></a></dd>
                         {/volist}
                     </dl>
@@ -54,7 +54,7 @@
                     {volist name="$self->menu" id="vo"}
                     <li class="layui-nav-item ">
                         {if isset($vo['children']) && $vo.children}
-                        <a href="javascript:;" {if $vo.uri}data-href="{:url($vo.uri)}" {/if}><i
+                        <a href="javascript:;" {if $vo.uri}data-href="{:url($vo.uri)} lay-text="{$vo.name|raw}" {/if}><i
                         class=" layui-icon {$vo.icon}"></i>{php}echo str_repeat('&nbsp;&nbsp;',
                         $vo['deep']);{/php}<span>{$vo.name|raw}</span><span
                         class="layui-nav-more"></span></a>
@@ -62,7 +62,7 @@
                         {volist name="$vo['children']" id="vv"}
                         <dl class="layui-nav-child">
                             <dd class="">
-                                <a {if $vv.uri}data-href='{:url($vv.uri)}' {/if} href="javascript:;">{php}echo
+                                <a {if $vv.uri}data-href='{:url($vv.uri)}'  lay-text="{$vv.name|raw}" {/if} href="javascript:;">{php}echo
                                 str_repeat('&nbsp;&nbsp;',
                                 $vv['deep']);{/php}<span>{$vv.name|raw}</span></a>
                                 {if isset($vv['children']) && $vo.children}
@@ -70,7 +70,7 @@
                                 {if $v['status'] == 1}
                                 <dl class="layui-nav-child">
                                     <dd class="">
-                                        <a {if $v.uri}data-href='{:url($v.uri)}' {/if} href="javascript:;">{php}echo
+                                        <a {if $v.uri}data-href='{:url($v.uri)}'  lay-text="{$v.name|raw}" {/if} href="javascript:;">{php}echo
                                         str_repeat('&nbsp;&nbsp;', $v['deep']);{/php}<span>{$v.name|raw}</span></a>
                                     </dd>
                                 </dl>
@@ -82,7 +82,7 @@
                         {/volist}
                         {/if}
                         {else /}
-                        <a href="javascript:;" {if $vo.uri}data-href="{:url($vo.uri)}" {/if} {if
+                        <a href="javascript:;" {if $vo.uri}data-href="{:url($vo.uri)}"  lay-text="{$vo.name|raw}" {/if} {if
                         isset($vo.attr)}{volist name="$vo.attr" id="v"}{$key}="{$v}"{/volist}{/if}><i
                         class=" layui-icon {$vo.icon}"></i><span>{$vo.name}</span></a>
                         {/if}

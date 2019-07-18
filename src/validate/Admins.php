@@ -4,7 +4,7 @@ namespace thans\layuiAdmin\validate;
 
 use think\Validate;
 
-class User extends Validate
+class Admins extends Validate
 {
     protected $rule = [
         'name'             => ['require', 'regex' => '/^[a-z_A-Z\x{4e00}-\x{9fa5}][a-zA-Z0-9_\x{4e00}-\x{9fa5}]{4,50}$/u'],
@@ -17,7 +17,7 @@ class User extends Validate
     ];
 
     protected $message = [
-        'name'             => '用户名必须5-50位，不能以数字开头',
+        'name'             => '管理员名必须5-50位，不能以数字开头',
         'nickname'         => '昵称必须5到50位，且不能出现空格',
         'password'         => '请输入正确的密码',
         'confirm_password' => '两次输入的密码不一样',

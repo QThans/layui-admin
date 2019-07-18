@@ -1,9 +1,9 @@
 <?php
 
-use Phinx\Db\Adapter\MysqlAdapter;
 use think\migration\Migrator;
+use Phinx\Db\Adapter\MysqlAdapter;
 
-class User extends Migrator
+class Admins extends Migrator
 {
     /**
      * Change Method.
@@ -28,8 +28,7 @@ class User extends Migrator
      */
     public function change()
     {
-        $table = $this->table('user');
-
+        $table = $this->table('admins');
         $table->addColumn('name', 'string', ['limit' => 100])
             ->addColumn('salt', 'string', ['limit' => 20])
             ->addColumn('password', 'string', ['limit' => 128])
@@ -39,7 +38,6 @@ class User extends Migrator
             ->addColumn('mobile', 'string', ['limit' => 11, 'null' => true])
             ->addColumn('activation_key', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 0, 'null' => false])
-            ->addColumn('admin', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 0, 'null' => false])
             ->addColumn('register_ip', 'string', ['limit' => 15, 'comment' => '注册IP', 'default' => ''])
             ->addColumn('last_login_ip', 'string', ['limit' => 15, 'comment' => '最后登录IP', 'default' => ''])
             ->addColumn('last_login_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => 0, 'comment' => '最后登录时间'])
@@ -58,7 +56,6 @@ class User extends Migrator
             'salt'        => $salt,
             'password'    => $password,
             'nickname'    => 'admin',
-            'admin'       => 1,
             'create_time' => time(),
             'update_time' => time(),
         ];

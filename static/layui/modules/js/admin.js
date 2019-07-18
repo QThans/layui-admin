@@ -182,14 +182,10 @@ layui.define(["layer", "upload"], function (exports) {
   //点击链接增加tab
   $(document).on("click", "a[data-href]", function () {
     var href = $(this).attr("data-href");
+    var title = $(this).attr("lay-text");
     if (typeof href != "undefined") {
-      var title = $(this)
-        .children("span")
-        .html();
-      if (typeof title == "undefined") {
-        var title = $(this).attr("lay-text");
-      }
-      obj.addAdminTab(element, title, href);
+      //兼容子窗口增加父tab
+      window.top.layui.admin.addAdminTab(window.top.layui.element, title, href);
     }
     return false;
   });

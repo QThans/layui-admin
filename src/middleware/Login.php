@@ -6,7 +6,7 @@ class Login
 {
     public function handle($request, \Closure $next)
     {
-        $check = \thans\layuiAdmin\facade\Auth::userId();
+        $check = \thans\layuiAdmin\facade\AdminsAuth::id();
 
         if (!$check) {
             session('error_msg', '请先登录系统');

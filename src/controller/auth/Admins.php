@@ -3,17 +3,17 @@
 namespace thans\layuiAdmin\controller\auth;
 
 //管理员管理
-use thans\layuiAdmin\facade\Auth;
+use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
 use thans\layuiAdmin\model\AuthRole;
-use thans\layuiAdmin\model\User as UserModel;
+use thans\layuiAdmin\model\Admins as AdminsModel;
 use thans\layuiAdmin\Table;
 use thans\layuiAdmin\Traits\FormActions;
 use think\Request;
 
-class User
+class Admins
 {
     use FormActions;
 
@@ -23,18 +23,17 @@ class User
             list($where, $order, $page, $limit) = Utils::buildParams(
                 'name|nickname|email|mobile'
             );
-            $where[] = ['admin', 'eq', 1];
-            $user    = UserModel::where($where);
-            $list    = $user->order($order)->page($page)->limit($limit)
+            $admins    = AdminsModel::where($where);
+            $list    = $admins->order($order)->page($page)->limit($limit)
                 ->select();
-            $total   = $user->count();
+            $total   = $admins->count();
             Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
         $tb->title('管理员');
-        $tb->url(url('thans\layuiAdmin\controller\auth\User/index'));
+        $tb->url(url('thans\layuiAdmin\controller\auth\Admins/index'));
         $tb->column('id', 'ID', 100);
-        $tb->column('name', '用户名');
+        $tb->column('name', '管理员名');
         $tb->column('nickname', '昵称');
         $tb->column('email', '邮箱');
         $tb->column('mobile', '手机号');
@@ -46,13 +45,13 @@ class User
             1, '禁用', 'danger'
         );
         $url = url(
-            'thans\layuiAdmin\controller\auth\User/edit', 'id={{ d.id }}'
+            'thans\layuiAdmin\controller\auth\Admins/edit', 'id={{ d.id }}'
         );
-        if (Auth::check($url)) {
+        if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url);
         }
-        $url = url('thans\layuiAdmin\controller\auth\User/create');
-        if (Auth::check($url)) {
+        $url = url('thans\layuiAdmin\controller\auth\Admins/create');
+        if (AdminsAuth::check($url)) {
             $tb->action('新增管理员', $url);
         }
         $tb->toolWidth(70);
@@ -63,11 +62,11 @@ class User
     public function buildForm()
     {
         $form = new Form(
-            new UserModel(), new \thans\layuiAdmin\validate\User(), true
+            new AdminsModel(), new \thans\layuiAdmin\validate\Admins(), true
         );
-        $form->text()->label('用户名')->name('name')->placeholder('请输入用户名')->rules(
+        $form->text()->label('管理员名')->name('name')->placeholder('请输入管理员名')->rules(
             'account'
-        )->tips('用户名支持中英文、数字、下划线，不支持数字开头');
+        )->tips('管理员名支持中英文、数字、下划线，不支持数字开头');
         $form->text()->label('昵称')->name('nickname')->placeholder('请输入昵称')
             ->rules('required', true, 5, 100);
         $placeholder = '请输入密码';
@@ -130,9 +129,6 @@ class User
                 $form->model->roles()->save(explode(',', $data['roles']));
             }
         });
-
-        $form->text()->hide()->value(1)->name('admin');
-
         return $form;
     }
 }

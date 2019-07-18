@@ -12,10 +12,10 @@ namespace thans\layuiAdmin\facade;
 
 use think\Facade;
 
-class Auth extends Facade
+class AdminsAuth extends Facade
 {
     protected static function getFacadeClass()
     {
-        return 'thans\layuiAdmin\tool\Auth';
+        return 'thans\layuiAdmin\tool\AdminsAuth';
     }
 }

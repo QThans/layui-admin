@@ -2,7 +2,7 @@
 
 namespace thans\layuiAdmin\controller\auth;
 
-use thans\layuiAdmin\facade\Auth;
+use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
@@ -41,22 +41,22 @@ class Role
         $tb->column('create_time', '创建时间');
         $tb->column('update_time', '更新时间');
         $url = url('thans\layuiAdmin\controller\auth\Role/create');
-        if (Auth::check($url)) {
+        if (AdminsAuth::check($url)) {
             $tb->action('新增权限组', $url);
         }
         $url = url(
             'thans\layuiAdmin\controller\auth\Role/edit', 'id={{ d.id }}'
         );
-        if (Auth::check($url)) {
+        if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url);
         }
         $url = url(
             'thans\layuiAdmin\controller\auth\Role/delete', 'id={{ d.id }}'
         );
-        if (Auth::check($url, 'delete')) {
+        if (AdminsAuth::check($url, 'delete')) {
             $tb->tool(
                 '删除', $url, 'confirmAjax', 'danger', 'DELETE', 'd.id != 1',
-                '确定删除权限组吗？已关联用户权限将被取消'
+                '确定删除权限组吗？已关联管理员权限将被取消'
             );
         }
         $tb->toolWidth(120);

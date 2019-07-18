@@ -4,8 +4,8 @@ namespace thans\layuiAdmin\model;
 
 use think\model\Pivot;
 
-class AuthRoleUser extends Pivot
+class AuthRoleAdmins extends Pivot
 {
-    protected $name = 'auth_role_user';
+    protected $name = 'auth_role_admins';
     protected $autoWriteTimestamp = true;
 }

@@ -2,7 +2,7 @@
 
 namespace thans\layuiAdmin\controller\auth;
 
-use thans\layuiAdmin\facade\Auth;
+use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
@@ -39,20 +39,20 @@ class Permission
         $url = url(
             'thans\layuiAdmin\controller\auth\Permission/edit', 'id={{ d.id }}'
         );
-        if (Auth::check($url)) {
+        if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url, 'formLayer');
         }
         $url = url(
             'thans\layuiAdmin\controller\auth\Permission/delete',
             'id={{ d.id }}'
         );
-        if (Auth::check($url, 'DELETE')) {
+        if (AdminsAuth::check($url, 'DELETE')) {
             $tb->tool(
                 '删除', $url, 'confirmAjax', 'danger', 'DELETE', 'd.id != 1'
             );
         }
         $url = url('thans\layuiAdmin\controller\auth\Permission/create');
-        if (Auth::check($url)) {
+        if (AdminsAuth::check($url)) {
             $tb->action('新增权限', $url);
         }
 

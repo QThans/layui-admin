@@ -3,7 +3,7 @@
 use Phinx\Db\Adapter\MysqlAdapter;
 use think\migration\Migrator;
 
-class AuthRoleUser extends Migrator
+class AuthRoleAdmins extends Migrator
 {
     /**
      * Change Method.
@@ -28,18 +28,18 @@ class AuthRoleUser extends Migrator
      */
     public function change()
     {
-        $table = $this->table('auth_role_user', ['id'=>false]);
+        $table = $this->table('auth_role_admins', ['id'=>false]);
 
         $table->addColumn('role_id', 'integer', ['limit' => MysqlAdapter::INT_REGULAR])
-            ->addColumn('user_id', 'integer', ['limit' => MysqlAdapter::INT_REGULAR])
+            ->addColumn('admins_id', 'integer', ['limit' => MysqlAdapter::INT_REGULAR])
             ->addColumn('create_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default'=>0])
             ->addColumn('update_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default'=>0])
             ->addIndex(['role_id'], ['unique' => false])
-            ->addIndex(['user_id'], ['unique' => false])
+            ->addIndex(['admins_id'], ['unique' => false])
             ->create();
         $default = [
             'role_id'     => 1,
-            'user_id'     => 1,
+            'admins_id'     => 1,
             'create_time' => time(),
             'update_time' => time(),
         ];

@@ -3,7 +3,7 @@
 namespace thans\layuiAdmin\controller;
 
 use thans\layuiAdmin\Dashbord;
-use thans\layuiAdmin\facade\Auth;
+use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\Index as Home;
 use think\Db;
 use think\facade\App;
@@ -13,9 +13,9 @@ class Index
     public function index()
     {
         $home = new Home();
-        $userInfo = session('user_info');
-        $home->userName($userInfo->nickname ? $userInfo->nickname : $userInfo->name);
-        $menu = Auth::menu();
+        $adminsInfo = session('admins_info');
+        $home->userName($adminsInfo->nickname ? $adminsInfo->nickname : $adminsInfo->name);
+        $menu = AdminsAuth::menu();
         $home->menu($menu);
         $home->firstTabUrl(url('thans\layuiAdmin\controller\Index@dashboard'));
         $home->firstTabName('控制台');

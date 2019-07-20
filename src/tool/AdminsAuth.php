@@ -23,7 +23,7 @@ class AdminsAuth
         $field  = Validate::isEmail($account) ? 'email'
             : (Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'name');
         $admins = Admins::where($field, $account)->find();
-        if ( ! $admins) {
+        if (! $admins) {
             throw new \think\exception\HttpException(401, '账户不存在');
         }
         if ($admins->status !== 0) {
@@ -42,7 +42,7 @@ class AdminsAuth
     public function info()
     {
         $info = Cache::get('admins_'.session('admins_id'));
-        if ( ! $info) {
+        if (! $info) {
             $info = Admins::get(session('admins_id'));
             Cache::set('admins_'.session('admins_id'), $info, 3600);
         }
@@ -90,7 +90,7 @@ class AdminsAuth
             }
             //查找所有权限
             $permissions = $role->permissions()->select();
-            if ( ! $permissions) {
+            if (! $permissions) {
                 //本次权限组无权限，跳出本次循环
                 continue;
             }

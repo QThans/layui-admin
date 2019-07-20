@@ -23,5 +23,6 @@
         "files": [
             "src/helper.php"
         ]
-    }
+    },
+    "minimum-stability": "dev"
 }

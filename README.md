@@ -3,7 +3,7 @@
 <p align="center"> 基于thinkphp的后台管理系统。</p>
 
 <p align="center">
-<a target="_blank" href="https://www.kancloud.cn/sanshinet/layui-admin">开发文档[拟写中]</a>
+<a target="_blank" href="https://www.kancloud.cn/sanshinet/layui-admin/">开发文档</a>
 <a target="_blank" href="http://demo.layuiadmin.com/admin/login.html">DEMO[备案中]</a>
 </p>
 
@@ -62,12 +62,11 @@ $ php think migrate:run
 
 ## Demo
 
-> 登录界面
-![login](http://files.git.oschina.net/group1/M00/07/9B/PaAvDFzSe7CAG2EaAALjwC3zdtE362.png?token=ec0705afbe71e1f57b4c1120ca3a26b7&ts=1557298098&attname=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-05-08%2014.47.20.png&disposition=inline)
-
-> 菜单管理
-![menu](http://files.git.oschina.net/group1/M00/07/9B/PaAvDFzSe56AU3vKAAZmKPfufgg295.png?token=3d5d24669df98ec624af121fcdaf5fb0&ts=1557298098&attname=%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-05-08%2014.47.03.png&disposition=inline)
-
+> 界面预览
+![login](https://uinge.oss-cn-beijing.aliyuncs.com/Screen%20Shot%202019-08-01%20at%2010.49.20.png)
+![form](https://uinge.oss-cn-beijing.aliyuncs.com/Screen%20Shot%202019-08-01%20at%2010.48.01.png)
+![list](https://uinge.oss-cn-beijing.aliyuncs.com/Screen%20Shot%202019-08-01%20at%2010.47.48.png)
+![console](https://uinge.oss-cn-beijing.aliyuncs.com/Screen%20Shot%202019-08-01%20at%2010.47.39.png)
 ## License
 
 Apache2.0

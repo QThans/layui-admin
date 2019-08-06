@@ -29,9 +29,11 @@ Route::group('admin', function () {
         thans\layuiAdmin\middleware\Login::class,
         thans\layuiAdmin\middleware\AdminsAuth::class,
     ]);
+
+    Route::group('', function () {
+        Route::get('logout', 'thans\layuiAdmin\controller\Login@logout');
+        Route::post('upload/image', 'thans\layuiAdmin\controller\Upload@image');
+        Route::post('upload/file', 'thans\layuiAdmin\controller\Upload@file');
+    })->middleware([thans\layuiAdmin\middleware\Login::class]);
+
 });
-Route::group('', function () {
-    Route::get('logout', 'thans\layuiAdmin\controller\Login@logout');
-    Route::post('upload/image', 'thans\layuiAdmin\controller\Upload@image');
-    Route::post('upload/file', 'thans\layuiAdmin\controller\Upload@file');
-})->middleware([thans\layuiAdmin\middleware\Login::class]);

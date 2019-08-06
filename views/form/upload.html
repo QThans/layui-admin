@@ -13,22 +13,22 @@
     <div class="layui-upload-list" id="{$self->id}_upload_list">
         {php}
         if(!is_array($self->value) && $self->value){
-        $id = rand_uniqid();
+        $id = uniqid();
         {/php}
         {php}if($self->uploadType == 'image'){{/php}
-        <div id="dim_id_{$id}" class="dimback">
+        <div id="dim_{$self->id}_{$id}" class="dimback">
             <img id="img_id_{$id}" src="{$self->value}" class="layui-upload-img">
             <span class="status_{$id}">已上传</span>
-            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
+            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg_{$self->id}"></i>
         </div>
         <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$self->value}">
         {php}
         }else{
         {/php}
-        <div id="dim_id_{$id}" class="dimback dimback-file">
+        <div id="dim_{$self->id}_{$id}" class="dimback dimback-file">
             <p id="img_id_{$id}" src="{$self->value}" class="layui-upload-file-name "> <a target="_blank" href="{$self->value}">{$self->value}</a></p>
             <span class="status_{$id}">已上传</span>
-            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
+            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg_{$self->id}"></i>
         </div>
         <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$self->value}">
         {php}
@@ -40,11 +40,11 @@
         {/php}
         {php}if($self->uploadType == 'image'){{/php}
         {volist name="$self->value" id="vo"}
-        {php}$id = rand_uniqid();{/php}
-        <div id="dim_id_{$id}" class="dimback">
+        {php}$id = uniqid();{/php}
+        <div id="dim_{$self->id}_{$id}" class="dimback">
             <img id="img_id_{$id}" src="{$vo}" class="layui-upload-img">
             <span class="status_{$id}">已上传</span>
-            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
+            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg_{$self->id}"></i>
         </div>
         <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$vo}">
         {/volist}
@@ -53,11 +53,11 @@
         {/php}
 
         {volist name="$self->value" id="vo"}
-        {php}$id = rand_uniqid();{/php}
-        <div id="dim_id_{$id}" class="dimback dimback-file">
+        {php}$id = uniqid();{/php}
+        <div id="dim_{$self->id}_{$id}" class="dimback dimback-file">
             <p id="img_id_{$id}" src="{$vo}" class="layui-upload-file-name"><a target="_blank" href="{$vo}">{$vo}</a></p>
             <span class="status_{$id}">已上传</span>
-            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg"></i>
+            <i data-id="{$id}" class="layui-icon-close layui-icon removeimg_{$self->id}"></i>
         </div>
         <input name="{$self->name}" type="hidden" class="value_{$id}" value="{$vo}">
         {/volist}

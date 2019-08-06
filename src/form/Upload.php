@@ -51,12 +51,13 @@ class Upload
         $val    = isset($this->obj->data[$this->name])
             ? $this->obj->data[$this->name] : '';
         $script = '';
-        if (is_array($val)) {
+        if (is_array($val) && $val) {
             foreach ($val as $k => $v) {
                 $script .= $script = $this->appendInput($val);
             }
 
             $script .= $this->appendView(0, $val);
+
         } elseif ($val) {
             $script = $this->appendInput($val);
             $script .= $this->appendView(0, $val);
@@ -77,11 +78,11 @@ EOD;
     {
         if ($this->uploadType == 'image') {
             return <<<EOD
-                $('#{$this->id}_upload_list').append('<div id="dim_id_$k" class="dimback"><img id="img_id_$k" src="$v" alt="" class="layui-upload-img" ><span class="status_$k">已上传</span><i data-id="$k" class="layui-icon-close layui-icon removeimg"></i></div>');
+                $('#{$this->id}_upload_list').append('<div id="dim_{$this->id}_$k" class="dimback"><img id="img_id_$k" src="$v" alt="" class="layui-upload-img" ><span class="status_$k">已上传</span><i data-id="$k" class="layui-icon-close layui-icon removeimg_{$this->id}"></i></div>');
 EOD;
         } else {
             return <<<EOD
-                $('#{$this->id}_upload_list').append('<div id="dim_id_$k" class="dimback dimback-file"><p id="img_id_$k"  class="layui-upload-file-name" >$v</p><span class="status_$k">已上传</span><i data-id="$k" class="layui-icon-close layui-icon removeimg"></i></div>');
+                $('#{$this->id}_upload_list').append('<div id="dim_{$this->id}_$k" class="dimback dimback-file"><p id="img_id_$k"  class="layui-upload-file-name" >$v</p><span class="status_$k">已上传</span><i data-id="$k" class="layui-icon-close layui-icon removeimg_{$this->id}"></i></div>');
 EOD;
         }
     }

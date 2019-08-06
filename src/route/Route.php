@@ -35,5 +35,4 @@ Route::group('admin', function () {
         Route::post('upload/image', 'thans\layuiAdmin\controller\Upload@image');
         Route::post('upload/file', 'thans\layuiAdmin\controller\Upload@file');
     })->middleware([thans\layuiAdmin\middleware\Login::class]);
-
 });

@@ -5,11 +5,27 @@ var list_table_{$self->id} = admin.table(table, 'list-table-{$self->id}', '{$sel
 $('#layui-icon-refresh-{$self->id}').click(function () {
     list_table_{$self->id}.reload();
 });
+var list_table_{$self->id}_filter = {};
+var list_table_{$self->id}_sort = {};
+var initSort = {};
 form.on('submit(search-{$self->id})', function(data){
-    list_table_{$self->id}.reload({
-    where: {
-        filter:data.field
-    }
-    });
+    list_table_{$self->id}_filter = data.field
+    reload_{$self->id}();
     return false;
 });
+//监听排序事件
+table.on('sort(list-table-{$self->id})', function(obj){
+	initSort = obj;
+	list_table_{$self->id}_sort[obj.field] = obj.type
+	reload_{$self->id}();
+    return false;
+});
+function reload_{$self->id}(){
+	list_table_{$self->id}.reload({
+		initSort: initSort,
+    	where: {
+			filter:list_table_{$self->id}_filter
+			,sort:list_table_{$self->id}_sort
+		}
+    });
+}

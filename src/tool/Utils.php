@@ -31,9 +31,17 @@ class Utils
             }
         }
 
-        $order = 'id desc'; //TODO 排序
-
-        $page = Request::param('page/d', 1);
+        $sort = Request::param('sort');
+        $order = '';
+        if ($sort) {
+            foreach ($sort as $key => $value) {
+                if ($value) {
+                    $order = $key.' '.$value ?: $order.','.$key.' '.$value;
+                }
+            }
+        }
+        $order = $order ?: 'id desc';
+        $page  = Request::param('page/d', 1);
 
         $limit = Request::param('limit/d', 15);
 
@@ -48,8 +56,8 @@ class Utils
         foreach ($data as $key => $val) {
             if ($val[$this->treeParentKey] == $parent) {
                 $val['label'] = str_repeat($label, $deep).$val[$this->treeTitleColumn];
-                $val['deep'] = $deep;
-                if (!$child) {
+                $val['deep']  = $deep;
+                if (! $child) {
                     $tree[] = $val;
                     $this->buildTree($data, $child, $label, $val['id'], $deep + 1, $tree);
                 } else {

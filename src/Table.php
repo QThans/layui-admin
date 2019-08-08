@@ -28,10 +28,11 @@ class Table
 
     public $search = true;
 
-    public $classMap = [
-        'status' => table\Status::class,
-        'icon'   => table\Icon::class,
-    ];
+    public $classMap
+        = [
+            'status' => table\Status::class,
+            'icon'   => table\Icon::class,
+        ];
 
     public $filter = [];
 
@@ -50,14 +51,14 @@ class Table
     /**
      * 增加筛选条件。支持type类型：input\select。
      *
-     * @param string $title
-     * @param string $name
-     * @param string $type
-     * @param array  $options 如果select必须包含：title和value。
-     *
-     * @throws
+     * @param  string  $title
+     * @param  string  $name
+     * @param  string  $type
+     * @param  array   $options  如果select必须包含：title和value。
      *
      * @return $this
+     * @throws
+     *
      */
     public function filter($title, $name, $type = 'input', $options = [])
     {
@@ -68,7 +69,7 @@ class Table
 
     private function createFilter($title, $name, $type = 'input', $options = [])
     {
-        $id = rand_uniqid();
+        $id             = rand_uniqid();
         $this->filter[] = [
             'title'   => $title,
             'name'    => $name,
@@ -84,13 +85,13 @@ class Table
      * 日期筛选。支持 type 类型：year，month，date，time，datetime。传入options
      * options支持参数：range 开启范围面板
      *
-     * @param $title
-     * @param $name
-     * @param array $options
-     *
-     * @throws
+     * @param         $title
+     * @param         $name
+     * @param  array  $options
      *
      * @return void
+     * @throws
+     *
      */
     public function timeFilter($title, $name, $options = [])
     {
@@ -128,20 +129,28 @@ EOD;
     public function end()
     {
         $this->toolParse();
-        $code = $this->display(__DIR__.DIRECTORY_SEPARATOR.'table'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR.'table.js.stub');
+        $code = $this->display(__DIR__.DIRECTORY_SEPARATOR.'table'.DIRECTORY_SEPARATOR.'stub'.DIRECTORY_SEPARATOR
+            .'table.js.stub');
         $this->builder->script('table', $code);
     }
 
     public function column($field, $title, $width = 200, $tpl = '', $attr = [])
     {
-        $column = ['field' => $field, 'title' => $title, 'width' => $width, 'templet' => $tpl ? '#'.$tpl : ''];
+        $column         = ['field' => $field, 'title' => $title, 'width' => $width, 'templet' => $tpl ? '#'.$tpl : ''];
         $this->fields[] = array_merge($column, $attr);
 
         return $this;
     }
 
-    public function tool($title, $url, $action = 'formLayer', $type = 'primary', $method = 'get', $condition = '', $tips = '')
-    {
+    public function tool(
+        $title,
+        $url,
+        $action = 'formLayer',
+        $type = 'primary',
+        $method = 'get',
+        $condition = '',
+        $tips = ''
+    ) {
         $this->tools[] = [
             'title'     => $title,
             'action'    => $action,
@@ -164,7 +173,7 @@ EOD;
 
     private function toolParse()
     {
-        if (!empty($this->tools)) {
+        if (! empty($this->tools)) {
             $html = '';
             foreach ($this->tools as $val) {
                 $this->toolTitleWidth += strlen($val['title']);
@@ -182,7 +191,8 @@ EOD;
                 } else {
                     $val['title-tips'] = $val['tips'] ? $val['tips'] : $val['title'];
                 }
-                $tmp = "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
+                $tmp
+                    = "<a href='javascript:;' refresh='{$this->id}' admin-event='{$val['action']}' data-title='{$val['title-tips']}' data-href='{$val['url']}' method='{$val['method']}' class='layui-btn layui-btn-xs {$class}'>{$val['title']}</a>";
                 if ($val['condition']) {
                     $tmp = '{{#  if('.$val['condition'].'){ }}'.$tmp.'{{#  } }}'; //条件
                 }
@@ -195,6 +205,7 @@ EOD;
 EOD;
             if ($this->toolWidth == 'auto') {
                 $this->toolWidth = ($this->toolTitleWidth / 3) * 27.5;
+                $this->toolWidth = $this->toolWidth > 70 ? $this->toolWidth : 70;
             }
             $this->column('', '操作', $this->toolWidth, 'tools', ['fixed' => 'right']);
         }

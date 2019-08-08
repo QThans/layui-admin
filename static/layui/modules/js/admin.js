@@ -484,6 +484,7 @@ layui.define(["layer", "upload"], function (exports) {
         limit: 15,
         limits: [15, 30, 50],
         page: true,
+        autoSort: false,
         loading: true,
         cellMinWidth: 80
       };

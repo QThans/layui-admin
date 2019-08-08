@@ -41,9 +41,11 @@ foreach ($self->rules as $key=>$val) {
     $tmpl = '';
     $tmpl .= "rule_".$val['id'].":function(value, item){\n";
     $tmpl.=!$val['required']?"if(value != ''){\n":'';
-    $tmpl.="if(!".$rule['reg'].".test(value)){\n";
-    $tmpl.= $val['tips']?"return '".$val['tips']."';\n":"return '".$rule['tips']."';\n";
-    $tmpl.="}\n";
+    if($rule['reg']){
+		$tmpl.="if(!".$rule['reg'].".test(value)){\n";
+		$tmpl.= $val['tips']?"return '".$val['tips']."';\n":"return '".$rule['tips']."';\n";
+		$tmpl.="}\n";
+    }
     $minTips = $val['tips']?$val['tips']:"该项长度不能小于".$val['min']."个字符";
     $maxTips = $val['tips']?$val['tips']:"该项长度不能大于".$val['max']."个字符";
     $tmpl.= $val['min']!=0?"if(value.length<".$val['min']."){ return '".$minTips."' }":'';

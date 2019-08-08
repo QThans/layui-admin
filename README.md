@@ -69,4 +69,4 @@ $ php think migrate:run
 ![console](https://uinge.oss-cn-beijing.aliyuncs.com/Screen%20Shot%202019-08-01%20at%2010.47.39.png)
 ## License
 
-Apache2.0
+MIT

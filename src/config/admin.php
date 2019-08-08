@@ -28,11 +28,11 @@ return [
 
     'upload' => [
         'image' => [
-            'size' => 1024000, //KB
+            'size' => 1024000, //bytes
             'ext'  => 'jpg,png,jpeg',
         ],
         'file' => [
-            'size' => 1024000, //KB
+            'size' => 1024000, //bytes
             'ext'  => '*',
         ],
     ],

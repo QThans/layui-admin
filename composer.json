@@ -1,7 +1,7 @@
 {
-    "name": "thans\/layui-admin",
+    "name": "thans/layui-admin",
     "description": "layui admin template build",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "Thans",

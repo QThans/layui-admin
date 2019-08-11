@@ -95,7 +95,7 @@ class Jump
         }
         $page = new Page();
 
-        $page->tmpl('jump');
+        $page->tmpl(DIRECTORY_SEPARATOR.'jump');
 
         $page->builder->script('jump_close', <<<'EOT'
         document.getElementById('close').onclick = function () {

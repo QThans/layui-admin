@@ -11,9 +11,7 @@ trait FormActions
 
     public function edit($id, Request $request)
     {
-        $url = $request->controller() && ! $this->route ? url($request->module().'/'
-            .$request->controller().'/update', 'id='.$id)
-            : url('\\'.get_class($this).'/update', 'id='.$id);
+        $url = $this->buildUrl($request, 'update', 'id='.$id);
 
         return $this->buildForm()->edit($id)->hiddenSubmit(
             ! AdminsAuth::check($url, 'put')
@@ -39,11 +37,17 @@ trait FormActions
 
     public function create(Request $request)
     {
-        $url = $request->controller() && ! $this->route ? url($request->module().'/'
-            .$request->controller().'/save') : url('\\'.get_class($this).'/save');
+        $url = $this->buildUrl($request, 'save');
 
         return $this->buildForm()->hiddenSubmit(
-            ! AdminsAuth::check($url, 'put')
+            ! AdminsAuth::check($url, 'post')
         )->url($url)->render();
+    }
+
+    public function buildUrl(Request $request, $method, $param = '')
+    {
+        return $request->controller() && $this->route ? url($request->module().DIRECTORY_SEPARATOR
+            .$request->controller().DIRECTORY_SEPARATOR.$method, $param)
+            : url(get_called_class().DIRECTORY_SEPARATOR.$method, $param);
     }
 }

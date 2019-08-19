@@ -10,6 +10,7 @@
 
 namespace thans\layuiAdmin;
 
+use think\App;
 use think\View;
 
 class Builder
@@ -53,7 +54,11 @@ class Builder
         $this->view                      = new View();
         $this->engineConfig['view_path'] = view_path();
         $this->tmpl                      = $tmpl;
-        $this->view->init($this->engineConfig);
+        if (strpos(App::VERSION, '6.0') === false) {
+            $this->view->engine($this->engineConfig);
+        } else {
+            $this->view->engine('Think', $this->engineConfig);
+        }
     }
 
     final public function css($key, $css)

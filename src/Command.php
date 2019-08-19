@@ -30,7 +30,7 @@ class Command extends \think\console\Command
 
     public function createConfig($output)
     {
-        $configFilePath = env('app_path').'..'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'admin.php';
+        $configFilePath = app()->getAppPath().'..'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'admin.php';
         if (is_file($configFilePath)) {
             $output->writeln('Config file is exist');
         } else {
@@ -45,14 +45,14 @@ class Command extends \think\console\Command
 
     public function createMigrations($output)
     {
-        $migrationsPath = env('app_path').'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations';
+        $migrationsPath = app()->getAppPath().'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations';
         copy_dir(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations', $migrationsPath);
         $output->writeln('Copy database margrations end');
     }
 
     public function createStatic($output)
     {
-        $staticPath = env('app_path').'..'.DIRECTORY_SEPARATOR.'public'.
+        $staticPath = app()->getAppPath().'..'.DIRECTORY_SEPARATOR.'public'.
             DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'layui-admin'.DIRECTORY_SEPARATOR;
         copy_dir(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'static', $staticPath);
         $output->writeln('Copy resources end');

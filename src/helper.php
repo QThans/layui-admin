@@ -8,11 +8,16 @@
  * This source file is subject to the Apache2.0 license that is bundled.
  */
 
-\think\Console::addDefaultCommands([
-    \thans\layuiAdmin\Command::class,
-]);
+use think\App;
+use think\Console;
 
-require_once 'route'.DIRECTORY_SEPARATOR.'Route.php';
+if (strpos(App::VERSION, '6.0') === false) {
+    Console::addDefaultCommands([
+        \thans\layuiAdmin\Command::class,
+    ]);
+    require_once 'route'.DIRECTORY_SEPARATOR.'Route.php';
+}
+
 
 if (! function_exists('scan_dir')) {
     /**

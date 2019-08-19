@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "topthink/framework": "^5.1.10",
+        "topthink/framework": "^5.1.10 || ^6.0.0",
         "topthink/think-migration": "*"
     },
     "require-dev": {
@@ -23,6 +23,16 @@
         "files": [
             "src/helper.php"
         ]
+    },
+    "extra": {
+        "think": {
+            "services": [
+                "thans\\layuiAdmin\\Service"
+            ],
+            "config": {
+                "admin": "src/config/config.php"
+            }
+        }
     },
     "minimum-stability": "dev"
 }

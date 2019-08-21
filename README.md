@@ -1,6 +1,6 @@
 
 <h1><p align="center">layui-admin</p></h1>
-<p align="center"> 基于thinkphp的后台管理系统。</p>
+<p align="center"> 【thinkphp6.0】基于thinkphp的后台管理系统。</p>
 
 <p align="center">
 <a target="_blank" href="https://www.kancloud.cn/sanshinet/layui-admin/">开发文档</a>
@@ -9,7 +9,7 @@
 
 ## 特性
 
-1. 基于tp5.1
+1. 基于tp6.0
 2. 基于layui前端框架
 3. 内置用户和权限管理
 4. Form类快速构建表单
@@ -19,7 +19,7 @@
 ## Requirement
 
 1. php >= 7.0
-2. thinkphp >=5.1.10
+2. thinkphp >=6.0.0
 
 ## Installation
 第一步：

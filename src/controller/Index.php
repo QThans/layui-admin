@@ -5,14 +5,14 @@ namespace thans\layuiAdmin\controller;
 use thans\layuiAdmin\Dashbord;
 use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\Index as Home;
-use think\Db;
+use think\facade\Db;
 use think\facade\App;
 
 class Index
 {
     public function index()
     {
-        $home = new Home();
+        $home       = new Home();
         $adminsInfo = session('admins_info');
         $home->userName($adminsInfo->nickname ? $adminsInfo->nickname : $adminsInfo->name);
         $menu = AdminsAuth::menu();
@@ -30,9 +30,9 @@ class Index
     public function dashboard()
     {
         $dashboard = new Dashbord();
-        $mysql = Db::query('select VERSION() as version');
-        $mysql = $mysql[0]['version'];
-        $mysql = empty($mysql) ? lang('UNKNOWN') : $mysql;
+        $mysql     = Db::query('select VERSION() as version');
+        $mysql     = $mysql[0]['version'];
+        $mysql     = empty($mysql) ? lang('UNKNOWN') : $mysql;
         $dashboard->card()->title('系统信息')->datas([
             'Thinkphp版本' => App::version(),
             '服务器版本'      => $_SERVER['SERVER_SOFTWARE'],

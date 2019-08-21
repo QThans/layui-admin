@@ -43,7 +43,7 @@ class AdminsAuth
     {
         $info = Cache::get('admins_'.session('admins_id'));
         if (! $info) {
-            $info = Admins::get(session('admins_id'));
+            $info = Admins::find(session('admins_id'));
             Cache::set('admins_'.session('admins_id'), $info, 3600);
         }
 
@@ -52,7 +52,7 @@ class AdminsAuth
 
     public function clearCache()
     {
-        return Cache::rm('admins_'.session('admins_id'));
+        return Cache::delete('admins_'.session('admins_id'));
     }
 
     public function id()
@@ -83,7 +83,8 @@ class AdminsAuth
     {
         $path = parse_url($path)['path'];
         $path = trim($path, '/');
-        $path = trim($path, '.html');
+        $path = rtrim($path, 'html');
+        $path = rtrim($path, '.');
         foreach ($this->info()->roles as $role) {
             if ($role->status !== 0) {
                 continue;
@@ -103,7 +104,8 @@ class AdminsAuth
                         return $this->checkMethod($val['http_method'], $method);
                     }
                     $pattern = trim($v, '/');
-                    $pattern = trim($pattern, '.html');
+                    $pattern = trim($pattern, 'html');
+                    $pattern = trim($pattern, '.');
                     $pattern = preg_quote($pattern, '#');
                     $pattern = str_replace('\*', '.*', $pattern);
                     if (preg_match('#^'.$pattern.'\z#u', $path) === 1) {

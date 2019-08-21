@@ -269,14 +269,14 @@ class Form
 
         try {
             if ($this->validate) {
-                $scene = $this->validateScene ? 'update' : null;
-                if (! $this->validate->scene($scene)->check($data)) {
+                $this->validateScene ? $this->validate = $this->validate->scene('update') : null;
+                if (! $this->validate->check($data)) {
                     Json::error($this->validate->getError());
                 }
             }
             $model = $this->model->find($id);
             $this->callUpdating($model, $data);
-            $model->allowField(true)->save($data);
+            $model->save($data);
             $this->callUpdated($model, $data);
             Json::success('更新成功');
         } catch (Exception $e) {
@@ -290,13 +290,13 @@ class Form
 
         try {
             if ($this->validate) {
-                $scene = $this->validateScene ? 'save' : null;
-                if (! $this->validate->scene($scene)->check($data)) {
+                $this->validateScene ? $this->validate = $this->validate->scene('save') : null;
+                if (! $this->validate->check($data)) {
                     Json::error($this->validate->getError());
                 }
             }
             $this->callSaving($data);
-            $this->model->allowField(true)->save($data);
+            $this->model->save($data);
             $this->callSaved($data);
             Json::success('保存成功');
         } catch (Exception $e) {

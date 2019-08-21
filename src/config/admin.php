@@ -16,24 +16,18 @@ return [
     /*
      * web title
      */
-    'title' => 'Inge Admin',
+    'title' => 'Layui Admin',
     'login' => [
-        'logo'    => '<span>Inge Admin</span>',
+        'logo'    => '<span>Layui Admin</span>',
         'title'   => '后台管理',
         's_title' => '登录',
-        'copy'    => '版权所有',
+        'copy'    => 'LyuiAdmin',
         'remeber' => true,
     ],
-    'jump_tmpl' => Env::get('root_path').'vendor/thans/layui-admin/views/jump.html',
+    'jump_tmpl' => app()->getRootPath().'vendor/thans/layui-admin/views/jump.html',
 
     'upload' => [
-        'image' => [
-            'size' => 1024000, //bytes
-            'ext'  => 'jpg,png,jpeg',
-        ],
-        'file' => [
-            'size' => 1024000, //bytes
-            'ext'  => '*',
-        ],
+        'image' => 'filesize:1024000|fileExt:jpg,png,jpeg',
+        'file'  => 'filesize:1024000',
     ],
 ];

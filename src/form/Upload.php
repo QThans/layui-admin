@@ -53,22 +53,22 @@ class Upload
         $script = '';
         if (is_array($val) && $val) {
             foreach ($val as $k => $v) {
-                $script .= $script = $this->appendInput($val);
+                $script .= $this->appendInput($k, $v);
+                $script .= $this->appendView($k, $v);
             }
 
-            $script .= $this->appendView(0, $val);
         } elseif ($val) {
-            $script = $this->appendInput($val);
+            $script = $this->appendInput(0, $val);
             $script .= $this->appendView(0, $val);
         }
 
         $this->obj->setValueScript('upload_'.$this->id, $script);
     }
 
-    protected function appendInput($val)
+    protected function appendInput($k, $val)
     {
         return <<<EOD
-$('#{$this->id}_upload_list').append('<input name="{$this->name}" type="hidden" class="value_0" value="{$val}">');
+$('#{$this->id}_upload_list').append('<input name="{$this->name}" type="hidden" class="value_{$k}" value="{$val}">');
 number_{$this->id}++;
 EOD;
     }

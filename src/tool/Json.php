@@ -29,7 +29,7 @@ class Json
 
         $result = [
             'code'     => 0,
-            'msg'      => $msg,
+            'message'      => $msg,
             'data'     => $data,
             'redirect' => $url,
             'wait'     => $wait,
@@ -61,7 +61,7 @@ class Json
         }
 
         $result = [
-            'error_msg' => $msg,
+            'message' => $msg,
             'data'      => $data,
             'redirect'  => $url,
             'wait'      => $wait,

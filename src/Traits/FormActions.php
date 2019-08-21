@@ -11,7 +11,7 @@ trait FormActions
 
     public function edit($id, Request $request)
     {
-        $url = $this->buildUrl($request, 'update', 'id='.$id);
+        $url = $this->buildUrl($request, 'update', ['id' => $id]);
 
         return $this->buildForm()->edit($id)->hiddenSubmit(
             ! AdminsAuth::check($url, 'put')
@@ -44,7 +44,7 @@ trait FormActions
         )->url($url)->render();
     }
 
-    public function buildUrl(Request $request, $method, $param = '')
+    public function buildUrl(Request $request, $method, array $param = [])
     {
         return $request->controller() && $this->route ? url($request->module().DIRECTORY_SEPARATOR
             .$request->controller().DIRECTORY_SEPARATOR.$method, $param)

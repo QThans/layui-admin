@@ -124,16 +124,18 @@ class Builder
         }
         $this->engineConfig['view_path'] = view_path();
         $tmpl                            = $this->tmpl;
+        $this->view->engine('Think', $this->engineConfig);
+        $this->view->assign($vars);
 
-        return $this->view->fetch($tmpl, $vars,
-            $this->engineConfig);
+        return $this->view->fetch($tmpl);
     }
 
     public function display($tmpl, $vars = [])
     {
         $this->view->engine->layout(false);
+        $this->view->assign($vars);
 
-        return $this->view->fetch($tmpl, $vars);
+        return $this->view->fetch($tmpl);
     }
 
     //加载其他组件

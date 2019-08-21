@@ -55,7 +55,7 @@ class Select
                 })
                 form.render('select');
             } else {
-                layer.msg(data.msg);
+                layer.msg(data.message);
             }
         }, '', 'get',false);
 EOD;

@@ -49,37 +49,33 @@ class Admins extends Model
         return $this->statusText[$data['status']];
     }
 
-    public static function init()
+    public static function onBeforeInsert(Model $model)
     {
-        self::event(
-            'before_insert', function ($admins) {
-                self::existAdmins($admins);
-                $admins['salt'] = random_str(20);
-                $admins['password'] = encrypt_password(
-                $admins['password'], $admins['salt']
-            );
-            }
+        self::existAdmins($model);
+        $model['salt']     = random_str(20);
+        $model['password'] = encrypt_password(
+            $model['password'], $model['salt']
         );
-        self::event(
-            'before_update', function ($admins) {
-                self::existAdmins($admins, $admins['id']);
-            }
-        );
+    }
+
+    public static function onBeforeUpdate(Model $model)
+    {
+        self::existAdmins($model, $model['id']);
     }
 
     public static function existAdmins($admins, $admins_id = '')
     {
         if (self::exist('name', $admins['name'], $admins_id)) {
-            exception('管理员已存在');
+            abort(404, '管理员用户名已存在');
         }
         if (self::exist('nickname', $admins['nickname'], $admins_id)) {
-            exception('昵称已存在');
+            abort(404, '昵称已存在');
         }
         if (self::exist('mobile', $admins['mobile'], $admins_id)) {
-            exception('手机号已存在');
+            abort(404, '手机号已存在');
         }
         if (self::exist('email', $admins['email'], $admins_id)) {
-            exception('邮箱已存在');
+            abort(404, '邮箱已存在');
         }
     }
 
@@ -87,7 +83,7 @@ class Admins extends Model
     {
         $where = [];
         if ($admins_id) {
-            $where[] = ['id', 'neq', $admins_id];
+            $where[] = ['id', '<>', $admins_id];
         }
         $model = self::where($where);
         if ($value && $model->where($field, $value)->find()) {

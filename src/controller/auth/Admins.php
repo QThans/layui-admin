@@ -23,10 +23,10 @@ class Admins
             list($where, $order, $page, $limit) = Utils::buildParams(
                 'name|nickname|email|mobile'
             );
-            $admins    = AdminsModel::where($where);
-            $list    = $admins->order($order)->page($page)->limit($limit)
+            $admins = AdminsModel::where($where);
+            $list   = $admins->order($order)->page($page)->limit($limit)
                 ->select();
-            $total   = $admins->count();
+            $total  = $admins->count();
             Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
@@ -45,7 +45,7 @@ class Admins
             1, '禁用', 'danger'
         );
         $url = url(
-            'thans\layuiAdmin\controller\auth\Admins/edit', 'id={{ d.id }}'
+            'thans\layuiAdmin\controller\auth\Admins/edit', ['id' => '{{ d.id }}']
         );
         if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url);
@@ -129,6 +129,7 @@ class Admins
                 $form->model->roles()->save(explode(',', $data['roles']));
             }
         });
+
         return $form;
     }
 }

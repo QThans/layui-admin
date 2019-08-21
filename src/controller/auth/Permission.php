@@ -22,8 +22,8 @@ class Permission
                 'name|alias|path'
             );
             $permission = AuthPermission::where($where)->order($order);
-            $list = $permission->page($page)->limit($limit)->select();
-            $total = $permission->count();
+            $list       = $permission->page($page)->limit($limit)->select();
+            $total      = $permission->count();
             Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
@@ -37,14 +37,14 @@ class Permission
         $tb->column('http_method', 'HTTP Method', 250);
         $tb->column('path', '网址', 300);
         $url = url(
-            'thans\layuiAdmin\controller\auth\Permission/edit', 'id={{ d.id }}'
+            'thans\layuiAdmin\controller\auth\Permission/edit', ['id' => '{{ d.id }}']
         );
         if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url, 'formLayer');
         }
         $url = url(
             'thans\layuiAdmin\controller\auth\Permission/delete',
-            'id={{ d.id }}'
+            ['id' => '{{ d.id }}']
         );
         if (AdminsAuth::check($url, 'DELETE')) {
             $tb->tool(
@@ -67,7 +67,7 @@ class Permission
         $form->text()->name('name')->label('权限名称')->rules('required');
         $form->text()->name('alias')->label('别名')->tips('仅支持字母、下划线、"."，必须字母开头')
             ->rules('/^[a-zA-Z0-9\\\*]+$/', true, 1, 100, '请输入正确的别名');
-        $methods = [];
+        $methods   = [];
         $methods[] = ['val' => 'GET', 'title' => 'GET'];
         $methods[] = ['val' => 'POST', 'title' => 'POST'];
         $methods[] = ['val' => 'PUT', 'title' => 'PUT'];

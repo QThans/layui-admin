@@ -42,11 +42,11 @@ class Menu
         if (AdminsAuth::check($url)) {
             $tb->action('新增菜单', $url);
         }
-        $url = url('thans\layuiAdmin\controller\Menu/edit', 'id={{ d.id }}');
+        $url = url('thans\layuiAdmin\controller\Menu/edit', ['id' => '{{ d.id }}']);
         if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url, 'formLayer');
         }
-        $url = url('thans\layuiAdmin\controller\Menu/delete', 'id={{ d.id }}');
+        $url = url('thans\layuiAdmin\controller\Menu/delete', ['id' => '{{ d.id }}']);
         if (AdminsAuth::check($url, 'DELETE')) {
             $tb->tool('删除', $url, 'confirmAjax', 'danger', 'DELETE');
         }

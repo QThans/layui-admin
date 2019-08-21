@@ -12,7 +12,7 @@ class AdminsAuth
         if ($auth === false) {
             return $next($request);
         }
-        $path = $request->path();
+        $path = $request->pathinfo();
         $check = \thans\layuiAdmin\facade\AdminsAuth::check($path);
         if (!$check) {
             if (!$request->isAjax()) {

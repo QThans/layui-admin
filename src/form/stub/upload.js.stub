@@ -18,6 +18,7 @@ var upload_config_{$self->id} = {
 	,done: function(res,index){
 	    if(res.code == {$self->successCode}){
 	        $('#{$self->id}_upload_list').append('<input name="{$self->name}" type="hidden" class="value_'+index+'" value="'+res.data+'">')
+	        $('.value_default').remove();
 	        $('.status_'+index).html('上传成功');
 	    }
 	    layer.closeAll('loading');
@@ -53,6 +54,10 @@ var uploadInst_{$self->id} = upload.render(upload_config_{$self->id});
 $(document).on('click','.removeimg_{$self->id}',function(){
     var index = $(this).attr('data-id');
     $('#dim_{$self->id}_'+index).remove();
+    $('.value_'+index).remove();
     number_{$self->id}--;
+    if(number_{$self->id} <= 0 ){
+		$('#{$self->id}_upload_list').append('<input name="{$self->name}" type="hidden" class="value_default" value="">')
+    }
     return false;
 });

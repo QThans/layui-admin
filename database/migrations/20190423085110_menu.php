@@ -56,7 +56,7 @@ class Menu extends Migrator
             'parent_id'   => 1,
             'order'       => 2,
             'icon'        => '',
-            'uri'         => 'admin/menu',
+            'uri'         => '/admin/menu',
             'create_time' => time(),
             'update_time' => time(),
         ];
@@ -65,7 +65,7 @@ class Menu extends Migrator
             'parent_id'   => 1,
             'order'       => 3,
             'icon'        => '',
-            'uri'         => 'admin/permission',
+            'uri'         => '/admin/permission',
             'create_time' => time(),
             'update_time' => time(),
         ];
@@ -74,7 +74,7 @@ class Menu extends Migrator
             'parent_id'   => 1,
             'order'       => 4,
             'icon'        => '',
-            'uri'         => 'admin/role',
+            'uri'         => '/admin/role',
             'create_time' => time(),
             'update_time' => time(),
         ];
@@ -92,7 +92,7 @@ class Menu extends Migrator
             'parent_id'   => 5,
             'order'       => 6,
             'icon'        => '',
-            'uri'         => 'admin/auth/admins',
+            'uri'         => '/admin/auth/admins',
             'create_time' => time(),
             'update_time' => time(),
         ];

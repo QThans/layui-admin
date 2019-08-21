@@ -45,13 +45,13 @@ class Role
             $tb->action('新增权限组', $url);
         }
         $url = url(
-            'thans\layuiAdmin\controller\auth\Role/edit', 'id={{ d.id }}'
+            'thans\layuiAdmin\controller\auth\Role/edit', ['id' => '{{ d.id }}']
         );
         if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url);
         }
         $url = url(
-            'thans\layuiAdmin\controller\auth\Role/delete', 'id={{ d.id }}'
+            'thans\layuiAdmin\controller\auth\Role/delete', ['id' => '{{ d.id }}']
         );
         if (AdminsAuth::check($url, 'delete')) {
             $tb->tool(

@@ -33,12 +33,8 @@ class AuthRole extends Model
         return $this->hasMany('AuthRoleUser', 'role_id', 'id');
     }
 
-    protected static function init()
+    public static function onBeforeWrite(Model $model)
     {
-        self::event(
-            'before_write', function ($role) {
-                $role['status'] = Request::param('status', null) == null ? 0 : 1;
-            }
-        );
+        $model['status'] = Request::param('status', null) == null ? 0 : 1;
     }
 }

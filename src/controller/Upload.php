@@ -3,40 +3,35 @@
 namespace thans\layuiAdmin\controller;
 
 use thans\layuiAdmin\facade\Json;
+use think\exception\ValidateException;
 use think\facade\Config;
 use think\facade\Env;
+use think\facade\Filesystem;
 use think\Request;
 
 class Upload
 {
     public function image(Request $request)
     {
-        $file = $request->file('image');
-        if (!$file) {
-            Json::error('请选择图片');
-        }
-        // 移动到框架应用根目录/uploads/ 目录下
-        $info = $file->validate(['size' => Config::get('admin.upload.image.size'), 'ext' => Config::get('admin.upload.image.ext')])->move(Env::get('root_path').'/public/uploads');
-        if ($info) {
-            Json::success('上传成功', '/uploads/'.$info->getSaveName());
-        } else {
-            // 上传失败获取错误信息
-            Json::error($file->getError());
+        $file = $request->file();
+        try {
+            validate(['image' => Config::get('admin.upload.image')])->check($file);
+            $savename = Filesystem::disk('public')->putFile('uploads/images', $file['image']);
+            Json::success('上传成功', DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.$savename);
+        } catch (ValidateException $e) {
+            Json::error($e->getMessage());
         }
     }
 
     public function file(Request $request)
     {
-        $file = $request->file('file');
-        if (!$file) {
-            Json::error('请选择文件');
-        }
-        $info = $file->validate(['size' => Config::get('admin.upload.file.size'), 'ext' => Config::get('admin.upload.file.ext')])->move(Env::get('root_path').'/public/uploads');
-        if ($info) {
-            Json::success('上传成功', '/uploads/'.$info->getSaveName());
-        } else {
-            // 上传失败获取错误信息
-            Json::error($file->getError());
+        $file = $request->file();
+        try {
+            validate(['file' => Config::get('admin.upload.file')])->check($file);
+            $savename = Filesystem::disk('public')->putFile('uploads/files', $file['file']);
+            Json::success('上传成功', DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.$savename);
+        } catch (ValidateException $e) {
+            Json::error($e->getMessage());
         }
     }
 }

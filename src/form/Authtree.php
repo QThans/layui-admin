@@ -98,7 +98,7 @@ EOD
 					autowidth: true
 				});
              } else {
-                  layer.msg(data.msg);
+                  layer.msg(data.message);
              }
         },'','get');
 EOD

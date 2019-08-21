@@ -146,7 +146,7 @@ layui.define(["layer", "upload"], function (exports) {
       href,
       "",
       function (data) {
-        layer.msg(data.msg);
+        layer.msg(data.message);
         if (refresh) {
           $("#layui-icon-refresh-" + refresh, parent.document).click();
           $("#layui-icon-refresh-" + refresh).click();
@@ -167,7 +167,7 @@ layui.define(["layer", "upload"], function (exports) {
         href,
         "",
         function (data) {
-          layer.msg(data.msg);
+          layer.msg(data.message);
           if (refresh) {
             $("#layui-icon-refresh-" + refresh, parent.document).click();
             $("#layui-icon-refresh-" + refresh).click();
@@ -435,7 +435,7 @@ layui.define(["layer", "upload"], function (exports) {
           var wait = data.wait * 1000 || 1000;
           if (!data.code) {
             layer.msg(
-              data.msg,
+              data.message,
               {
                 offset: "15px",
                 icon: 1,
@@ -448,13 +448,13 @@ layui.define(["layer", "upload"], function (exports) {
               }
             );
           } else {
-            layer.msg(data.msg);
+            layer.msg(data.message);
           }
         };
       var errorCallback =
         errorCallback ||
         function (e, t) {
-          layer.msg(e.responseJSON.error_msg);
+          layer.msg(e.responseJSON.message);
         };
       $.ajax({
         type: type,

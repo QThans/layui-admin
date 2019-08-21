@@ -11,7 +11,7 @@ use think\exception\HttpException;
 use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Session;
-use think\Loader;
+use think\helper\Str;
 use think\Request;
 
 class Login
@@ -22,7 +22,7 @@ class Login
 
         try {
             foreach (Config::get('admin.login') as $key => $val) {
-                $key = Loader::parseName($key, 1, false);
+                $key = Str::camel($key);
                 $login->$key($val);
             }
         } catch (Exception $e) {
@@ -35,7 +35,7 @@ class Login
 
     public function doLogin(Request $request)
     {
-        $account = $request->param('account');
+        $account  = $request->param('account');
         $password = $request->param('password');
         $redirect = $request->param('redirect', '');
 
@@ -43,8 +43,9 @@ class Login
             $admins = AdminsAuth::login($account, $password);
             session('admins_id', $admins->id);
             session('admins_info', $admins);
-            Cache::rm('admins_'.$admins->id);
-            Json::success('登录成功...', [], [], $redirect ? $redirect : url('thans\layuiAdmin\controller\Index@index'), 2);
+            Cache::delete('admins_'.$admins->id);
+            $redirect = $redirect ? $redirect : url('thans\layuiAdmin\controller\Index@index')->build();
+            Json::success('登录成功...', [], [], $redirect, 2);
         } catch (HttpException $e) {
             Json::error($e->getMessage(), 400);
         }
@@ -52,7 +53,7 @@ class Login
 
     public function logout(Request $request)
     {
-        Cache::rm('admins_'.session('admins_id'));
+        Cache::delete('admins_'.session('admins_id'));
         Session::clear();
         if ($request->isAjax()) {
             Json::success('退出成功');

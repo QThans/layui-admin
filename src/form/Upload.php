@@ -57,7 +57,6 @@ class Upload
                 $script .= $this->appendInput($k, $v);
                 $script .= $this->appendView($k, $v);
             }
-
         } elseif ($val) {
             $script = $this->appendInput(0, $val);
             $script .= $this->appendView(0, $val);

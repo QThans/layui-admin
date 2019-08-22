@@ -3,7 +3,6 @@
 use think\facade\Route;
 
 Route::group('admin', function () {
-
     Route::group('', function () {
         Route::get('', 'thans\layuiAdmin\controller\Index@index');
         Route::group('personal', function () {
@@ -33,7 +32,6 @@ Route::group('admin', function () {
         Route::post('upload/image', 'thans\layuiAdmin\controller\Upload@image');
         Route::post('upload/file', 'thans\layuiAdmin\controller\Upload@file');
     })->middleware([thans\layuiAdmin\middleware\Login::class]);
-
 });
 
 Route::group('admin', function () {

@@ -3,7 +3,6 @@
 
 namespace thans\layuiAdmin;
 
-
 use think\middleware\SessionInit;
 
 class Service extends \think\Service

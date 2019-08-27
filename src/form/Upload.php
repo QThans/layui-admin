@@ -11,7 +11,6 @@
 namespace thans\layuiAdmin\form;
 
 use thans\layuiAdmin\Traits\Field;
-use think\facade\Filesystem;
 
 class Upload
 {

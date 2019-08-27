@@ -41,10 +41,10 @@ var upload_config_{$self->id} = {
 	        number_{$self->id}++;
 	        {switch $self->uploadType}
 	        {case image}
-	            $('#{$self->id}_upload_list').append('<div id="dim_{$self->id}_'+index+'" class="dimback"><img id="img_id_'+index+'" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" ><span class="status_'+index+'">上传中...</span><i data-id="'+index+'" class="layui-icon-close layui-icon removeimg_{$self->id}"></i></div>')
+	            $('#{$self->id}_upload_list').append('<div id="dim_{$self->id}_'+index+'" class="dimback"><img id="file_{$self->id}_'+index+'" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img view_{$self->id}" ><span class="status_'+index+'">上传中...</span><i data-id="'+index+'" class="layui-icon-close layui-icon removeimg_{$self->id}"></i></div>')
 	        {/case}
 	        {default /}
-	            $('#{$self->id}_upload_list').append('<div id="dim_{$self->id}_'+index+'" class="dimback dimback-file"><p id="img_id_'+index+'"  class="layui-upload-file-name" >'+ file.name +'</p><span class="status_'+index+'">上传中...</span><i data-id="'+index+'" class="layui-icon-close layui-icon removeimg_{$self->id}"></i></div>')
+	            $('#{$self->id}_upload_list').append('<div id="dim_{$self->id}_'+index+'" class="dimback dimback-file"><p id="file_{$self->id}_'+index+'"  class="layui-upload-file-name" >'+ file.name +'</p><span class="status_'+index+'">上传中...</span><i data-id="'+index+'" class="layui-icon-close layui-icon removeimg_{$self->id}"></i></div>')
 	        {/switch}
 	        obj.upload(index, file)
 	    });
@@ -60,4 +60,14 @@ $(document).on('click','.removeimg_{$self->id}',function(){
 		$('#{$self->id}_upload_list').append('<input name="{$self->name}" type="hidden" class="value_default" value="">')
     }
     return false;
+});
+$(document).on('click','.view_{$self->id}',function(){
+	layer.open({
+	  type: 1,
+	  title: false,
+	  closeBtn: 0,
+	  shadeClose: true,
+	  area: 'auto',
+	  content: '<img style="height:100%;" src="'+$(this).attr('src')+'">'
+	});
 });

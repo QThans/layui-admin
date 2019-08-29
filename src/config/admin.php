@@ -21,7 +21,7 @@ return [
         'logo'    => '<span>Layui Admin</span>',
         'title'   => '后台管理',
         's_title' => '登录',
-        'copy'    => 'LyuiAdmin',
+        'copy'    => 'LayuiAdmin',
         'remeber' => true,
     ],
     'jump_tmpl' => app()->getRootPath().'vendor/thans/layui-admin/views/jump.html',

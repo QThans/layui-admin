@@ -68,7 +68,7 @@ class Upload
     protected function appendInput($k, $val)
     {
         return <<<EOD
-$('#{$this->id}_upload_list').append('<input name="{$this->name}" type="hidden" class="value_{$k}" value="{$val}">');
+$('#{$this->id}_upload_list').append('<input name="{$this->name}" type="hidden" class="value_{$this->id}_{$k}" value="{$val}">');
 number_{$this->id}++;
 EOD;
     }

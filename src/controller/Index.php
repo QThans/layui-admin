@@ -42,9 +42,9 @@ class Index
             '剩余空间'       => round((@disk_free_space('.') / (1024 * 1024)), 2).'M',
         ]);
         $dashboard->card()->title('联系信息')->datas([
-            '官网'   => '<a href=\'https://layuiadmin.com\' target="_blank">LayuiAdmin-TP</a></a>',
-            '商务联系' => '<img src="http://cdn.inge.vip/thans.jpeg">',
-            '为我点赞' => '<a target="_blank" href=\'https://gitee.com/thans/layuiAdmin/stargazers\'><img src=\'https://gitee.com/thans/layuiAdmin/badge/star.svg?theme=white\' alt=\'star\'></img></a>',
+            '官网'   => '<a href=\'//layuiadmin.com\' target="_blank">LayuiAdmin-TP</a></a>',
+            '商务联系' => '<img src="//cdn.inge.vip/thans.jpeg">',
+            '为我点赞' => '<a target="_blank" href=\'https://gitee.com/thans/layuiAdmin/stargazers\'><img src=\'//gitee.com/thans/layuiAdmin/badge/star.svg?theme=white\' alt=\'star\'></img></a>',
         ]);
 
         return $dashboard->render();

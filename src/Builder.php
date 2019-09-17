@@ -51,14 +51,10 @@ class Builder
         if ($init) {
             $this->html = [];
         }
-        $this->view                      = new View();
+        $this->view                      = new View(\think\facade\App::getInstance());
         $this->engineConfig['view_path'] = view_path();
         $this->tmpl                      = $tmpl;
-        if (strpos(App::VERSION, '6.0') === false) {
-            $this->view->engine($this->engineConfig);
-        } else {
-            $this->view->engine('Think', $this->engineConfig);
-        }
+        $this->view->engine('Think')->config($this->engineConfig);
     }
 
     final public function css($key, $css)
@@ -124,7 +120,8 @@ class Builder
         }
         $this->engineConfig['view_path'] = view_path();
         $tmpl                            = $this->tmpl;
-        $this->view->engine('Think', $this->engineConfig);
+        $this->view->engine('Think')->config($this->engineConfig);
+
         $this->view->assign($vars);
 
         return $this->view->fetch($tmpl);
@@ -132,7 +129,7 @@ class Builder
 
     public function display($tmpl, $vars = [])
     {
-        $this->view->engine->layout(false);
+        $this->view->engine('Think')->layout(false);
         $this->view->assign($vars);
 
         return $this->view->fetch($tmpl);

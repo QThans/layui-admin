@@ -6,7 +6,6 @@ use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\facade\Json;
 use thans\layuiAdmin\facade\Jump;
 use thans\layuiAdmin\Login as LoginView;
-use think\Exception;
 use think\exception\HttpException;
 use think\facade\Cache;
 use think\facade\Config;
@@ -18,10 +17,10 @@ class Login
 {
     public function index()
     {
+        $admin = Config::get('admin.login');
         $login = new LoginView();
-
         try {
-            foreach (Config::get('admin.login') as $key => $val) {
+            foreach ($admin as $key => $val) {
                 $key = Str::camel($key);
                 $login->$key($val);
             }

@@ -8,17 +8,6 @@
  * This source file is subject to the Apache2.0 license that is bundled.
  */
 
-use think\App;
-use think\Console;
-
-if (strpos(App::VERSION, '6.0') === false) {
-    Console::addDefaultCommands([
-        \thans\layuiAdmin\Command::class,
-    ]);
-    require_once 'route'.DIRECTORY_SEPARATOR.'Route.php';
-}
-
-
 if (! function_exists('scan_dir')) {
     /**
      * 扫描目录.

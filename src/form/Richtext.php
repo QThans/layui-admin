@@ -30,7 +30,7 @@ class Richtext
     public function end()
     {
         $config = '';
-        $data = json_encode($this->obj->data,JSON_UNESCAPED_UNICODE);
+        $data = json_encode($this->obj->data, JSON_UNESCAPED_UNICODE);
         $this->config('filebrowserImageUploadUrl', $this->imageUploadUrl);
         foreach ($this->config as $key => $value) {
             $config .= "var richtext_config_{$this->id} = CKEDITOR.config; richtext_config_{$this->id}.{$key} = '{$value}';";

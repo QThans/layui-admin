@@ -30,7 +30,7 @@ class Richtext
     public function end()
     {
         $config = '';
-        $data = json_encode($this->obj->data,JSON_UNESCAPED_UNICODE);
+        $data = json_encode($this->obj->data, JSON_UNESCAPED_UNICODE);
         $this->config('filebrowserImageUploadUrl', $this->imageUploadUrl);
         foreach ($this->config as $key => $value) {
             $config .= "var richtext_config_{$this->id} = CKEDITOR.config; richtext_config_{$this->id}.{$key} = '{$value}';";
@@ -41,7 +41,6 @@ class Richtext
         $config
         var richtext_{$this->id} =  CKEDITOR.replace('{$this->id}',richtext_config_{$this->id});
         richtext_{$this->id}.on( 'change', function( evt ) {
-        console.log(evt.editor.getData())
             $('#{$this->id}').val(evt.editor.getData());
         });
         var data = {$data};

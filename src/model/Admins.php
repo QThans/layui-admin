@@ -52,6 +52,11 @@ class Admins extends Model
     public static function onBeforeInsert(Model $model)
     {
         self::existAdmins($model);
+        $model = self::buildPassword($model);
+    }
+
+    public static function buildPassword(&$model)
+    {
         $model['salt']     = random_str(20);
         $model['password'] = encrypt_password(
             $model['password'], $model['salt']
@@ -61,6 +66,11 @@ class Admins extends Model
     public static function onBeforeUpdate(Model $model)
     {
         self::existAdmins($model, $model['id']);
+        if (isset($model['password']) && $model['password']) {
+            self::buildPassword($model);
+        } else {
+            unset($model['password']);
+        }
     }
 
     public static function existAdmins($admins, $admins_id = '')

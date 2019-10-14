@@ -46,6 +46,16 @@ trait FormActions
 
     public function buildUrl(Request $request, $method, array $param = [])
     {
+        if (property_exists($this, $method.'Url')) {
+            $method .= 'Url';
+            $url    = $this->$method;
+            foreach ($param as $k => $v) {
+                $url = str_replace('$'.$k, $v, $url);
+            }
+
+            return $url;
+        }
+
         return $request->controller() && $this->route ? url($request->controller().'/'.$method, $param)
             : url(get_called_class().'/'.$method, $param);
     }

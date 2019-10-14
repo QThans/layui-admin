@@ -37,13 +37,12 @@ class Admins
         $tb->column('nickname', '昵称');
         $tb->column('email', '邮箱');
         $tb->column('mobile', '手机号');
-        $tb->column('status_text', '状态', 100, 'status', ['align' => 'center']);
         $tb->column('last_login_time', '最后登录时间');
         $tb->column('create_time', '创建时间');
         $tb->column('update_time', '更新时间');
         $tb->status(['field' => 'status'])->option(0, '正常')->option(
             1, '禁用', 'danger'
-        );
+        )->column('status_text', '状态', 100, ['align' => 'center']);
         $url = url(
             'thans\layuiAdmin\controller\auth\Admins/edit', ['id' => '{{ d.id }}']
         );

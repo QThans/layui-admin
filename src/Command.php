@@ -30,17 +30,6 @@ class Command extends \think\console\Command
 
     public function createConfig($output)
     {
-        $configFilePath = app()->getAppPath().'..'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'admin.php';
-        if (is_file($configFilePath)) {
-            $output->writeln('Config file is exist');
-        } else {
-            $res = copy(__DIR__.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'admin.php', $configFilePath);
-            if ($res) {
-                $output->writeln('Create config file success:'.$configFilePath);
-            } else {
-                $output->writeln('Create config file error');
-            }
-        }
         $path = app()->getAppPath().'..'.DIRECTORY_SEPARATOR.'.env';
         if (file_exists($path)
             && strpos(file_get_contents($path), '[FILESYSTEM]')
@@ -60,6 +49,7 @@ class Command extends \think\console\Command
         copy_dir(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations',
             $migrationsPath);
         $output->writeln('Copy database margrations end');
+
     }
 
     public function createStatic($output)

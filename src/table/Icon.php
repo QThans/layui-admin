@@ -8,11 +8,11 @@
 
 namespace thans\layuiAdmin\Table;
 
-use thans\layuiAdmin\Traits\Compoents;
+use thans\layuiAdmin\Traits\Column;
 
 class Icon
 {
-    use Compoents;
+    use Column;
 
     public $tmpl = 'table/icon';
 

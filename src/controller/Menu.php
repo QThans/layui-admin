@@ -20,9 +20,9 @@ class Menu
     {
         if ($request->isAjax()) {
             list($where, $order, $page, $limit) = Utils::buildParams('name|url|permission');
-            $menu = new MenuModel();
-            $list = $menu->select();
-            $list = Utils::buildTree($list, false, '└―');
+            $menu  = new MenuModel();
+            $list  = $menu->select();
+            $list  = Utils::buildTree($list, false, '└―');
             $count = $menu->where($where)->count();
             Json::success('获取成功', $list, ['total' => $count]);
         }
@@ -30,12 +30,10 @@ class Menu
         $tb->url(url('thans\layuiAdmin\controller\Menu/index'));
         $tb->column('id', 'ID', 100);
         $tb->column('label', '菜单名称', 300);
-        $tb->icon();
-        $tb->column('icon', 'ICON', 100, 'icon', ['align' => 'center']);
+        $tb->icon()->column('icon', 'ICON', 100, ['align' => 'center']);
         $tb->column('uri', 'URI', 200);
         $tb->column('permission', '权限绑定', 200);
-        $tb->status()->option(0, '显示')->option(1, '隐藏', 'danger');
-        $tb->column('status', '状态', 100, 'status', ['align' => 'center']);
+        $tb->status()->option(0, '显示')->option(1, '隐藏', 'danger')->column('status', '状态', 100, ['align' => 'center']);
         $tb->column('create_time', '创建时间', 200);
         $tb->column('update_time', '更新时间', 200);
         $url = url('thans\layuiAdmin\controller\Menu/create');
@@ -57,9 +55,9 @@ class Menu
 
     private function buildForm()
     {
-        $menu = new MenuModel();
-        $form = new Form($menu, new \thans\layuiAdmin\validate\Menu());
-        $parent = [];
+        $menu     = new MenuModel();
+        $form     = new Form($menu, new \thans\layuiAdmin\validate\Menu());
+        $parent   = [];
         $parent[] = ['val' => 0, 'title' => '根菜单'];
         foreach (Utils::buildTree($menu->select(), false, '└―') as $val) {
             $parent[] = ['val' => $val['id'], 'title' => $val['label']];
@@ -69,7 +67,7 @@ class Menu
         $form->icon()->name('icon')->label('ICON');
         $form->number()->name('order')->label('排序')->value(1000);
         $form->text()->name('uri')->label('URI')->placeholder('请输入URI');
-        $status = [];
+        $status   = [];
         $status[] = ['val' => 0, 'title' => '启用'];
         $status[] = ['val' => 1, 'title' => '禁用'];
         $form->select()->name('status')->label('状态')->options($status);

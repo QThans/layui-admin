@@ -24,9 +24,9 @@ class Role
                 'name|alias'
             );
             $authRole = AuthRole::where($where);
-            $list = $authRole->order($order)->page($page)->limit($limit)
+            $list     = $authRole->order($order)->page($page)->limit($limit)
                 ->select();
-            $total = $authRole->count();
+            $total    = $authRole->count();
             Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
@@ -36,8 +36,7 @@ class Role
         $tb->column('id', 'ID', 100);
         $tb->column('name', '权限组名称');
         $tb->column('alias', '权限组别名');
-        $tb->status()->option(0, '启用')->option(1, '禁用', 'danger');
-        $tb->column('status', '状态', 100, 'status', ['align' => 'center']);
+        $tb->status()->option(0, '启用')->option(1, '禁用', 'danger')->column('status', '状态', 100, ['align' => 'center']);
         $tb->column('create_time', '创建时间');
         $tb->column('update_time', '更新时间');
         $url = url('thans\layuiAdmin\controller\auth\Role/create');
@@ -81,7 +80,7 @@ class Role
         $form->authtree()->items($menus)->label('菜单选择')->name('menus');
 
         $permission = AuthPermission::select();
-        $op = [];
+        $op         = [];
         foreach ($permission as $val) {
             $op[] = ['title' => $val['name'], 'val' => $val['id']];
         }
@@ -95,7 +94,7 @@ class Role
                     ? implode(
                         ',', array_column($form->data->permissions->toArray(), 'id')
                     ) : '';
-                $form->data['menus'] = isset($form->data['menus'])
+                $form->data['menus']       = isset($form->data['menus'])
                 && $form->data['menus']
                     ? implode(
                         ',', array_column($form->data->menus->toArray(), 'id')

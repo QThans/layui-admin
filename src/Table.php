@@ -134,9 +134,10 @@ EOD;
         $this->builder->script('table', $code);
     }
 
-    public function column($field, $title, $width = 200, $tpl = '', $attr = [])
+    public function column($field, $title, $width = 200, $attr = [])
     {
-        $column         = ['field' => $field, 'title' => $title, 'width' => $width, 'templet' => $tpl ? '#'.$tpl : ''];
+        $column = ['field' => $field, 'title' => $title, 'width' => $width];
+
         $this->fields[] = array_merge($column, $attr);
 
         return $this;
@@ -207,7 +208,7 @@ EOD;
                 $this->toolWidth = ($this->toolTitleWidth / 3) * 27.5;
                 $this->toolWidth = $this->toolWidth > 70 ? $this->toolWidth : 70;
             }
-            $this->column('', '操作', $this->toolWidth, 'tools', ['fixed' => 'right']);
+            $this->column('', '操作', $this->toolWidth, ['fixed' => 'right', 'templet' => '#tools']);
         }
     }
 }

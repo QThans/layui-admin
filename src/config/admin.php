@@ -12,12 +12,29 @@ return [
     /*
      * cdn resource address
      */
-    'cdn_url' => '/',
+    'cdn_url'   => '/',
     /*
      * web title
      */
-    'title' => 'Layui Admin',
-    'login' => [
+    'title'     => 'Layui Admin',
+    'logo'      => 'LayuiAdmin - TP',
+    'slogo'     => 'Admin',
+    'dashboard' => [
+        'title' => '控制台',
+        'url'   => url('thans\layuiAdmin\controller\Index@dashboard'),
+    ],
+    'userMenu' => [
+        [
+            '个人设置',
+            url('thans\layuiAdmin\controller\Personal@setting'),
+        ],
+        [
+            '退出登录',
+            '',
+            ['target' => '_top', 'href' => url('thans\layuiAdmin\controller\Login@logout')],
+        ],
+    ],
+    'login'     => [
         'logo'    => '<span>Layui Admin</span>',
         'title'   => '后台管理',
         's_title' => '登录',
@@ -26,8 +43,19 @@ return [
     ],
     'jump_tmpl' => app()->getRootPath().'vendor/thans/layui-admin/views/jump.html',
 
-    'upload' => [
+    'upload'   => [
         'image' => 'filesize:1024000|fileExt:jpg,png,jpeg',
         'file'  => 'filesize:1024000',
+    ],
+    'userMenu' => [
+        [
+            '个人设置',
+            url('thans\layuiAdmin\controller\Personal@setting'),
+        ],
+        [
+            '退出登录',
+            '',
+            ['target' => '_top', 'href' => url('thans\layuiAdmin\controller\Login@logout')],
+        ],
     ],
 ];

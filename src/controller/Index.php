@@ -5,6 +5,7 @@ namespace thans\layuiAdmin\controller;
 use thans\layuiAdmin\Dashbord;
 use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\Index as Home;
+use think\facade\Config;
 use think\facade\Db;
 use think\facade\App;
 
@@ -17,12 +18,15 @@ class Index
         $home->userName($adminsInfo->nickname ? $adminsInfo->nickname : $adminsInfo->name);
         $menu = AdminsAuth::menu();
         $home->menu($menu);
-        $home->firstTabUrl(url('thans\layuiAdmin\controller\Index@dashboard'));
-        $home->firstTabName('控制台');
-        $home->logo('LayuiAdmin-TP');
-        $home->sLogo('Admin');
-        $home->userMenu('个人设置', url('thans\layuiAdmin\controller\Personal@setting'));
-        $home->userMenu('退出登录', '', ['target' => '_top', 'href' => url('thans\layuiAdmin\controller\Login@logout')]);
+        $dashboard = Config('admin.dashboard');
+        $home->firstTabUrl($dashboard['url']);
+        $home->firstTabName($dashboard['title']);
+        $home->logo(Config::get('admin.logo'));
+        $home->sLogo(Config::get('admin.slogo'));
+        $userMenus = Config::get('admin.userMenu');
+        foreach ($userMenus as $menu) {
+            $home->userMenu($menu[0], $menu[1], isset($menu[2]) ? $menu[2] : []);
+        }
 
         return $home->render();
     }

@@ -46,8 +46,8 @@ trait FormActions
 
     public function buildUrl(Request $request, $method, $param = '')
     {
-        return $request->controller() && $this->route ? url($request->module().DIRECTORY_SEPARATOR
-            .$request->controller().DIRECTORY_SEPARATOR.$method, $param)
-            : url(get_called_class().DIRECTORY_SEPARATOR.$method, $param);
+        return $request->controller() && $this->route ? url($request->module().'/'
+            .$request->controller().'/'.$method, $param)
+            : url(get_called_class().'/'.$method, $param);
     }
 }

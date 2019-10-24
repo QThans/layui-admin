@@ -49,7 +49,6 @@ class Command extends \think\console\Command
         copy_dir(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations',
             $migrationsPath);
         $output->writeln('Copy database margrations end');
-
     }
 
     public function createStatic($output)

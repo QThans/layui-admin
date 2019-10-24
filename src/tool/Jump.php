@@ -113,7 +113,7 @@ EOT
 
         $page = $page->render();
 
-        $response = Response::create($result, 'jump')->header($header)->content($page);
+        $response = Response::create($result, 'html')->header($header)->content($page);
 
         throw new HttpResponseException($response);
     }

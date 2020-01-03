@@ -65,7 +65,7 @@ form.on('submit(form-{$self->id})', function (data) {
     {volist name="$self->submitStartSctipt" id="vo"}
         {$vo|raw}
     {/volist}
-    admin.ajax('{$self->url}', data.field, function (data) {
+    admin.ajax('{$self->url|raw}', data.field, function (data) {
         {volist name="$self->submitEndSctipt" id="vo"}
             {$vo|raw}
         {/volist}

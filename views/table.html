@@ -1,79 +1,73 @@
 <div class="layui-fluid table-{$self->id}">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md12">
-                    <div class="layui-card">
-                        <div class="layui-card-header">{$self->title|default='列表'}</div>
-                        <div class="layui-card-body admin-table">
-                            <div class="layui-row admin-table-action">
-                                <div class="layui-col-md4 tool-action">
-                                    {volist name="$self->action" id="vo"}
-                                    <a data-href="{$vo.href}"
-                                       data-title="{$vo.title}"
-                                       admin-event="formLayer"
-                                       refresh="{$self->id}"
-                                       class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary">
-                                        {$vo.title}
-                                    </a>
-                                    {/volist}
-                                    {if $self->refresh}
-                                    <button id="layui-icon-refresh-{$self->id}"
-                                            class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary">
-                                        <i class="layui-icon layui-icon-refresh"></i>
-                                    </button>
+            <div class="layui-card">
+                <div class="layui-card-header">{$self->title|default='列表'}</div>
+                <div class="layui-card-body admin-table">
+                    <div class="layui-row admin-table-action">
+                        <div class="layui-col-md4 tool-action">
+                            {volist name="$self->action" id="vo"}
+                            <a data-href="{$vo.href}" data-title="{$vo.title}" admin-event="formLayer"
+                                refresh="{$self->id}" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary">
+                                {$vo.title}
+                            </a>
+                            {/volist}
+                            {if $self->refresh}
+                            <button id="layui-icon-refresh-{$self->id}"
+                                class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary">
+                                <i class="layui-icon layui-icon-refresh"></i>
+                            </button>
+                            {/if}
+                        </div>
+                        {if $self->filter || $self->search}
+                        <div class="layui-col-md8 search-form">
+                            <div class="layui-form layui-form-pane search layui-row">
+                                <div class="layui-form-item layui-row " style="margin-left: 60px;">
+                                    <label class="layui-form-label">筛选</label>
+                                    {if $self->search}
+                                    <div class="layui-input-inline layui-col-md2">
+                                        <input type="text" name="keyword" placeholder="请输入关键词搜索" autocomplete="off"
+                                            class="layui-input">
+                                    </div>
                                     {/if}
-                                </div>
-                                {if $self->filter || $self->search}
-                                <div class="layui-col-md8 search-form">
-                                    <div class="layui-form layui-form-pane search layui-row">
-                                        <div class="layui-form-item layui-row " style="margin-left: 60px;">
-                                            <label class="layui-form-label">筛选</label>
-                                            {if $self->search}
-                                            <div class="layui-input-inline layui-col-md2">
-                                                <input type="text" name="keyword"
-                                                       placeholder="请输入关键词搜索" autocomplete="off" class="layui-input">
-                                            </div>
+                                    {volist name="$self->filter" id="vo"}
+                                    <div class="layui-input-inline">
+                                        {switch $vo.type}
+                                        {case input}
+                                        <input id="input-{$vo.id}" type="text" name="{$vo.name}"
+                                            placeholder="{$vo.title}" autocomplete="off" class="layui-input">
+                                        {/case}
+                                        {case select}
+                                        {if !empty($vo.options)}
+                                        <select id="input-{$vo.id}" name="{$vo.name}">
+                                            <option value="">{$vo.title}</option>
+                                            {volist name="$vo.options" id="v"}
+                                            {if isset($v.title) && isset($v.value)}
+                                            <option value="{$v.value}">{$v.title}</option>
                                             {/if}
-                                            {volist name="$self->filter" id="vo"}
-                                            <div class="layui-input-inline">
-                                                {switch $vo.type}
-                                                    {case input}
-                                                <input  id="input-{$vo.id}" type="text" name="{$vo.name}"
-                                                       placeholder="{$vo.title}" autocomplete="off" class="layui-input">
-                                                    {/case}
-                                                    {case select}
-                                                        {if !empty($vo.options)}
-                                                        <select  id="input-{$vo.id}" name="{$vo.name}">
-                                                            <option value="">{$vo.title}</option>
-                                                            {volist name="$vo.options" id="v"}
-                                                            {if isset($v.title) && isset($v.value)}
-                                                            <option value="{$v.value}">{$v.title}</option>
-                                                            {/if}
-                                                            {/volist}
-                                                        </select>
-                                                        {/if}
-                                                    {/case}
-                                                    {case time}
-                                                <input type="text" id="input-{$vo.id}" name="{$vo.name}"
-                                                       placeholder="{$vo.title}" autocomplete="off" class="layui-input">
-                                                    {/case}
-                                                {/switch}
-
-                                            </div>
                                             {/volist}
-                                            <button lay-filter="search-{$self->id}" lay-submit class="layui-btn  layui-btn-sm layui-btn-radius layui-btn-primary search-submit-{$self->id}">
-                                                筛选
-                                            </button>
-                                        </div>
+                                        </select>
+                                        {/if}
+                                        {/case}
+                                        {case time}
+                                        <input type="text" id="input-{$vo.id}" name="{$vo.name}"
+                                            placeholder="{$vo.title}" autocomplete="off" class="layui-input">
+                                        {/case}
+                                        {/switch}
 
                                     </div>
+                                    {/volist}
+                                    <button lay-filter="search-{$self->id}" lay-submit
+                                        class="layui-btn  layui-btn-sm layui-btn-radius layui-btn-primary search-submit-{$self->id}">
+                                        筛选
+                                    </button>
                                 </div>
-                                {/if}
+
                             </div>
-                            <div id="list-table-{$self->id}" lay-filter="list-table-{$self->id}"></div>
                         </div>
+                        {/if}
                     </div>
+                    <div id="list-table-{$self->id}" lay-filter="list-table-{$self->id}"></div>
                 </div>
             </div>
         </div>

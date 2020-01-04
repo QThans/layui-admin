@@ -28,11 +28,7 @@ class Personal
             try {
                 $admins->nickname = $data['nickname'];
                 isset($data['avatar']) ? $admins->avatar = $data['avatar'] : '';
-                if ($data['password']) {
-                    $salt             = random_str(20);
-                    $admins->password = encrypt_password($data['password'], $salt);
-                    $admins->salt     = $salt;
-                }
+                $admins->password = $data['password'];
                 $admins->save();
                 AdminsAuth::clearCache();
                 Json::success('修改完成');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Thans
@@ -31,7 +32,9 @@ class Status
 
     public function options($arr = [])
     {
-        $this->options = array_merge($this->options, $arr);
+        foreach ($arr as $val) {
+            $this->options[] = ['val' => $val[0], 'title' => $val[1], 'type' => isset($val[2]) ? $val[2] : 'primary'];
+        }
 
         return $this;
     }

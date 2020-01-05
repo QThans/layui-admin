@@ -19,15 +19,17 @@ class Admins extends Model
     protected $name = 'admins';
 
     public $statusText
-        = [
-            0 => '正常',
-            1 => '禁用',
-        ];
+    = [
+        0 => '正常',
+        1 => '禁用',
+    ];
 
     public function roles()
     {
         return $this->belongsToMany(
-            'AuthRole', 'thans\layuiAdmin\model\AuthRoleAdmins', 'role_id',
+            'AuthRole',
+            'thans\layuiAdmin\model\AuthRoleAdmins',
+            'role_id',
             'admins_id'
         );
     }
@@ -52,24 +54,20 @@ class Admins extends Model
     public static function onBeforeInsert(Model $model)
     {
         self::existAdmins($model);
-        self::buildPassword($model);
     }
 
-    public static function buildPassword(&$model)
+    public static function onBeforeWrite(Model $model)
     {
-        $model['salt']     = random_str(20);
-        $model['password'] = encrypt_password(
-            $model['password'], $model['salt']
-        );
-    }
-
-    public static function onBeforeUpdate(Model $model)
-    {
-        self::existAdmins($model, $model['id']);
-        if (isset($model['password']) && $model['password'] != '') {
-            self::buildPassword($model);
-        } else {
-            unset($model['password']);
+        $changed = $model->getChangedData();
+        if (isset($changed['password'])) {
+            if ($changed['password']) {
+                $salt           = random_str(20);
+                $model->password = encrypt_password(
+                    $changed['password'],
+                    $salt
+                );
+                $model->salt     = $salt;
+            }
         }
     }
 

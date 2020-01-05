@@ -8,12 +8,12 @@
  * This source file is subject to the Apache2.0 license that is bundled.
  */
 
-namespace thans\layuiAdmin;
+namespace thans\layuiAdmin\command;
 
 use think\console\Input;
 use think\console\Output;
 
-class Command extends \think\console\Command
+class Admin extends \think\console\Command
 {
     public function configure()
     {
@@ -46,7 +46,7 @@ class Command extends \think\console\Command
     public function createMigrations($output)
     {
         $migrationsPath = app()->getAppPath().'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations';
-        copy_dir(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations',
+        copy_dir(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations',
             $migrationsPath);
         $output->writeln('Copy database margrations end');
     }
@@ -55,7 +55,7 @@ class Command extends \think\console\Command
     {
         $staticPath = app()->getAppPath().'..'.DIRECTORY_SEPARATOR.'public'.
             DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'layui-admin'.DIRECTORY_SEPARATOR;
-        copy_dir(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'static', $staticPath);
+        copy_dir(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'static', $staticPath);
         $output->writeln('Copy resources end');
     }
 }

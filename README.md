@@ -45,6 +45,19 @@ $ php think migrate:run
 
 安装完成。访问：http://hostname/admin/login.html
 
+## Commands
+
+将密码重置为123456
+
+```shell
+$ php think layuiAdmin:repwd -p 123456
+```
+
+将密码随机重置
+
+```shell
+$ php think layuiAdmin:repwd
+```
 ## Compoents
 
 * 富文本编辑框【ckeditor4】

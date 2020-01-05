@@ -99,7 +99,7 @@ class AdminsAuth
                 if ($val['alias'] == $path) {
                     return $this->checkMethod($val['http_method'], $method);
                 }
-                foreach (explode("\r\n", $val['path']) as $v) {
+                foreach (explode(PHP_EOL, $val['path']) as $v) {
                     if ($v == $path) {
                         return $this->checkMethod($val['http_method'], $method);
                     }

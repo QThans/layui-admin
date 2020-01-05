@@ -76,7 +76,6 @@ class Form
 
     public $classMap
         = [
-            'input'       => form\Input::class,
             'text'        => form\Text::class,
             'textarea'    => form\Textarea::class,
             'number'      => form\Number::class,

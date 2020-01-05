@@ -22,6 +22,8 @@ class Form
 
     public $tmpl = 'form';
 
+    public $title = '';
+
     public $url = '';
 
     public $id = '';

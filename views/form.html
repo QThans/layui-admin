@@ -2,6 +2,7 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
+                {if $self->title}<div class="layui-card-header">{$self->title|default=''|raw}</div>{/if}
                 <div class="layui-card-body">
                     <div class="layui-form" lwid100 iwid300 lay-filter="form-{$self->id}">
                         {:implode($self->builder->compoents)}

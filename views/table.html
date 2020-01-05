@@ -2,7 +2,7 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">{$self->title|default='列表'}</div>
+                {if $self->title}<div class="layui-card-header">{$self->title|default=''}</div>{/if}
                 <div class="layui-card-body admin-table">
                     <div class="layui-row admin-table-action">
                         <div class="layui-col-md4 tool-action">

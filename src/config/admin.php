@@ -40,6 +40,7 @@ return [
         's_title' => '登录',
         'copy'    => 'LayuiAdmin',
         'remeber' => true,
+        'captcha' => true,
     ],
     'jump_tmpl' => app()->getRootPath().'vendor/thans/layui-admin/views/jump.html',
 

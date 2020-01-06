@@ -16,6 +16,7 @@ use thans\layuiAdmin\Traits\Load;
 use think\Exception;
 use think\facade\Request;
 
+//TODO 规划变量赋值。下一个大版本不允许直接复制变量，必须通过函数操作。
 class Form
 {
     use Load;
@@ -57,7 +58,7 @@ class Form
     public $dataMethod = 'get';
 
     public $rules = [];
-
+    
     public $submitBtn = '保存';
 
     public $hiddenSubmit = false;
@@ -324,7 +325,7 @@ class Form
         $this->validate      = $validate;
         $this->validateScene = $validateScene;
         $this->builder       = new Builder(DIRECTORY_SEPARATOR.$this->tmpl);
-        $this->id            = uniqid();
+        $this->id            = rand_uniqid();
         $this->builder->module('form');
         $this->builder->module('jquery');
     }

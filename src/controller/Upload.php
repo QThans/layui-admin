@@ -8,6 +8,7 @@ use think\facade\Config;
 use think\facade\Filesystem;
 use think\Request;
 
+//公共默认上传
 class Upload
 {
     public function image(Request $request)

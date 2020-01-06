@@ -1,4 +1,4 @@
-<div class="layui-form-item">
+<div class="layui-form-item" style="{if $self->hidden}display:none;{/if}">
     <label class="layui-form-label">{$self->label}</label>
     <div class="layui-input-inline">
         <input class="layui-input" type="{$self->type}" lay-verify="{$self->rules}" {volist name="$self->attr" id="vo"}{$key}="{$vo}" {/volist} name="{$self->name}" value="{$self->value|default='1'}" {$self->disabled}>

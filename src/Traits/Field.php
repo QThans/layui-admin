@@ -25,6 +25,8 @@ trait Field
 
     public $placeholder = '';
 
+    public $hidden = false;
+
     public $attr = [];
 
     public function value($val = '')
@@ -55,12 +57,7 @@ trait Field
 
     public function hide()
     {
-        if (isset($this->attr['style'])) {
-            $this->attr['style'] = 'display:none;'.$this->attr['style'];
-        } else {
-            $this->attr['style'] = 'display:none;';
-        }
-
+        $this->hidden = true;
         return $this;
     }
 
@@ -77,7 +74,7 @@ trait Field
     public function rules($rules = '', $required = true, $min = 0, $max = 0, $tips = '')
     {
         $id = rand_uniqid();
-        $this->rules = 'rule_'.$id;
+        $this->rules = 'rule_' . $id;
         $this->obj->rules[] = [
             'id'       => $id,
             'rules'    => $rules,

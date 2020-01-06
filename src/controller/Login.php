@@ -24,14 +24,14 @@ class Login
                 $key = Str::camel($key);
                 $login->$key($val);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             abort(404, '参数错误，请先执行layuiAdmin安装命令');
         }
         $login->url(url('thans\layuiAdmin\controller\Login@doLogin'));
 
         return $login->render();
     }
-
+    
     public function doLogin(Request $request)
     {
         $account  = $request->param('account');

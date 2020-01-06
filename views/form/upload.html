@@ -1,4 +1,4 @@
-<div class="layui-form-item">
+<div class="layui-form-item" style="{if $self->hidden}display:none;{/if}">
     <label class="layui-form-label">{$self->label}</label>
     <div class="layui-input-inline">
         <div class="layui-upload-drag" id="{$self->id}">
@@ -11,7 +11,5 @@
 </div>
 <div class="review">
     <div class="layui-upload-list" id="{$self->id}_upload_list">
-
-
     </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="layui-form-item">
+<div class="layui-form-item" style="{if $self->hidden}display:none;{/if}">
     <label class="layui-form-label">{$self->label}</label>
     <div class="layui-input-inline">
         {php}$value = $self->value;$search = $self->search;{/php}

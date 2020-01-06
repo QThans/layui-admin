@@ -13,6 +13,7 @@
         "topthink/framework": "^6.0.0",
         "thans/thinkphp-filesystem-cloud": "^1.0",
         "topthink/think-migration": "^3.0.2",
+        "topthink/think-captcha": "2.0.*",
         "topthink/think-view": "^1.0"
     },
     "require-dev": {

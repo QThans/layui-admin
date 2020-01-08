@@ -15,6 +15,7 @@
 4. Form类快速构建表单
 5. 包含多种表单组件
 6. Table类快速构建列表
+7. 轻松管理配置项
 
 ## Requirement
 
@@ -24,7 +25,7 @@
 ## Installation
 第一步：
 ```shell
-$ composer create-project topthink/think tp5 && cd tp5
+$ composer create-project topthink/think tp && cd tp
 
 ```
 第二步：

@@ -59,15 +59,15 @@ class Admins extends Model
     public static function onBeforeWrite(Model $model)
     {
         $changed = $model->getChangedData();
-        if (isset($changed['password'])) {
-            if ($changed['password']) {
-                $salt           = random_str(20);
-                $model->password = encrypt_password(
-                    $changed['password'],
-                    $salt
-                );
-                $model->salt     = $salt;
-            }
+        if (isset($changed['password']) && $changed['password']) {
+            $salt           = random_str(20);
+            $model->password = encrypt_password(
+                $changed['password'],
+                $salt
+            );
+            $model->salt     = $salt;
+        }else{
+            unset($model['password']);
         }
         self::existAdmins($model);
     }

@@ -36,8 +36,8 @@ class Config extends Migrator
             ->addColumn('tips', 'string', ['limit' => 255, 'comment' => '配置说明'])
             ->addColumn('rule', 'string', ['limit' => 255, 'comment' => '验证规则'])
             ->addColumn('weight', 'integer', ['limit' => MysqlAdapter::INT_MEDIUM, 'default' => 1000])
-            ->addColumn('type', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'comment' => '配置类型，0-input，1-select，3-image'])
-            ->addColumn('parameter', 'string', ['limit' => 255, 'comment' => '参数', 'default' => null, 'null' => true])
+            ->addColumn('type', 'string', ['limit' => 20, 'comment' => '配置类型'])
+            ->addColumn('parameter', 'string', ['limit' => 500, 'comment' => '参数', 'default' => null, 'null' => true])
             ->addColumn('value', 'string', ['limit' => 500, 'comment' => '配置值', 'default' => null, 'null' => true])
             ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'comment' => '状态，1-禁用，0-正常', 'default' => 0])
             ->addColumn(

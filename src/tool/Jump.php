@@ -96,16 +96,16 @@ class Jump
         $page = new Page();
 
         $page->tmpl(DIRECTORY_SEPARATOR.'jump');
-
+        $page->builder->module('jquery');
         $page->builder->script('jump_close', <<<'EOT'
-        document.getElementById('close').onclick = function () {
+        $('#close').on('click',function(){
             if (self.frameElement && self.frameElement.tagName == "IFRAME") {
-                window.top.layui.admin.closeSelf();
+                parent.layui.$(window.parent.document).find('.closeNowTab').click();
             }else{
                 location.href = 'about:blank';
             }
             return false;
-        }
+        });
 EOT
         );
 

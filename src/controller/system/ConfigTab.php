@@ -4,6 +4,7 @@ namespace thans\layuiAdmin\controller\system;
 
 use thans\layuiAdmin\facade\AdminsAuth;
 use thans\layuiAdmin\facade\Json;
+use thans\layuiAdmin\facade\Jump;
 use thans\layuiAdmin\facade\Utils;
 use thans\layuiAdmin\Form;
 use thans\layuiAdmin\model\SystemConfig;
@@ -109,6 +110,9 @@ class ConfigTab
         $form = new Form();
         $configTab = SystemConfigTab::where('type', $type)
             ->where('status', 0)->select();
+        if(!$configTab->count()){
+            Jump::error('该配置分类下无可配置参数','close');
+        }
         $title = '';
         foreach ($configTab as $tab) {
             $title .= '<a href="' . url('thans\layuiAdmin\controller\system\ConfigTab@setting', ['tab_id' => $tab['id'], 'type' => $type]) . '"><button type="button" class="layui-btn layui-btn-normal layui-btn-sm">' . $tab['name'] . '</button></a>';

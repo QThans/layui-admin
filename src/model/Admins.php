@@ -69,20 +69,21 @@ class Admins extends Model
                 $model->salt     = $salt;
             }
         }
+        self::existAdmins($model);
     }
 
-    public static function existAdmins($admins, $admins_id = '')
+    public static function existAdmins($admins)
     {
-        if (self::exist('name', $admins['name'], $admins_id)) {
+        if (self::exist('name', $admins['name'], $admins['id'])) {
             abort(404, '管理员用户名已存在');
         }
-        if (self::exist('nickname', $admins['nickname'], $admins_id)) {
+        if (self::exist('nickname', $admins['nickname'],  $admins['id'])) {
             abort(404, '昵称已存在');
         }
-        if (self::exist('mobile', $admins['mobile'], $admins_id)) {
+        if (self::exist('mobile', $admins['mobile'],  $admins['id'])) {
             abort(404, '手机号已存在');
         }
-        if (self::exist('email', $admins['email'], $admins_id)) {
+        if (self::exist('email', $admins['email'],  $admins['id'])) {
             abort(404, '邮箱已存在');
         }
     }

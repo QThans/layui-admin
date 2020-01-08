@@ -65,17 +65,15 @@
                                 <a {if $vv.uri}data-href='{:url($vv.uri)}'  lay-text="{$vv.name|raw}" {/if} href="javascript:;">{php}echo
                                 str_repeat('&nbsp;&nbsp;',
                                 $vv['deep']);{/php}<span>{$vv.name|raw}</span></a>
-                                {if isset($vv['children']) && $vo.children}
-                                {volist name="$vv['children']" id="v"}
-                                {if $v['status'] == 1}
-                                <dl class="layui-nav-child">
-                                    <dd class="">
-                                        <a {if $v.uri}data-href='{:url($v.uri)}'  lay-text="{$v.name|raw}" {/if} href="javascript:;">{php}echo
-                                        str_repeat('&nbsp;&nbsp;', $v['deep']);{/php}<span>{$v.name|raw}</span></a>
-                                    </dd>
-                                </dl>
-                                {/if}
-                                {/volist}
+                                {if isset($vv['children']) && $vv.children}
+                                    {volist name="$vv['children']" id="v"}
+                                    <dl class="layui-nav-child">
+                                        <dd class="">
+                                            <a {if $v.uri}data-href='{:url($v.uri)}'  lay-text="{$v.name|raw}" {/if} href="javascript:;">{php}echo
+                                            str_repeat('&nbsp;&nbsp;', $v['deep']);{/php}<span>{$v.name|raw}</span></a>
+                                        </dd>
+                                    </dl>
+                                    {/volist}
                                 {/if}
                             </dd>
                         </dl>

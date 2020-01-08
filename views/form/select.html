@@ -4,7 +4,7 @@
         {php}$value = $self->value;$search = $self->search;{/php}
         <select {if $search}lay-search{/if} lay-verify="{$self->rules}" placeholder="{$self->placeholder|default=''}" {volist name="$self->attr" id="vo"}{$key}="{$vo}"{/volist} name="{$self->name}" {$self->disabled}>
             {foreach $self->options as $key=>$vo}
-            <option value="{$vo.val|default=''}" {if $value && $vo.val == $value }selected="selected"{/if}>{$vo.title|raw}</option>
+            <option value="{$vo.val|default=''}" {if $vo.val == $value }selected="selected"{/if}>{$vo.title|raw}</option>
             {/foreach}
         </select>
     </div>

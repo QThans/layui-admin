@@ -42,7 +42,7 @@ class Admins
         $tb->column('update_time', '更新时间');
         $tb->status(['field' => 'status'])->option(0, '正常')->option(
             1, '禁用', 'danger'
-        )->column('status_text', '状态', 100, ['align' => 'center']);
+        )->column('status', '状态', 100, ['align' => 'center']);
         $url = url(
             'thans\layuiAdmin\controller\auth\Admins/edit', ['id' => '{{ d.id }}']
         );

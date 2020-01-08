@@ -24,7 +24,6 @@ class Icon
     public function end()
     {
         $this->id = uniqid();
-        $this->hide();
         $this->obj->module('iconPicker');
         $icon = Cache::remember('fa-iconfont_icons', function () {
             $faFile = file_get_contents($this->obj->builder->css['fa-iconfont']);

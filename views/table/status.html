@@ -1,4 +1,4 @@
-<script type="text/html" id="{$self->field}">
+<script type="text/html" id="{$self->field}_{$self->id}">
     {volist name="$self->options" id="vo"}
         {{#  if(d.{$self->field} == '{$vo.val}'){ }}
             {if $vo.type}

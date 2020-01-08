@@ -86,6 +86,7 @@ class Form
             'multiSelect' => form\MultiSelect::class,
             'onoff'       => form\Onoff::class,
             'checkbox'    => form\Checkbox::class,
+            'radio'       => form\Radio::class,
             'authtree'    => form\Authtree::class,
             'richtext'    => form\Richtext::class,
             'upload'      => form\Upload::class,

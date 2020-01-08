@@ -16,7 +16,8 @@ trait Column
 
     public function column($field, $title, $width = 200, $attr = [])
     {
-        $attr['templet'] = '#'.$field;
+        $this->field = $field;
+        $attr['templet'] = '#'.$field.'_'.$this->id;
         $this->obj->column($field, $title, $width, $attr);
 
         return $this;

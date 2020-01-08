@@ -65,7 +65,7 @@ class Menu
         $form->select()->name('parent_id')->label('上级菜单')->options($parent);
         $form->text()->name('name')->label('菜单名称')->rules('required');
         $form->icon()->name('icon')->label('ICON');
-        $form->number()->name('order')->label('排序')->value(1000);
+        $form->number()->name('weight')->label('排序')->value(1000);
         $form->text()->name('uri')->label('URI')->placeholder('请输入URI');
         $status   = [];
         $status[] = ['val' => 0, 'title' => '启用'];

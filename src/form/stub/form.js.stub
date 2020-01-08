@@ -22,10 +22,10 @@ admin.ajax('{$self->dataUrl}','',function (data) {
 {/if}
 {if $self->data}
 form.val("form-{$self->id}", {:json_encode($self->data)});
+{/if}
 {volist name="$self->setValueScript" id="vo"}
     {$vo|raw}
 {/volist}
-{/if}
 {php}
 $verify = [];
 foreach ($self->rules as $key=>$val) {

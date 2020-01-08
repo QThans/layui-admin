@@ -57,9 +57,9 @@ class Upload
                 $script .= $this->appendInput($k, $v);
                 $script .= $this->appendView($k, $v);
             }
-        } elseif ($val) {
-            $script = $this->appendInput(0, $val);
-            $script .= $this->appendView(0, $val);
+        } elseif ($this->value) {
+            $script = $this->appendInput(0, $this->value);
+            $script .= $this->appendView(0, $this->value);
         }
 
         $this->obj->setValueScript('upload_'.$this->id, $script);

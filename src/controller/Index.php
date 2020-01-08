@@ -27,7 +27,7 @@ class Index
         foreach ($userMenus as $menu) {
             $home->userMenu($menu[0], $menu[1], isset($menu[2]) ? $menu[2] : []);
         }
-
+        
         return $home->render();
     }
 

@@ -27,6 +27,15 @@ Route::group('admin', function () {
         thans\layuiAdmin\middleware\AdminsAuth::class,
     ]);
 
+    Route::group('system', function () {
+        Route::resource('config_tab.config', 'thans\layuiAdmin\controller\system\Config');
+        Route::rule('config_tab/setting/:type/[:tab_id]', 'thans\layuiAdmin\controller\system\ConfigTab@setting');
+        Route::resource('config_tab', 'thans\layuiAdmin\controller\system\ConfigTab');
+    })->middleware([
+        thans\layuiAdmin\middleware\Login::class,
+        thans\layuiAdmin\middleware\AdminsAuth::class,
+    ]);
+
     Route::group('', function () {
         Route::get('logout', 'thans\layuiAdmin\controller\Login@logout');
         Route::post('upload/image', 'thans\layuiAdmin\controller\Upload@image');

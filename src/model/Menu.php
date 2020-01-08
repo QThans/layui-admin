@@ -12,6 +12,6 @@ class Menu extends Model
 
     public function setUriAttr($value)
     {
-        return trim($value, '/');
+        return trim($value);
     }
 }

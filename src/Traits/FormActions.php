@@ -13,7 +13,7 @@ trait FormActions
     {
         $url = $this->buildUrl($request, 'update', ['id' => $id]);
 
-        return $this->buildForm()->edit($id)->hiddenSubmit(
+        return $this->buildForm($request)->edit($id)->hiddenSubmit(
             ! AdminsAuth::check($url, 'put')
         )->url(
             $url
@@ -22,12 +22,12 @@ trait FormActions
 
     public function update($id, Request $request)
     {
-        $this->buildForm()->update($id, $request->param());
+        $this->buildForm($request)->update($id, $request->param());
     }
 
     public function save(Request $request)
     {
-        $this->buildForm()->save($request->param());
+        $this->buildForm($request)->save($request->param());
     }
 
     public function delete($id)
@@ -39,7 +39,7 @@ trait FormActions
     {
         $url = $this->buildUrl($request, 'save');
 
-        return $this->buildForm()->hiddenSubmit(
+        return $this->buildForm($request)->hiddenSubmit(
             ! AdminsAuth::check($url, 'post')
         )->url($url)->render();
     }
@@ -52,7 +52,7 @@ trait FormActions
             foreach ($param as $k => $v) {
                 $url = str_replace('$'.$k, $v, $url);
             }
-
+            
             return $url;
         }
 

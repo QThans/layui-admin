@@ -85,6 +85,10 @@ html {
     font-size: 14px;
 }
 
+.layui-form-radio i{
+    font-size: 22px !important;
+}
+
 .layui-layout-admin .layui-nav {
     border-radius: 0;
     cursor: pointer;

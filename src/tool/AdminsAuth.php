@@ -63,7 +63,7 @@ class AdminsAuth
     public function menu()
     {
         $menus = [];
-        $menu  = Menu::where('status', 0)->order('order asc');
+        $menu  = Menu::where('status', 0)->order('weight asc');
         foreach ($this->info()->roles as $role) {
             if ($role->status !== 0) {
                 continue;
@@ -96,6 +96,7 @@ class AdminsAuth
                 continue;
             }
             foreach ($permissions as $val) {
+
                 if ($val['alias'] == $path) {
                     return $this->checkMethod($val['http_method'], $method);
                 }

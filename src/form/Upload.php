@@ -42,13 +42,15 @@ class Upload
     public function end()
     {
         $this->obj->module('upload');
-        $code = $this->obj->builder->display(__DIR__.DIRECTORY_SEPARATOR.'stub'
-            .DIRECTORY_SEPARATOR.'upload.js.stub', $vars = [
+        $code = $this->obj->builder->display(__DIR__ . DIRECTORY_SEPARATOR . 'stub'
+            . DIRECTORY_SEPARATOR . 'upload.js.stub', $vars = [
             'self' => $this,
         ]);
-        $this->obj->script('upload_js_'.$this->id, $code);
-        $this->obj->submitStartSctipt('upload_start_script_'.$this->id,
-            'delete data.field.'.$this->field.';');
+        $this->obj->script('upload_js_' . $this->id, $code);
+        $this->obj->submitStartSctipt(
+            'upload_start_script_' . $this->id,
+            'delete data.field.' . $this->field . ';'
+        );
         $val    = isset($this->obj->data[$this->name])
             ? $this->obj->data[$this->name] : '';
         $script = '';
@@ -61,8 +63,8 @@ class Upload
             $script = $this->appendInput(0, $this->value);
             $script .= $this->appendView(0, $this->value);
         }
-
-        $this->obj->setValueScript('upload_'.$this->id, $script);
+        
+        $this->obj->setValueScript('upload_' . $this->id, $script);
     }
 
     protected function appendInput($k, $val)

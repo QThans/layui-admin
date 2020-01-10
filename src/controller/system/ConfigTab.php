@@ -110,8 +110,8 @@ class ConfigTab
         $form = new Form();
         $configTab = SystemConfigTab::where('type', $type)
             ->where('status', 0)->select();
-        if(!$configTab->count()){
-            Jump::error('该配置分类下无可配置参数','close');
+        if (!$configTab->count()) {
+            Jump::error('该配置分类下无可配置参数', 'close');
         }
         $title = '';
         foreach ($configTab as $tab) {
@@ -124,20 +124,20 @@ class ConfigTab
         $form->title($title);
         foreach ($config as $val) {
             $type = $val['type'];
-            switch ($type) {
-                case 'image':
-                    $component = $form->upload()->label($val['name'])->name($val['alias'])->field('image')
-                        ->url(url('thans\layuiAdmin\controller\Upload@image'))->tips($val['tips'])->rules($val['rule'])->value($val['value']);
-                    break;
-                default:
-                    $component = $form->$type()->label($val['name'])->name($val['alias'])->tips($val['tips'])->value($val['value'])->rules($val['rule']);
-                    break;
-            }
+            $component = $form->$type()->label($val['name'])->name($val['alias'])->tips($val['tips'])->value($val['value'])->rules($val['rule']);
             $parameter = explode(PHP_EOL, $val['parameter']);
             if ($val['parameter'] && $parameter) {
                 foreach ($parameter as $option) {
                     $option = explode('=>', $option);
-                    $component->option($option[0], $option[1], isset($option[2]) ? $option[2] : false);
+                    switch ($type) {
+                        case 'upload':
+                            $method = $option[0];
+                            $component->$method($option[1]);
+                            break;
+                        default:
+                            $component->option($option[0], $option[1], isset($option[2]) ? $option[2] : false);
+                            break;
+                    }
                 }
             }
         }

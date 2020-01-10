@@ -45,7 +45,7 @@ class Config
             ->option('text', '单行文本框')
             ->option('textarea', '多行文本框')
             ->option('select', '单选下拉框')
-            ->option('image', '单图片上传')
+            ->option('upload', '文件上传')
             ->column('type', '配置类型', 120, ['align' => 'center']);
         $tb->column('value', '配置值', 320);
 
@@ -84,7 +84,7 @@ class Config
             ['title' => '单行文本框', 'val' => 'text'],
             ['title' => '单选下拉框', 'val' => 'select'],
             ['title' => '多行文本框', 'val' => 'textarea'],
-            ['title' => '单图片上传', 'val' => 'image'],
+            ['title' => '文件上传', 'val' => 'upload'],
         ])->value('text');
         $form->textarea()->name('parameter')->label('参数');
         $form->textarea()->name('value')->label('配置值');

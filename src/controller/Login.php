@@ -53,6 +53,10 @@ class Login
             session('admins_id', $admins->id);
             session('admins_info', $admins);
             Cache::delete('admins_' . $admins->id);
+            if ($redirect == '' && session('redirect_url')) {
+                $redirect = session('redirect_url');
+                session('redirect_url', null);
+            }
             $redirect = $redirect ? $redirect : url('thans\layuiAdmin\controller\Index@index')->build();
             Json::success('登录成功...', [], [], $redirect, 2);
         } catch (HttpException $e) {

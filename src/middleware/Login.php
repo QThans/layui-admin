@@ -11,7 +11,7 @@ class Login
         if (! $check) {
             session('error_msg', '请先登录系统');
 
-            return redirect(url('thans\layuiAdmin\controller\Login@index'));
+            return redirect(url('thans\layuiAdmin\controller\Login@index'))->remember();
         }
 
         return $next($request);

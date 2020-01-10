@@ -3,7 +3,7 @@
     <div class="layui-input-inline">
         {php}$value = $self->value;{/php}
         {foreach $self->options as $key=>$vo}
-            <input class="layui-input" type="{$self->type}" lay-verify="{$self->rules}" title="{$vo.title|raw}" {volist name="$self->attr" id="vo"}{$key}="{$vo}" {/volist} name="{$self->name}" value="{$vo.val|default=''}" {if $vo.val == $value }checked="checked"{/if} {if isset($vo.disabled) && $vo.disabled == true }disabled="disabled"{/if} {$self->disabled}>
+            <input class="layui-input" type="{$self->type}" lay-verify="{$self->rules}" title="{$vo.title|raw}" {foreach $self->attr as $k => $v}{$k}="{$v}" {/foreach} name="{$self->name}" value="{$vo.val|default=''}" {if $vo.val == $value }checked="checked"{/if} {if isset($vo.disabled) && $vo.disabled == true }disabled="disabled"{/if} {$self->disabled}>
         {/foreach}
     </div>
     <div class="layui-form-mid layui-word-aux">{$self->tips|raw}</div>

@@ -15,11 +15,27 @@ class Upload
     {
         $file = $request->file();
         try {
-            validate(['image|图片' => Config::get('admin.upload.image')],['image.fileSize'=>'图片大小不符','image.fileExt'=>'图片后缀不符','image.fileMime'=>'Mime类型错误','image.image'=>'尺寸\类型错误'])->check($file);
-            $savename = Filesystem::putFile('uploads/images', $file['image']);
-            Json::success('上传成功', $savename, ['url' => Filesystem::getUrl($savename),'msg'=>'123']);
+            validate(['image|图片' => Config::get('admin.upload.image')], ['image.fileSize' => '图片大小不符', 'image.fileExt' => '图片后缀不符', 'image.fileMime' => 'Mime类型错误', 'image.image' => '尺寸\类型错误'])->check($file);
+            $file = $request->param('type') == 'ck' ? $file['upload'] : $file['image'];
+            $savename = Filesystem::putFile('uploads/images', $file);
+            if ($request->param('type') == 'ck') {
+                return json([
+                    'uploaded' => 1,
+                    'fileName' => $file->getOriginalMime(),
+                    'url' => Filesystem::getUrl($savename)
+                ]);
+            }
+            Json::success('上传成功', $savename, ['url' => Filesystem::getUrl($savename), 'msg' => '123']);
         } catch (ValidateException $e) {
-            Json::error($e->getMessage(),200);
+            if ($request->param('type') == 'ck') {
+                return json([
+                    'uploaded' => 0,
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
+                ]);
+            }
+            Json::error($e->getMessage(), 200);
         }
     }
 
@@ -27,11 +43,27 @@ class Upload
     {
         $file = $request->file();
         try {
-            validate(['file' => Config::get('admin.upload.file')],['image.fileSize'=>'文件大小不符','image.fileExt'=>'文件后缀不符','image.fileMime'=>'Mime类型错误'])->check($file);
-            $savename = Filesystem::putFile('uploads/files', $file['file']);
+            validate(['file' => Config::get('admin.upload.file')], ['image.fileSize' => '文件大小不符', 'image.fileExt' => '文件后缀不符', 'image.fileMime' => 'Mime类型错误'])->check($file);
+            $file = $request->param('type') == 'ck' ? $file['upload'] : $file['file'];
+            $savename = Filesystem::putFile('uploads/files', $file);
+            if ($request->param('type') == 'ck') {
+                return json([
+                    'uploaded' => 1,
+                    'fileName' => $file->getOriginalMime(),
+                    'url' => Filesystem::getUrl($savename)
+                ]);
+            }
             Json::success('上传成功', $savename, ['url' => Filesystem::getUrl($savename)]);
         } catch (ValidateException $e) {
-            Json::error($e->getMessage(),200);
+            if ($request->param('type') == 'ck') {
+                return json([
+                    'uploaded' => 0,
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
+                ]);
+            }
+            Json::error($e->getMessage(), 200);
         }
     }
 }

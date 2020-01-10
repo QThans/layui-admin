@@ -62,8 +62,18 @@ class Upload
         } elseif ($this->value) {
             $script = $this->appendInput(0, $this->value);
             $script .= $this->appendView(0, $this->value);
+        } else {
+            $script = $this->appendInput("'+number_{$this->id}+'", "'+v+'");
+            $script .= $this->appendView("'+number_{$this->id}+'", "'+v+'");
+            $script = <<<EOD
+            $.each(data_{$this->obj->id},function(k,v){
+                if(k == '{$this->name}'){
+                    {$script}
+                    return false;
+                }
+            });
+EOD;
         }
-        
         $this->obj->setValueScript('upload_' . $this->id, $script);
     }
 

@@ -21,7 +21,8 @@ admin.ajax('{$self->dataUrl}','',function (data) {
 },'','{$self->dataMethod}');
 {/if}
 {if $self->data}
-form.val("form-{$self->id}", {:json_encode($self->data)});
+var data_{$self->id} = {:json_encode($self->data)};
+form.val("form-{$self->id}", data_{$self->id});
 {/if}
 {volist name="$self->setValueScript" id="vo"}
     {$vo|raw}

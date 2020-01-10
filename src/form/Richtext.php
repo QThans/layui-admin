@@ -19,7 +19,11 @@ class Richtext
     public $options = [];
 
     public $tmpl = 'form/richtext';
-    //图片上传接口开发参考：https://ckeditor.com/docs/ckeditor4/latest/guide/dev_file_upload.html
+    /**
+     * 图片上传接口开发参考：https://ckeditor.com/docs/ckeditor4/latest/guide/dev_file_upload.html
+     * layuiadmin默认接口：url('thans\layuiAdmin\controller\Upload@image',['type'=>'ck'])
+     * @package thans\layuiAdmin\form
+     */
     public $imageUploadUrl = '';
 
     public function init()

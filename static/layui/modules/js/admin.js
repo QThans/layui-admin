@@ -20,7 +20,7 @@ layui.define(["layer", "upload"], function (exports) {
   /**
    *验证码刷新
    */
-  $("#captcha-code").click(function () {
+  $(".captcha-code").click(function () {
     var url = $(this).attr("src");
     $(this).attr("src", changeURLPar(url, "random", Math.random()));
   });

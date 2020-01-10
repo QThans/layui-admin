@@ -45,5 +45,6 @@ Route::group('admin', function () {
 
 Route::group('admin', function () {
     Route::get('login', 'thans\layuiAdmin\controller\Login@index');
+    Route::get('captcha', 'thans\layuiAdmin\controller\Login@captcha');
     Route::post('login', 'thans\layuiAdmin\controller\Login@doLogin');
 });

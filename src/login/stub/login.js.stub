@@ -9,7 +9,7 @@ form.verify({
     ]
     {if $self->captcha}
     ,code:function(value, item){
-        if(!/^\d{4,6}$/.test(value)){
+        if(!/{$self->captcha}/.test(value)){
             return '请输入正确的验证码';
         }
     }
@@ -23,6 +23,7 @@ form.on('submit(login)', function(data){
         admin.setCookie('account','');
     }
     admin.ajax('{$self->url}',data.field);
+    $('.captcha-code').click();
     return false;
 });
 {if $self->remeber}

@@ -12,8 +12,9 @@ class Admins extends Validate
         'password'         => 'require|min:6|max:24',
         'confirm_password' => 'require|confirm:password',
         'mobile'           => 'require|mobile',
-        'email|邮箱'         => 'require|email',
-        'code'             => 'require|length:4',
+        'email|邮箱'        => 'require|email',
+        'code'             => 'require|captcha',
+        'account'          => 'require|min:5|max:100',
     ];
 
     protected $message = [
@@ -23,6 +24,7 @@ class Admins extends Validate
         'confirm_password' => '两次输入的密码不一样',
         'mobile'           => '请输入正确的手机号',
         'code'             => '请输入正确的验证码',
+        'account'          => '登录用户名不少于5位',
     ];
 
     public function sceneSave()
@@ -45,5 +47,13 @@ class Admins extends Validate
         return $this->only(['nickname', 'password', 'confirm_password'])
             ->remove('confirm_password', 'require')
             ->remove('password', 'require');
+    }
+    public function sceneLogin()
+    {
+        return $this->only(['account', 'password', 'code']);
+    }
+    public function sceneLoginNoCode()
+    {
+        return $this->only(['account', 'password']);
     }
 }

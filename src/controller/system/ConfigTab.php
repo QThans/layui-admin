@@ -120,6 +120,7 @@ class ConfigTab
         $tabId = $tabId ? $tabId : $configTab[0]['id'];
         $config = SystemConfig::where('config_tab_id', $tabId)
             ->where('status', 0)
+            ->order('weight asc')
             ->select();
         $form->title($title);
         foreach ($config as $val) {

@@ -30,7 +30,7 @@ class Config
             $where[] = ['config_tab_id', '=', $configTabId];
             $model = SystemConfig::where($where);
             $total = $model->count();
-            $list = $model->order('weight desc')->page($page)->limit($limit)->select();
+            $list = $model->order('weight asc')->page($page)->limit($limit)->select();
             Json::success('获取成功', $list, ['total' => $total]);
         }
         $tb = new Table();
@@ -85,11 +85,23 @@ class Config
             ['title' => '单选下拉框', 'val' => 'select'],
             ['title' => '多行文本框', 'val' => 'textarea'],
             ['title' => '文件上传', 'val' => 'upload'],
-        ])->value('text');
+        ])->value('text')->attr('lay-filter','config_type');
         $form->textarea()->name('parameter')->label('参数');
         $form->textarea()->name('value')->label('配置值');
         $form->onoff()->name('status')->label('是否禁用')->text('禁用|启用');
-        
+        $form->module('jquery');
+        $form->builder->script('config_type',<<<EOD
+        form.on('radio(config_type)', function(data){
+            $('textarea[name="parameter"]').val('');
+            if(data.value == 'upload'){
+                var tips = "url=>上传地址\\nfield=>image\\nuploadType=>image\\number=>1";
+                $('textarea[name="parameter"]').val(tips);
+            }
+            if(data.value == 'select'){
+                $('textarea[name="parameter"]').val('选项值=>选项文本');
+            }
+        });  
+EOD);
         return $form;
     }
 }

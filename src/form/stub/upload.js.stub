@@ -20,14 +20,20 @@ var upload_config_{$self->id} = {
 	        $('#{$self->id}_upload_list').append('<input name="{$self->name}" type="hidden" class="value_'+index+'" value="'+res.data+'">')
 	        $('.value_default').remove();
 	        $('.status_'+index).html('上传成功');
-	    }
+	    }else{
+			$('.status_'+index).html(res.message);
+			uploadInst_{$self->id}.config.elem.next()[0].value = '';
+			number_{$self->id}--;
+		}
 	    layer.closeAll('loading');
+		return false;
 	}
 	,error: function(index, upload){
 	    layer.closeAll('loading');
 	    $('.status_'+index).html('上传失败');
 	   	uploadInst_{$self->id}.config.elem.next()[0].value = '';
 	    number_{$self->id}--;
+		return false;
 	}
 	,choose: function(obj){
 	    obj.preview(function(index, file, result){

@@ -45,8 +45,8 @@ return [
     'jump_tmpl' => app()->getRootPath().'vendor/thans/layui-admin/views/jump.html',
 
     'upload'   => [
-        'image' => 'filesize:1024000|fileExt:jpg,png,jpeg',
-        'file'  => 'filesize:1024000',
+        'image' => 'fileSize:1024000|fileExt:jpg,png,jpeg',
+        'file'  => 'fileSize:1024000',
     ],
     'userMenu' => [
         [

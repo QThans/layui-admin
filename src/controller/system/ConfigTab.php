@@ -81,8 +81,8 @@ class ConfigTab
     private function buildForm()
     {
         $form = new Form(new SystemConfigTab, new ValidateSystemConfigTab);
-        $form->text()->name('name')->label('配置分类名称')->rules('required', true, 1, 20);;
-        $form->text()->name('alias')->label('配置分类别名')->tips('用于系统获取等操作')->rules('required', true, 1, 20);;
+        $form->text()->name('name')->label('配置分类名称')->rules('required', true, 1, 20);
+        $form->text()->name('alias')->label('配置分类别名')->tips('用于系统获取等操作')->rules('required', true, 1, 20);
         $form->onoff()->name('status')->label('是否禁用')->text('禁用|启用');
         $form->radio()->name('type')->label('配置类型')->options([
             ['title' => '系统配置', 'val' => 0],

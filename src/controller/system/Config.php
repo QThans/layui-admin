@@ -101,7 +101,8 @@ class Config
                 $('textarea[name="parameter"]').val('选项值=>选项文本');
             }
         });  
-EOD);
+EOD
+);
         return $form;
     }
 }

@@ -85,12 +85,12 @@ class Config
             ['title' => '单选下拉框', 'val' => 'select'],
             ['title' => '多行文本框', 'val' => 'textarea'],
             ['title' => '文件上传', 'val' => 'upload'],
-        ])->value('text')->attr('lay-filter','config_type');
+        ])->value('text')->attr('lay-filter', 'config_type');
         $form->textarea()->name('parameter')->label('参数');
         $form->textarea()->name('value')->label('配置值');
         $form->onoff()->name('status')->label('是否禁用')->text('禁用|启用');
         $form->module('jquery');
-        $form->builder->script('config_type',<<<EOD
+        $form->builder->script('config_type', <<<EOD
         form.on('radio(config_type)', function(data){
             $('textarea[name="parameter"]').val('');
             if(data.value == 'upload'){

@@ -29,7 +29,7 @@ if (! function_exists('scan_dir')) {
         foreach ($dirArr as $item) {
             if (is_dir($item)) {
                 $dirs[] = $item;
-                $subDir = sub_dir($item, $depth, $now);
+                $subDir = scan_dir($item, $depth, $now);
                 if ($subDir) {
                     $dirs = array_merge($dirs, $subDir);
                 }

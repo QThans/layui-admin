@@ -38,7 +38,7 @@ class ConfigTab
             ->option(1, '应用配置')
             ->option(2, '支付配置')
             ->option(3, '其他')
-            ->column('status', '配置类型', 100, ['align' => 'center']);
+            ->column('type', '配置类型', 100, ['align' => 'center']);
 
         $tb->status()->option(0, '正常')->option(
             1,
@@ -81,8 +81,8 @@ class ConfigTab
     private function buildForm()
     {
         $form = new Form(new SystemConfigTab, new ValidateSystemConfigTab);
-        $form->text()->name('name')->label('配置分类名称')->rules('required', true, 1, 20);;
-        $form->text()->name('alias')->label('配置分类别名')->tips('用于系统获取等操作')->rules('required', true, 1, 20);;
+        $form->text()->name('name')->label('配置分类名称')->rules('required', true, 1, 20);
+        $form->text()->name('alias')->label('配置分类别名')->tips('用于系统获取等操作')->rules('required', true, 1, 20);
         $form->onoff()->name('status')->label('是否禁用')->text('禁用|启用');
         $form->radio()->name('type')->label('配置类型')->options([
             ['title' => '系统配置', 'val' => 0],
@@ -115,7 +115,7 @@ class ConfigTab
         }
         $title = '';
         foreach ($configTab as $tab) {
-            $title .= '<a href="' . url('thans\layuiAdmin\controller\system\ConfigTab@setting', ['tab_id' => $tab['id'], 'type' => $type]) . '"><button type="button" class="layui-btn layui-btn-normal layui-btn-sm">' . $tab['name'] . '</button></a>';
+            $title .= '<a href="' . url('thans\layuiAdmin\controller\system\ConfigTab@setting', ['tab_id' => $tab['id'], 'type' => $type]) . '" class="layui-btn layui-btn-normal layui-btn-sm">' . $tab['name'] . '</a>';
         }
         $tabId = $tabId ? $tabId : $configTab[0]['id'];
         $config = SystemConfig::where('config_tab_id', $tabId)

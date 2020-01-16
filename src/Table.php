@@ -32,6 +32,7 @@ class Table
         = [
             'status' => table\Status::class,
             'icon'   => table\Icon::class,
+            'image'   => table\Image::class,
         ];
 
     public $filter = [];

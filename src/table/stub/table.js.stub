@@ -29,13 +29,3 @@ function reload_{$self->id}(){
 		}
     });
 }
-$(document).on('click','.view_{$self->id}',function(){
-    layer.open({
-      type: 1,
-      title: false,
-      closeBtn: 0,
-      shadeClose: true,
-      area: 'auto',
-      content: '<img style="height:100%;width:100%;" src="'+$(this).attr('src')+'">'
-    });
-});

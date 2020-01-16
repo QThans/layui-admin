@@ -42,13 +42,16 @@ foreach ($self->rules as $key=>$val) {
     $tmpl = '';
     $tmpl .= "rule_".$val['id'].":function(value, item){\n";
     $tmpl.=!$val['required']?"if(value != ''){\n":'';
+    if(!isset($rule['tips']) && isset($val['tips'])){
+        $val['tips'] = '内容格式有误';
+    }
     if($rule['reg']){
 		$tmpl.="if(!".$rule['reg'].".test(value)){\n";
-		$tmpl.= $val['tips']?"return '".$val['tips']."';\n":"return '".$rule['tips']."';\n";
+		$tmpl.= isset($val['tips']) && $val['tips']?"return '".$val['tips']."';\n":"return '".$rule['tips']."';\n";
 		$tmpl.="}\n";
     }
-    $minTips = $val['tips']?$val['tips']:"该项长度不能小于".$val['min']."个字符";
-    $maxTips = $val['tips']?$val['tips']:"该项长度不能大于".$val['max']."个字符";
+    $minTips = isset($val['tips']) && $val['tips']?$val['tips']:"该项长度不能小于".$val['min']."个字符";
+    $maxTips = isset($val['tips']) && $val['tips']?$val['tips']:"该项长度不能大于".$val['max']."个字符";
     $tmpl.= $val['min']!=0?"if(value.length<".$val['min']."){ return '".$minTips."' }":'';
     $tmpl.= $val['max']!=0?"if(value.length>".$val['max']."){ return '".$maxTips."' }":'';
     $tmpl.=!$val['required']?"}\n":'';

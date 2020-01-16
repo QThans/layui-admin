@@ -33,7 +33,7 @@ trait Compoents
 
     public function __construct($arguments = [], &$obj = '')
     {
-        $this->id = 'id_'.uniqid();
+        $this->id = 'cp_' . rand_uniqid();
         $this->load($arguments);
         $this->obj = &$obj;
         if (method_exists($this, 'init')) {

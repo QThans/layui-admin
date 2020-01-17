@@ -20,7 +20,7 @@ class Select
 
     public $search = true;
 
-    public function option($val, $title = '',$disabled = false)
+    public function option($val, $title = '', $disabled = false)
     {
         if (is_array($val)) {
             $this->options = array_merge($this->options, $val);

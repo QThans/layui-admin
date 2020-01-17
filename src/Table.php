@@ -33,6 +33,7 @@ class Table
             'status' => table\Status::class,
             'icon'   => table\Icon::class,
             'image'   => table\Image::class,
+            'onoff'   => table\Onoff::class,
         ];
 
     public $filter = [];

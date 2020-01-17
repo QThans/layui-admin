@@ -1,0 +1,3 @@
+<script type="text/html" id="{$self->field}_{$self->id}">
+    <input class="onoff_{$self->id}" lay-filter="switch" type="checkbox" lay-skin="switch" data-href="{$self->url}" lay-text="{$self->text}" name="{$self->field}" {{ d.{$self->field}?'':'checked' }}>
+</script>

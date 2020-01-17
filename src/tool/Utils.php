@@ -13,7 +13,7 @@ class Utils
      * 构建列表查询参数
      * @param mixed|null $searchField 搜索查询字段
      * @param string $alias 表的别名
-     * @return array 
+     * @return array
      */
     public function buildParams($searchField = null, $alias = '')
     {

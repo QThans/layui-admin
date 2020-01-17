@@ -96,7 +96,6 @@ class AdminsAuth
                 continue;
             }
             foreach ($permissions as $val) {
-
                 if ($val['alias'] == $path) {
                     return $this->checkMethod($val['http_method'], $method);
                 }

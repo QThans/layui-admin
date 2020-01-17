@@ -21,7 +21,7 @@ class Radio
 
     public $options = [];
 
-    public function option($val, $title = '',$disabled = false)
+    public function option($val, $title = '', $disabled = false)
     {
         if (is_array($val)) {
             $this->options = array_merge($this->options, $val);
@@ -41,8 +41,8 @@ class Radio
     }
     public function end()
     {
-        if(!$this->options){
-            Jump::result('Radio组件参数[options]错误','','请联系开发人员');
+        if (!$this->options) {
+            Jump::result('Radio组件参数[options]错误', '', '请联系开发人员');
         }
     }
 }

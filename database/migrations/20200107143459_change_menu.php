@@ -29,6 +29,6 @@ class ChangeMenu extends Migrator
     public function change()
     {
         $table = $this->table('menu');
-        $table->renameColumn('order','weight');
+        $table->renameColumn('order', 'weight');
     }
 }

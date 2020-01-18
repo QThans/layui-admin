@@ -7,11 +7,8 @@ use thans\layuiAdmin\facade\Jump;
 
 class AdminsAuth
 {
-    public function handle($request, \Closure $next, $auth = true)
+    public function handle($request, \Closure $next)
     {
-        if ($auth === false) {
-            return $next($request);
-        }
         $path = $request->pathinfo();
         $check = \thans\layuiAdmin\facade\AdminsAuth::check($path);
         if (!$check) {

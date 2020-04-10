@@ -47,16 +47,5 @@ return [
     'upload'   => [
         'image' => 'fileSize:1024000|fileExt:jpg,png,jpeg',
         'file'  => 'fileSize:1024000',
-    ],
-    'userMenu' => [
-        [
-            '个人设置',
-            url('thans\layuiAdmin\controller\Personal@setting'),
-        ],
-        [
-            '退出登录',
-            '',
-            ['target' => '_top', 'href' => url('thans\layuiAdmin\controller\Login@logout')],
-        ],
-    ],
+    ]
 ];

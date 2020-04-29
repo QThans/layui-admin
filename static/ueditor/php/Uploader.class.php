@@ -57,7 +57,7 @@ class Uploader
         $this->type = $type;
         if ($type == "remote") {
             $this->saveRemote();
-        } else if($type == "base64") {
+        } elseif ($type == "base64") {
             $this->upBase64();
         } else {
             $this->upFile();
@@ -80,10 +80,10 @@ class Uploader
         if ($this->file['error']) {
             $this->stateInfo = $this->getStateInfo($file['error']);
             return;
-        } else if (!file_exists($file['tmp_name'])) {
+        } elseif (!file_exists($file['tmp_name'])) {
             $this->stateInfo = $this->getStateInfo("ERROR_TMP_FILE_NOT_FOUND");
             return;
-        } else if (!is_uploaded_file($file['tmp_name'])) {
+        } elseif (!is_uploaded_file($file['tmp_name'])) {
             $this->stateInfo = $this->getStateInfo("ERROR_TMPFILE");
             return;
         }
@@ -112,7 +112,7 @@ class Uploader
         if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
             $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
             return;
-        } else if (!is_writeable($dirname)) {
+        } elseif (!is_writeable($dirname)) {
             $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
             return;
         }
@@ -152,7 +152,7 @@ class Uploader
         if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
             $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
             return;
-        } else if (!is_writeable($dirname)) {
+        } elseif (!is_writeable($dirname)) {
             $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
             return;
         }
@@ -163,7 +163,6 @@ class Uploader
         } else { //移动成功
             $this->stateInfo = $this->stateMap[0];
         }
-
     }
 
     /**
@@ -196,7 +195,7 @@ class Uploader
         // 此时提取出来的可能是 ip 也有可能是域名，先获取 ip
         $ip = gethostbyname($host_without_protocol);
         // 判断是否是私有 ip
-        if(!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) {
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) {
             $this->stateInfo = $this->getStateInfo("INVALID_IP");
             return;
         }
@@ -244,7 +243,7 @@ class Uploader
         if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
             $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
             return;
-        } else if (!is_writeable($dirname)) {
+        } elseif (!is_writeable($dirname)) {
             $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
             return;
         }
@@ -255,7 +254,6 @@ class Uploader
         } else { //移动成功
             $this->stateInfo = $this->stateMap[0];
         }
-
     }
 
     /**
@@ -315,7 +313,8 @@ class Uploader
      * 获取文件名
      * @return string
      */
-    private function getFileName () {
+    private function getFileName()
+    {
         return substr($this->filePath, strrpos($this->filePath, '/') + 1);
     }
 
@@ -348,7 +347,7 @@ class Uploader
      * 文件大小检测
      * @return bool
      */
-    private function  checkSize()
+    private function checkSize()
     {
         return $this->fileSize <= ($this->config["maxSize"]);
     }
@@ -368,5 +367,4 @@ class Uploader
             "size" => $this->fileSize
         );
     }
-
 }

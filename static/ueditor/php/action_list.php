@@ -43,7 +43,7 @@ if (!count($files)) {
 
 /* 获取指定范围的列表 */
 $len = count($files);
-for ($i = min($end, $len) - 1, $list = array(); $i < $len && $i >= 0 && $i >= $start; $i--){
+for ($i = min($end, $len) - 1, $list = array(); $i < $len && $i >= 0 && $i >= $start; $i--) {
     $list[] = $files[$i];
 }
 //倒序
@@ -70,8 +70,12 @@ return $result;
  */
 function getfiles($path, $allowFiles, &$files = array())
 {
-    if (!is_dir($path)) return null;
-    if(substr($path, strlen($path) - 1) != '/') $path .= '/';
+    if (!is_dir($path)) {
+        return null;
+    }
+    if (substr($path, strlen($path) - 1) != '/') {
+        $path .= '/';
+    }
     $handle = opendir($path);
     while (false !== ($file = readdir($handle))) {
         if ($file != '.' && $file != '..') {

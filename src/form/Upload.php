@@ -42,7 +42,9 @@ class Upload
 
     public function many($array)
     {
-        if($this->multiple) $this->many = '[]';
+        if ($this->multiple) {
+            $this->many = '[]';
+        }
 
         return $this;
     }
@@ -74,7 +76,9 @@ class Upload
 
     protected function appendInput($k, $val)
     {
-        if($this->multiple) $this->many = '[]';
+        if ($this->multiple) {
+            $this->many = '[]';
+        }
         return <<<EOD
 $('#{$this->id}_upload_list').append('<input name="{$this->name}{$this->many}" type="hidden" class="{$this->multiple} value_{$this->id}_{$k}" value="{$val}">');
 number_{$this->id}++;

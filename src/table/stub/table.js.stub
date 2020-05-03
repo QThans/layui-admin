@@ -1,4 +1,3 @@
-var tableFilter;
 var list_table_{$self->id} = admin.table(table, 'list-table-{$self->id}', '{$self->url}', {
     page: {$self->page ? 'true' : 'false'}
     , cols: [{:json_encode($self->fields)}]{$self->options|raw}

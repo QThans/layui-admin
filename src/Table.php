@@ -183,22 +183,22 @@ EOD;
     {
         $url = urldecode($url);
         $this->builder->module('soulTable');
-        $this->builder->css('soulTable','vendor/layui-admin/layui/modules/css/soulTable.css');
-        if(isset($options['column']) || isset($options['columnTool'])){
+        $this->builder->css('soulTable', 'vendor/layui-admin/layui/modules/css/soulTable.css');
+        if (isset($options['column']) || isset($options['columnTool'])) {
             $drag = [];
-            if(isset($options['column']) && $options['column'] === 'simple'){
+            if (isset($options['column']) && $options['column'] === 'simple') {
                 $drag[] = "type:'simple'";
             }
-            if(isset($options['columnTool']) && $options['columnTool'] == true){
+            if (isset($options['columnTool']) && $options['columnTool'] == true) {
                 $drag[] = "toolbar: true";
             }
-            $this->option('drag','{'.implode(',',$drag).'}');
+            $this->option('drag', '{'.implode(',', $drag).'}');
         }
-        if(isset($options['column']) && $options['column'] == false){
-            $this->option('drag','false');
+        if (isset($options['column']) && $options['column'] == false) {
+            $this->option('drag', 'false');
         }
-        if(isset($options['row']) && $options['row'] == true){
-        $rowDrag = <<<EOD
+        if (isset($options['row']) && $options['row'] == true) {
+            $rowDrag = <<<EOD
 {trigger: 'row', done: function(obj) {
     var sorts = [],idArr = [],sortArr = [],before,after;
     if(obj.oldIndex < obj.newIndex){
@@ -229,15 +229,15 @@ EOD;
     location.reload();
 }}
 EOD;
-        $this->option('rowDrag',$rowDrag);
+            $this->option('rowDrag', $rowDrag);
         }
-        $this->option('done',<<<EOD
+        $this->option('done', <<<EOD
 function () {
   soulTable.render(this)
 }
 EOD);
     }
-    public function option($key,$value)
+    public function option($key, $value)
     {
         $this->options .= "\n, {$key}:{$value}";
 

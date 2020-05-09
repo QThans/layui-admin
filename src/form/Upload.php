@@ -53,6 +53,11 @@ class Upload
         );
         $val    = isset($this->obj->data[$this->name])
             ? $this->obj->data[$this->name] : '';
+
+        if (empty($val)){
+            return $this->obj->setValueScript('upload_' . $this->id, '');
+        }
+
         $script = '';
         if (is_array($val) && $val) {
             foreach ($val as $k => $v) {

@@ -39,7 +39,7 @@ var upload_config_{$self->id} = {
 	    obj.preview(function(index, file, result){
 	        if(number_{$self->id}+1 > {$self->number}){
 	            files = [];
-	            layer.msg("最多只能长传{$self->number}个文件",{icon:2});
+	            layer.msg("最多只能上传{$self->number}个文件",{icon:2});
 	           	delete file[index];
 	           	uploadInst_{$self->id}.config.elem.next()[0].value = '';
 	            return false;

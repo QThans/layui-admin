@@ -89,6 +89,7 @@ class Form
             'radio'       => form\Radio::class,
             'authtree'    => form\Authtree::class,
             'richtext'    => form\Richtext::class,
+            'ueditor'     => form\Ueditor::class,
             'upload'      => form\Upload::class,
             'icon'        => form\Icon::class,
             'date'        => form\Date::class,

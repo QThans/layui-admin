@@ -61,7 +61,7 @@ class Upload
         $val    = isset($this->obj->data[$this->name])
             ? $this->obj->data[$this->name] : '';
 
-        if (empty($val)){
+        if (empty($val)) {
             return $this->obj->setValueScript('upload_' . $this->id, '');
         }
 

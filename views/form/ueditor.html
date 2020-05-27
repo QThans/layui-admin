@@ -1,0 +1,9 @@
+<div class="layui-form-item" style="{if $self->hidden}display:none;{/if}">
+    <label class="layui-form-label">{$self->label}</label>
+    <div class="layui-input-block">
+        <textarea name="{$self->name}" placeholder="{$self->placeholder|default=''}" id="{$self->id}" class="form-ueditor" style="opacity: 0;">
+            {$self->value}
+        </textarea>
+    </div>
+    <div class="layui-form-mid layui-word-aux ueditor-tips">{$self->tips|raw}</div>
+</div>

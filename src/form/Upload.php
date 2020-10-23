@@ -11,6 +11,7 @@
 namespace thans\layuiAdmin\form;
 
 use thans\layuiAdmin\Traits\Field;
+use think\facade\Filesystem;
 
 class Upload
 {
@@ -92,6 +93,8 @@ EOD;
 
     protected function appendView($k, $v)
     {
+        //Add address acquisition
+        $v = Filesystem::getUrl($v);
         if ($this->uploadType == 'image') {
             return <<<EOD
                 $('#{$this->id}_upload_list').append('<div id="dim_{$this->id}_$k" class="dimback"><img id="file_{$this->id}_$k" src="$v" alt="" class="layui-upload-img  view_{$this->id}" ><span class="status_$k">已上传</span><i data-id="$k" class="layui-icon-close layui-icon removeimg_{$this->id}"></i></div>');

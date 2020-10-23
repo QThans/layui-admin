@@ -19,16 +19,17 @@
 
 ## Requirement
 
-1. php >= 7.0
+1. php >= 7.1
 2. thinkphp >=6.0.0
+3. Linux
 
 ## Installation
-第一步：
+第一步：安装TP
 ```shell
 $ composer create-project topthink/think tp && cd tp
 
 ```
-第二步：
+第二步：安装本框架
 ```shell
 $ composer require thans/layui-admin
 ```

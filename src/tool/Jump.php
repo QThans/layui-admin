@@ -97,7 +97,9 @@ class Jump
 
         $page->tmpl(DIRECTORY_SEPARATOR.'jump');
         $page->builder->module('jquery');
-        $page->builder->script('jump_close', <<<'EOT'
+        $page->builder->script(
+            'jump_close',
+            <<<'EOT'
         $('#close').on('click',function(){
             if (self.frameElement && self.frameElement.tagName == "IFRAME") {
                 parent.layui.$(window.parent.document).find('.closeNowTab').click();

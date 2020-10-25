@@ -39,7 +39,9 @@ class Onoff
 
     public function end()
     {
-        $this->obj->script('onoff_'.$this->id, <<<EOT
+        $this->obj->script(
+            'onoff_'.$this->id,
+            <<<EOT
 form.on('switch(switch)', function(data){
     var reload = true,url = $(this).prev('input').context.dataset.href;
     $.ajax({

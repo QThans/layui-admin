@@ -47,7 +47,9 @@ class Date
         $isInitValue = $this->isInitValue ? ',isInitValue:true' : ',isInitValue:false';
         $showBottom = $this->showBottom ? ',showBottom:true' : ',showBottom:false';
         $this->btns = json_encode($this->btns);
-        $this->obj->script('laydate_'.$this->id, <<<EOT
+        $this->obj->script(
+            'laydate_'.$this->id,
+            <<<EOT
 laydate.render({ 
   elem: '#{$this->id}'
   ,type: '{$this->type}'

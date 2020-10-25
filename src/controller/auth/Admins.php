@@ -41,10 +41,13 @@ class Admins
         $tb->column('create_time', '创建时间');
         $tb->column('update_time', '更新时间');
         $tb->status(['field' => 'status'])->option(0, '正常')->option(
-            1, '禁用', 'danger'
+            1,
+            '禁用',
+            'danger'
         )->column('status', '状态', 100, ['align' => 'center']);
         $url = url(
-            'thans\layuiAdmin\controller\auth\Admins/edit', ['id' => '{{ d.id }}']
+            'thans\layuiAdmin\controller\auth\Admins/edit',
+            ['id' => '{{ d.id }}']
         );
         if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url);
@@ -61,7 +64,9 @@ class Admins
     public function buildForm()
     {
         $form = new Form(
-            new AdminsModel(), new \thans\layuiAdmin\validate\Admins(), true
+            new AdminsModel(),
+            new \thans\layuiAdmin\validate\Admins(),
+            true
         );
         $form->text()->label('管理员名')->name('name')->placeholder('请输入管理员名')->rules(
             'account'
@@ -80,7 +85,8 @@ class Admins
             ->rules('password', ! input('id'));
 
         $form->text()->label('邮箱')->name('email')->placeholder('请输入邮箱')->rules(
-            'email', false
+            'email',
+            false
         );
         $form->text()->label('手机号')->name('mobile')->placeholder('请输入手机号')
             ->rules('mobile', false);
@@ -102,7 +108,8 @@ class Admins
                 $form->data['roles'] = isset($form->data['roles'])
                 && $form->data['roles']
                     ? implode(
-                        ',', array_column($form->data->roles->toArray(), 'id')
+                        ',',
+                        array_column($form->data->roles->toArray(), 'id')
                     ) : '';
             }
         );
@@ -117,7 +124,8 @@ class Admins
                 if (isset($data['password']) && $data['password']) {
                     $data['salt']     = random_str(20);
                     $data['password'] = encrypt_password(
-                        $data['password'], $data['salt']
+                        $data['password'],
+                        $data['salt']
                     );
                 }
             }

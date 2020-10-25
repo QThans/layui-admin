@@ -44,17 +44,24 @@ class Role
             $tb->action('新增权限组', $url);
         }
         $url = url(
-            'thans\layuiAdmin\controller\auth\Role/edit', ['id' => '{{ d.id }}']
+            'thans\layuiAdmin\controller\auth\Role/edit',
+            ['id' => '{{ d.id }}']
         );
         if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url);
         }
         $url = url(
-            'thans\layuiAdmin\controller\auth\Role/delete', ['id' => '{{ d.id }}']
+            'thans\layuiAdmin\controller\auth\Role/delete',
+            ['id' => '{{ d.id }}']
         );
         if (AdminsAuth::check($url, 'delete')) {
             $tb->tool(
-                '删除', $url, 'confirmAjax', 'danger', 'DELETE', 'd.id != 1',
+                '删除',
+                $url,
+                'confirmAjax',
+                'danger',
+                'DELETE',
+                'd.id != 1',
                 '确定删除权限组吗？已关联管理员权限将被取消'
             );
         }
@@ -66,7 +73,8 @@ class Role
     private function buildForm()
     {
         $form = new Form(
-            new AuthRole(), new \thans\layuiAdmin\validate\AuthRole()
+            new AuthRole(),
+            new \thans\layuiAdmin\validate\AuthRole()
         );
 
         $form->text()->name('name')->label('权限组名称')->placeholder('请输入权限组名称')
@@ -92,12 +100,14 @@ class Role
                 $form->data['permissions'] = isset($form->data['permissions'])
                 && $form->data['permissions']
                     ? implode(
-                        ',', array_column($form->data->permissions->toArray(), 'id')
+                        ',',
+                        array_column($form->data->permissions->toArray(), 'id')
                     ) : '';
                 $form->data['menus']       = isset($form->data['menus'])
                 && $form->data['menus']
                     ? implode(
-                        ',', array_column($form->data->menus->toArray(), 'id')
+                        ',',
+                        array_column($form->data->menus->toArray(), 'id')
                     ) : '';
             }
         );

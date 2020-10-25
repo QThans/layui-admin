@@ -68,7 +68,9 @@ trait Load
             $error_msg = session('error_msg');
             session('error_msg', null);
             $this->builder->module('notice');
-            $this->builder->script('error_msg', <<<EOT
+            $this->builder->script(
+                'error_msg',
+                <<<EOT
                 notice.error('{$error_msg}');
 EOT
             );

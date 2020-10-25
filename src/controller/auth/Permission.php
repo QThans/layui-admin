@@ -37,7 +37,8 @@ class Permission
         $tb->column('http_method', 'HTTP Method', 250);
         $tb->column('path', '网址', 300);
         $url = url(
-            'thans\layuiAdmin\controller\auth\Permission/edit', ['id' => '{{ d.id }}']
+            'thans\layuiAdmin\controller\auth\Permission/edit',
+            ['id' => '{{ d.id }}']
         );
         if (AdminsAuth::check($url)) {
             $tb->tool('编辑', $url, 'formLayer');
@@ -48,7 +49,12 @@ class Permission
         );
         if (AdminsAuth::check($url, 'DELETE')) {
             $tb->tool(
-                '删除', $url, 'confirmAjax', 'danger', 'DELETE', 'd.id != 1'
+                '删除',
+                $url,
+                'confirmAjax',
+                'danger',
+                'DELETE',
+                'd.id != 1'
             );
         }
         $url = url('thans\layuiAdmin\controller\auth\Permission/create');
@@ -62,7 +68,8 @@ class Permission
     private function buildForm()
     {
         $form = new Form(
-            new AuthPermission(), new \thans\layuiAdmin\validate\Permission()
+            new AuthPermission(),
+            new \thans\layuiAdmin\validate\Permission()
         );
         $form->text()->name('name')->label('权限名称')->rules('required');
         $form->text()->name('alias')->label('别名')->tips('仅支持字母、下划线、"."，必须字母开头')

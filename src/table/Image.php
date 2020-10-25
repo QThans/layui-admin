@@ -31,7 +31,9 @@ class Image
 
     public function end()
     {
-        $this->obj->script('view_'.$this->id, <<<EOT
+        $this->obj->script(
+            'view_'.$this->id,
+            <<<EOT
 $(document).on('click','.view_{$this->id}',function(){
     layer.open({
       type: 1,

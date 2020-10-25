@@ -25,7 +25,7 @@ class Upload
                     'url' => Filesystem::getUrl($savename)
                 ]);
             }
-            Json::success('上传成功', $savename, ['url' => Filesystem::getUrl($savename), 'msg' => '123']);
+            Json::success('上传成功', $savename, ['url' => Filesystem::getUrl($savename)]);
         } catch (ValidateException $e) {
             if ($request->param('type') == 'ck') {
                 return json([

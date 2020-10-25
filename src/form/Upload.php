@@ -57,8 +57,10 @@ class Upload
             'self' => $this,
         ]);
         $this->obj->script('upload_js_'.$this->id, $code);
-        $this->obj->submitStartSctipt('upload_start_script_'.$this->id,
-            'delete data.field.'.$this->field.';');
+        $this->obj->submitStartSctipt(
+            'upload_start_script_'.$this->id,
+            'delete data.field.'.$this->field.';'
+        );
         $val    = isset($this->obj->data[$this->name])
             ? $this->obj->data[$this->name] : '';
 

@@ -15,15 +15,20 @@ class AuthRole extends Model
     public function permissions()
     {
         return $this->belongsToMany(
-            'AuthPermission', 'thans\layuiAdmin\model\AuthRolePermission',
-            'permission_id', 'role_id'
+            'AuthPermission',
+            'thans\layuiAdmin\model\AuthRolePermission',
+            'permission_id',
+            'role_id'
         );
     }
 
     public function menus()
     {
         return $this->belongsToMany(
-            'Menu', 'thans\layuiAdmin\model\AuthRoleMenu', 'menu_id', 'role_id'
+            'Menu',
+            'thans\layuiAdmin\model\AuthRoleMenu',
+            'menu_id',
+            'role_id'
         );
     }
 

@@ -90,7 +90,9 @@ class Config
         $form->textarea()->name('value')->label('配置值');
         $form->onoff()->name('status')->label('是否禁用')->text('禁用|启用');
         $form->module('jquery');
-        $form->builder->script('config_type', <<<EOD
+        $form->builder->script(
+            'config_type',
+            <<<EOD
         form.on('radio(config_type)', function(data){
             $('textarea[name="parameter"]').val('');
             if(data.value == 'upload'){
@@ -102,7 +104,7 @@ class Config
             }
         });  
 EOD
-);
+        );
         return $form;
     }
 }

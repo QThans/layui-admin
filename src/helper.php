@@ -60,11 +60,15 @@ if (! function_exists('copy_dir')) {
             if (is_dir($dir.DIRECTORY_SEPARATOR.$item) && $item != '.'
                 && $item != '..'
             ) {
-                copy_dir($dir.DIRECTORY_SEPARATOR.$item,
-                    $dest.DIRECTORY_SEPARATOR.$item);
+                copy_dir(
+                    $dir.DIRECTORY_SEPARATOR.$item,
+                    $dest.DIRECTORY_SEPARATOR.$item
+                );
             } elseif (is_file($dir.DIRECTORY_SEPARATOR.$item)) {
-                copy($dir.DIRECTORY_SEPARATOR.$item,
-                    $dest.DIRECTORY_SEPARATOR.$item);
+                copy(
+                    $dir.DIRECTORY_SEPARATOR.$item,
+                    $dest.DIRECTORY_SEPARATOR.$item
+                );
             }
         }
 
@@ -139,8 +143,10 @@ if (! function_exists('assoc_unique')) {
     {
         $tmp_arr = [];
         foreach ($arr as $k => $v) {
-            if (in_array($v[$key],
-                $tmp_arr)
+            if (in_array(
+                $v[$key],
+                $tmp_arr
+            )
             ) {//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
                 unset($arr[$k]);
             } else {
